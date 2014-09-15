@@ -1,0 +1,1 @@
+var app = angular.module('crucem-elit',['ngRoute','ngResource']);
