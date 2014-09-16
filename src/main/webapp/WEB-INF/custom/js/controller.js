@@ -1,10 +1,12 @@
 
-function MainController($scope, $http){
-   
-    
-}
+app.controller('MainController', function($scope, $http, $location){
+	$scope.authors = ["Janar", "Eerik", "Indrek", "Anneliis"];
+	
+	$scope.login = function() {
+		$location.path('/login');
+	}
+});
 
-function LoginController($scope, $http){
-   
-    
-}
+app.controller('LoginController', function($scope, $http){
+	
+});
