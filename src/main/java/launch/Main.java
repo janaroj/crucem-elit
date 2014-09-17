@@ -14,7 +14,7 @@ public class Main {
         WebAppContext root = new WebAppContext();
         root.setContextPath("/");
         root.setDescriptor(webappDirLocation + "/WEB-INF/web.xml");
-        root.setResourceBase(webappDirLocation + "/WEB-INF/");
+        root.setResourceBase(webappDirLocation);
         root.setParentLoaderPriority(true);
         server.setHandler(root);
         server.start();
