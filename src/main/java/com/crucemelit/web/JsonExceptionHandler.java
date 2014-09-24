@@ -5,12 +5,12 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.crucemelit.util.ResponseMessage;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Called when an exception occurs during request processing. Transforms the exception message into JSON format.
