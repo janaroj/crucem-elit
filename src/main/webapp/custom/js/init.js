@@ -111,7 +111,7 @@
 				function(event, username, password) {
 					httpHeaders.common['Authorization'] = 'Basic '
 							+ base64.encode(username + ':' + password);
-					$http.get('action/user').success(function(data) {
+					$http.get('api/user').success(function(data) {
 						$rootScope.user = data;
 						$rootScope.$broadcast('event:loginConfirmed');
 					});

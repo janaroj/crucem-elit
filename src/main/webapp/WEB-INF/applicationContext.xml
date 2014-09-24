@@ -18,7 +18,7 @@
 		<sec:http-basic entry-point-ref="restAuthenticationEntryPoint" />
 		<sec:intercept-url pattern="/**" access="ROLE_USER" />
 	</sec:http>
-	<sec:http pattern="/action/user" create-session="never">
+	<sec:http pattern="/api/user" create-session="never">
 		<sec:http-basic entry-point-ref="restAuthenticationEntryPoint" />
 		<sec:intercept-url pattern="/**" access="ROLE_USER" />
 	</sec:http>
@@ -35,15 +35,6 @@
 		</sec:authentication-provider>
 	</sec:authentication-manager>
 	
-	<!--  Database beans -->
-	 <bean class="java.net.URI" id="dbUrl">
-        <constructor-arg value="#{systemEnvironment['DATABASE_URL']}"/>
-    </bean>
-
-    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
-        <property name="url" value="#{ 'jdbc:postgre://' + @dbUrl.getHost() + ':' + @dbUrl.getPort() + @dbUrl.getPath() }"/>
-        <property name="username" value="#{ @dbUrl.getUserInfo().split(':')[0] }"/>
-        <property name="password" value="#{ @dbUrl.getUserInfo().split(':')[1] }"/>
-    </bean>
-
+	<import resource="applicationContext-spring.xml" />
+	
 </beans>

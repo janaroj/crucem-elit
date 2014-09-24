@@ -1,11 +1,15 @@
 package com.crucemelit.service.impl;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.crucemelit.model.User;
+import com.crucemelit.repository.UserRepository;
 import com.crucemelit.service.UserService;
 
 /**
@@ -14,6 +18,9 @@ import com.crucemelit.service.UserService;
 @Service
 public class UserServiceImpl implements UserService {
 
+    @Autowired
+    private UserRepository userRepository;
+
     public User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || !(authentication.getPrincipal() instanceof UserDetails)) {
@@ -21,5 +28,10 @@ public class UserServiceImpl implements UserService {
         }
 
         return new User(((UserDetails) authentication.getPrincipal()).getUsername());
+    }
+
+    @Override
+    public List<User> getUsers() {
+        return userRepository.findAll();
     }
 }

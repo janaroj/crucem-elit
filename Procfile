@@ -1,1 +1,1 @@
-web: sh target/bin/webapp
+web: java -Dspring.profiles.active=production -jar target/dependency/jetty-runner.jar --port $PORT target/*.war

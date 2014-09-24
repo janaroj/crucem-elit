@@ -16,6 +16,20 @@
 		this.setLanguage('ee');
 	});
 
+	app.service('userService', function($http, $q) {
+		this.getAuthors = function() {
+			var deferred = $q.defer();
+			$http.get("/api/index").success(
+					function(data, status, headers, config) {
+						deferred.resolve(data);
+					}).error(function(data, status, headers, config) {
+				alert("AJAX failed!");
+				deferred.reject("Error")
+			});
+			return deferred.promise;
+		};
+	});
+
 	app
 			.service(
 					'base64',
@@ -55,7 +69,8 @@
 						this.decode = function(input) {
 							var output = "", chr1, chr2, chr3 = "", enc1, enc2, enc3, enc4 = "", i = 0;
 
-							// remove all characters that are not A-Z, a-z, 0-9, +, /, or =
+							// remove all characters that are not A-Z, a-z, 0-9,
+							// +, /, or =
 							input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
 
 							while (i < input.length) {

@@ -17,7 +17,7 @@
 	media="screen">
 <title>CrossFit</title>
 </head>
-<body data-ng-controller="MainController">
+<body data-ng-controller="MainController" data-ng-init="init()">
 
 	<div class="navbar navbar-fixed">
 		<div class="navbar-inner">
@@ -28,6 +28,7 @@
 				</li>
 				<li ng-class="activeWhen(path()=='/admin')"><a href="#/admin">Administration</a>
 				</li>
+				<li>{{author}}</li>
 			</ul>
 			<ul class="nav nav-pills pull-right">
 				<li ng-class="activeWhen(language()=='ee')"><a

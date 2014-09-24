@@ -1,7 +1,13 @@
 (function() {
 	var app = angular.module('crucem-elit');
-	app.controller('MainController', function($scope, $rootScope, i18n, $http,
+	app.controller('MainController', function($scope, $rootScope, i18n, userService,
 			$location) {
+		
+		$scope.init = function() {
+			userService.getAuthors().then(function(dataResponse) {
+				$scope.author = dataResponse;
+			});
+		}
 
 		$scope.language = function() {
 			return i18n.language;
