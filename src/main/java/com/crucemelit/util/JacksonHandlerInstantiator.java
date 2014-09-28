@@ -1,10 +1,15 @@
 package com.crucemelit.util;
 
-import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
-import org.springframework.context.ApplicationContext;
 
-import com.fasterxml.jackson.databind.*;
+import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.databind.DeserializationConfig;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.KeyDeserializer;
+import com.fasterxml.jackson.databind.SerializationConfig;
 import com.fasterxml.jackson.databind.cfg.HandlerInstantiator;
 import com.fasterxml.jackson.databind.cfg.MapperConfig;
 import com.fasterxml.jackson.databind.introspect.Annotated;
@@ -21,50 +26,52 @@ public class JacksonHandlerInstantiator extends HandlerInstantiator {
     public JsonDeserializer<?> deserializerInstance(DeserializationConfig config, Annotated annotated, Class<?> deserClass) {
         try {
             return (JsonDeserializer<?>) applicationContext.getBean(deserClass);
-        } catch (Exception e) {
-            // Return null and let the default behavior happen
         }
-        return null;
+        catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
-    public KeyDeserializer keyDeserializerInstance(DeserializationConfig config, Annotated annotated, Class<?> keyDeserClass) {
+    public KeyDeserializer keyDeserializerInstance(DeserializationConfig config, Annotated annotated,
+            Class<?> keyDeserClass) {
         try {
             return (KeyDeserializer) applicationContext.getBean(keyDeserClass);
-        } catch (Exception e) {
-            // Return null and let the default behavior happen
         }
-        return null;
+        catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
     public JsonSerializer<?> serializerInstance(SerializationConfig config, Annotated annotated, Class<?> serClass) {
         try {
             return (JsonSerializer<?>) applicationContext.getBean(serClass);
-        } catch (Exception e) {
-            // Return null and let the default behavior happen
         }
-        return null;
+        catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
-    public TypeResolverBuilder<?> typeResolverBuilderInstance(MapperConfig<?> config, Annotated annotated, Class<?> builderClass) {
+    public TypeResolverBuilder<?> typeResolverBuilderInstance(MapperConfig<?> config, Annotated annotated,
+            Class<?> builderClass) {
         try {
             return (TypeResolverBuilder<?>) applicationContext.getBean(builderClass);
-        } catch (Exception e) {
-            // Return null and let the default behavior happen
         }
-        return null;
+        catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
     public TypeIdResolver typeIdResolverInstance(MapperConfig<?> config, Annotated annotated, Class<?> resolverClass) {
         try {
             return (TypeIdResolver) applicationContext.getBean(resolverClass);
-        } catch (Exception e) {
-            // Return null and let the default behavior happen
         }
-        return null;
+        catch (Exception e) {
+            return null;
+        }
     }
 
 }

@@ -1,8 +1,5 @@
 package com.crucemelit.util;
 
-/**
- * Used to transport messages back to the client.
- */
 public class ResponseMessage {
     public enum Type {
         success, warn, error, info;
