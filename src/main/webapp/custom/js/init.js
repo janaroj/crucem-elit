@@ -15,8 +15,20 @@
 		//configure the rounting of ng-view
 		$routeProvider
 		.when('/main', {
-			controller : 'MainController',
-			templateUrl : 'main.html'
+			controller: 'MainController',
+			templateUrl: 'main.html'
+		})
+		.when('/register', {
+			controller: 'RegisterController',
+			templateUrl: 'partials/register.html'
+		})
+		.when('/login', {
+			controller: 'MainController',
+			templateUrl: 'partials/login.html'
+		})
+		.when('/user/main', {
+			controller: 'MainController',
+			templateUrl: 'partials/user/main.html'
 		})
 		.otherwise({ redirectTo : "/index"});
 
@@ -73,7 +85,7 @@
 		httpHeaders = $httpProvider.defaults.headers;
 	});
 
-	app.run(function($rootScope, $http, base64) {
+	app.run(function($rootScope, $http, base64, $location) {
 		//make current message accessible to root scope and therefore all scopes
 		$rootScope.message = function() {
 			return message;
@@ -83,9 +95,16 @@
 		 * Holds all the requests which failed due to 401 response.
 		 */
 		$rootScope.requests401 = [];
+		
+		$rootScope.$on("$routeChangeStart", function() {
+			$http.get('api/auth/authenticated/user')
+			.success(function(data) {
+				$rootScope.user = data;
+			});
+		});
 
 		$rootScope.$on('event:loginRequired', function() {
-			$('#login').modal('show');
+			//TODO
 		});
 
 		/**
@@ -102,6 +121,8 @@
 				retry(requests[i]);
 			}
 			$rootScope.requests401 = [];
+			
+			$location.path('/user/main');
 		});
 
 		/**
@@ -111,8 +132,7 @@
 				function(event, username, password) {
 					httpHeaders.common['Authorization'] = 'Basic '
 							+ base64.encode(username + ':' + password);
-					$http.get('api/user').success(function(data) {
-						$rootScope.user = data;
+					$http.post('api/auth/authenticate').success(function() {
 						$rootScope.$broadcast('event:loginConfirmed');
 					});
 				});
@@ -121,6 +141,7 @@
 		 * On 'logoutRequest' invoke logout on the server and broadcast 'event:loginRequired'.
 		 */
 		$rootScope.$on('event:logoutRequest', function() {
+			$http.get('j_spring_security_logout');
 			httpHeaders.common['Authorization'] = null;
 		});
 	});

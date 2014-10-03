@@ -17,9 +17,9 @@
 	});
 
 	app.service('userService', function($http, $q) {
-		this.getAuthors = function() {
+		this.register = function(user) {
 			var deferred = $q.defer();
-			$http.get("/api/index").success(
+			$http.post("/api/register", user).success(
 					function(data, status, headers, config) {
 						deferred.resolve(data);
 					}).error(function(data, status, headers, config) {
@@ -30,10 +30,7 @@
 		};
 	});
 
-	app
-			.service(
-					'base64',
-					function() {
+	app.service('base64',function() {
 						var keyStr = "ABCDEFGHIJKLMNOP" + "QRSTUVWXYZabcdef"
 								+ "ghijklmnopqrstuv" + "wxyz0123456789+/" + "=";
 						this.encode = function(input) {

@@ -7,10 +7,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.stereotype.Component;
 
 /**
  * Just return 401-unauthorized for every unauthorized request. The client side catches this and handles login itself.
  */
+@Component
 public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     @Override

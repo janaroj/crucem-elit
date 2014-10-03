@@ -24,11 +24,10 @@
 			<a class="brand" href="#"> <msg key="title"></msg>
 			</a>
 			<ul class="nav">
-				<li ng-class="activeWhen(path()=='/person')"><a href="#/person">Persons</a>
-				</li>
-				<li ng-class="activeWhen(path()=='/admin')"><a href="#/admin">Administration</a>
-				</li>
-				<li>{{author}}</li>
+				<li ng-class="activeWhen(path()=='/person')"><a href="#/person">Persons</a></li>
+				<li ng-class="activeWhen(path()=='/admin')"><a href="#/admin">Administration</a></li>
+				<li ng-class="activeWhen(path()=='/login')" data-ng-show="!user"><a href="#/login"><msg key="login"/></a></li>
+				<li ng-class="activeWhen(path()=='/register')" ng-show="!user"><a href="#/register">Register</a></li>
 			</ul>
 			<ul class="nav nav-pills pull-right">
 				<li ng-class="activeWhen(language()=='ee')"><a
@@ -37,12 +36,12 @@
 					ng-click="setLanguage('en')">English</a></li>
 			</ul>
 			<p class="navbar-text pull-right" style="margin-right: 5em"
-				ng-show="user.name">
+				ng-show="user.email">
 				<a ng-click="logout()">Logout</a>
 			</p>
 
 			<p class="navbar-text pull-right" style="margin-right: 5em"
-				ng-show="user.name">Welcome {{user.name}}</p>
+				ng-show="user.fullName">Welcome {{user.fullName}}</p>
 		</div>
 	</div>
 
@@ -51,37 +50,6 @@
 			<button type="button" class="close" ng-click="message().show=false">×</button>
 			<msg key-expr="message().text"></msg>
 		</div>
-
-		<div class="modal" style="display: none" id="login">
-			<div class="modal-header">
-				<a class="close" data-dismiss="modal">x</a>
-
-				<h3>Login</h3>
-			</div>
-			<div class="modal-body">
-				<label>See applicationContext.xml for valid
-					username/password.</label>
-				<div class="control-group">
-					<label class="control-label" for="username">Username</label>
-
-					<div class="controls">
-						<input id="username" ng-model="username" />
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="password">Password</label>
-
-					<div class="controls">
-						<input type="password" id="password" ng-model="password" />
-					</div>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<a ng-click="login()" class="btn btn-primary">Login</a> <a
-					data-dismiss="modal" class="btn">Cancel</a>
-			</div>
-		</div>
-
 		<ng-view />
 	</div>
 </body>

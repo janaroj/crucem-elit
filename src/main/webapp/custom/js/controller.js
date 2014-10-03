@@ -4,9 +4,6 @@
 			$location) {
 		
 		$scope.init = function() {
-			userService.getAuthors().then(function(dataResponse) {
-				$scope.author = dataResponse;
-			});
 		}
 
 		$scope.language = function() {
@@ -24,17 +21,32 @@
 		};
 		
 		$scope.login = function() {
-			$scope
-					.$emit('event:loginRequest', $scope.username,
-							$scope.password);
-			$('#login').modal('hide');
+			$scope.$emit('event:loginRequest', $scope.username,$scope.password);
 		};
 		$scope.logout = function() {
 			$rootScope.user = null;
 			$scope.username = $scope.password = null;
 			$scope.$emit('event:logoutRequest');
-			$location.url('/index');
+			$location.path('/index');
 		};
 	});
+	
+	app.controller('RegisterController', function ($scope, $location, userService, base64) {
+        $scope.success = null;
+        $scope.error = null;
+        $scope.doNotMatch = null;
+        $scope.errorUserExists = null;
+        $scope.register = function () {
+            if ($scope.registerAccount.password != $scope.confirmPassword) {
+                $scope.doNotMatch = "ERROR";
+            } else {
+                $scope.doNotMatch = null;
+                $scope.registerAccount.passwordHash = base64.encode($scope.registerAccount.password);
+                delete $scope.registerAccount.password;
+                userService.register($scope.registerAccount);
+                $location.path('/login');
+            }
+        }
+    });
 
 }());
