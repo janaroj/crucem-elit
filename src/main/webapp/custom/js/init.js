@@ -12,11 +12,11 @@
 	app = angular.module('crucem-elit', [ 'ngRoute', 'ngResource' ]);
 
 	app.config(function($routeProvider, $httpProvider) {
-		//configure the rounting of ng-view
+		//configure the routing of ng-view
 		$routeProvider
-		.when('/main', {
+		.when('/', {
 			controller: 'MainController',
-			templateUrl: 'main.html'
+			templateUrl: 'partials/home.html'
 		})
 		.when('/register', {
 			controller: 'RegisterController',
@@ -30,7 +30,7 @@
 			controller: 'MainController',
 			templateUrl: 'partials/user/main.html'
 		})
-		.otherwise({ redirectTo : "/index"});
+		.otherwise({ redirectTo : "/"});
 
 		//configure $http to catch message responses and show them
 		$httpProvider.responseInterceptors.push(function($q) {
@@ -138,7 +138,7 @@
 				});
 
 		/**
-		 * On 'logoutRequest' invoke logout on the server and broadcast 'event:loginRequired'.
+		 * On 'logoutRequest' invoke logout on the server
 		 */
 		$rootScope.$on('event:logoutRequest', function() {
 			$http.get('j_spring_security_logout');
