@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import com.crucemelit.model.User;
 import com.crucemelit.repository.UserRepository;
-import com.crucemelit.service.GymService;
 import com.crucemelit.service.UserService;
 import com.crucemelit.web.Role;
 
@@ -24,9 +23,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private GymService gymService;
 
     @Autowired
     private BCryptPasswordEncoder encoder;

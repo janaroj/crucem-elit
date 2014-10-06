@@ -21,6 +21,7 @@
             <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
                 <property name="objectMapper" ref="jacksonObjectMapper" />
             </bean>
+
         </mvc:message-converters>
         <mvc:argument-resolvers>
             <bean class="org.springframework.data.web.HateoasSortHandlerMethodArgumentResolver" />

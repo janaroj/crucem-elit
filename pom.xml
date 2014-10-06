@@ -30,7 +30,7 @@
 	</properties>
 
 	<dependencies>
-
+	
 		<!-- Unit testing dependencies -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -48,8 +48,6 @@
 		</dependency>
 
 		<!--SPRING dependencies -->
-
-
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>
@@ -135,6 +133,12 @@
 			<artifactId>jackson-databind</artifactId>
 			<version>${jackson.version}</version>
 		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-hibernate4</artifactId>
+			<version>${jackson.version}</version>
+		</dependency> 
 
 		<!-- database dependencies -->
 		<dependency>

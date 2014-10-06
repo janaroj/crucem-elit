@@ -31,10 +31,10 @@
 			<a class="brand" href="#"> <msg key="title"></msg>
 			</a>
 			<ul class="nav">
-				<li ng-class="activeWhen(path()=='/trainings')" ng-show="user"><a href="#/user/trainings"><msg key="trainings"/></a></li>
-				<li ng-class="activeWhen(path()=='/gym')" ng-show="user"><a href="#/user/gyms"><msg key="gym"/></a></li>
-                <li ng-class="activeWhen(path()=='/contacts')" ng-show="user"><a href="#/user/contacts"><msg key="contacts"/></a></li>
-				<li ng-class="activeWhen(path()=='/records')" ng-show="user"><a href="#/user/records"><msg key="records"/></a></li>
+				<li ng-class="activeWhen(path()=='/user/trainings')" ng-show="user"><a href="#/user/trainings"><msg key="trainings"/></a></li>
+				<li ng-class="activeWhen(path()=='/user/gym')" ng-show="user"><a href="#/user/gyms"><msg key="gym"/></a></li>
+                <li ng-class="activeWhen(path()=='/user/contacts')" ng-show="user"><a href="#/user/contacts"><msg key="contacts"/></a></li>
+				<li ng-class="activeWhen(path()=='/user/records')" ng-show="user"><a href="#/user/records"><msg key="records"/></a></li>
 				<li ng-class="activeWhen(path()=='/login')" ng-show="!user"><a href="#/login"><msg key="login"/></a></li>
 				<li ng-class="activeWhen(path()=='/register')" ng-show="!user"><a href="#/register"><msg key="register"/></a></li>
 			</ul>
