@@ -15,6 +15,7 @@
 <script type="text/javascript" src="../../custom/js/directive.js"></script>
 <script type="text/javascript" src="../../custom/js/service.js"></script>
 <script type="text/javascript" src="../../bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../js/ui-bootstrap-tpls-0.11.2.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="../../bootstrap/css/bootstrap.min.css" rel="stylesheet"
 	media="screen">
@@ -27,11 +28,12 @@
 			<a class="brand" href="#"> <msg key="title"></msg>
 			</a>
 			<ul class="nav">
+				<li ng-class="activeWhen(path()=='/trainings')" ng-show="user"><a href="#/user/trainings"><msg key="trainings"/></a></li>
+				<li ng-class="activeWhen(path()=='/gym')" ng-show="user"><a href="#/user/gyms"><msg key="gym"/></a></li>
+                <li ng-class="activeWhen(path()=='/contacts')" ng-show="user"><a href="#/user/contacts"><msg key="contacts"/></a></li>
+				<li ng-class="activeWhen(path()=='/records')" ng-show="user"><a href="#/user/records"><msg key="records"/></a></li>
 				<li ng-class="activeWhen(path()=='/login')" ng-show="!user"><a href="#/login"><msg key="login"/></a></li>
 				<li ng-class="activeWhen(path()=='/register')" ng-show="!user"><a href="#/register"><msg key="register"/></a></li>
-				<li ng-class="activeWhen(path()=='/gym')" ng-show="user"><a href="#/user/gyms"><msg key="gym"/></a></li>
-				<li ng-class="activeWhen(path()=='/gym')" ng-show="user"><a href="#/user/contacts"><msg key="contacts"/></a></li>
-				
 			</ul>
 			<ul class="nav nav-pills pull-right">
 				<li ng-class="activeWhen(language()=='ee')"><a
@@ -39,16 +41,24 @@
 				<li ng-class="activeWhen(language()=='en')"><a
 					ng-click="setLanguage('en')"><msg key="language_en"/></a></li>
 			</ul>
-			<p class="navbar-text pull-right" style="margin-right: 5em"
-				ng-show="user.email">
-				<a ng-click="logout()"><msg key="logout"/></a>
-			</p>
-
-			<p class="navbar-text pull-right" style="margin-right: 5em"
-				ng-show="user.fullName">Welcome {{user.fullName}}</p>
+            <ul class="nav nav-pills pull-right" ng-show="user" style="margin-right: 5em">
+                <button  class="btn btn-default dropdown-toggle" data-toggle="dropdown" ng-show="user.fullName">
+        
+                        {{user.fullName}} 
+                    
+                </button>    
+                <ul class="dropdown-menu dropdown-user">
+                    <li>
+                        <a href="/#/profile" class="dropdown-option"><msg key="profile"/></a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a ng-click="logout()" class="dropdown-option"><msg key="logout"/></a>
+                    </li>
+                </ul>
+            </ul>            
 		</div>
 	</div>
-
 	<div class="container">
 		<div ng-class="'alert alert-'+message().type" ng-show="message().show">
 			<button type="button" class="close" ng-click="message().show=false">×</button>
