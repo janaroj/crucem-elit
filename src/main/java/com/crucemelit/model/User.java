@@ -1,7 +1,6 @@
 package com.crucemelit.model;
 
 import java.util.Collection;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -43,7 +42,7 @@ public @Data class User extends BaseEntity implements UserDetails {
 
     private Gym gym;
 
-    private List<User> contacts;
+    // private List<User> contacts;
 
     @Column(name = "INVALID_LOGIN_COUNT")
     private int invalidLoginCount;

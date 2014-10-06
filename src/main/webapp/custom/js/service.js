@@ -30,6 +30,20 @@
 			return deferred.promise;
 		};
 	});
+	
+	app.service('GymService', function($http, $q) {
+		this.getGyms = function() {
+			var deferred = $q.defer();
+			$http.post("/api/user/getGyms", user).success(
+					function(data, status, headers, config) {
+						deferred.resolve(data);
+					}).error(function(data, status, headers, config) {
+				alert("AJAX failed!");
+				deferred.reject("Error")
+			});
+			return deferred.promise;
+		}
+	});
 
 	app.service('base64',function() {
 						var keyStr = "ABCDEFGHIJKLMNOP" + "QRSTUVWXYZabcdef"
