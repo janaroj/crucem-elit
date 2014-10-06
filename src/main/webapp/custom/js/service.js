@@ -8,6 +8,7 @@
 				path : 'i18n/',
 				mode : 'map',
 				language : language,
+				encoding: 'UTF-8',
 				callback : function() {
 					self.language = language;
 				}

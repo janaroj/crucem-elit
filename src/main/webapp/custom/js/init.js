@@ -30,6 +30,14 @@
 			controller: 'MainController',
 			templateUrl: 'partials/user/main.html'
 		})
+		.when('/user/contacts', {
+			controller: 'ContactController',
+			templateUrl: 'partials/user/contacts.html'
+		})
+		.when('/user/gyms', {
+			controller: 'GymController',
+			templateUrl: 'partials/user/gyms.html'
+		})
 		.otherwise({ redirectTo : "/"});
 
 		//configure $http to catch message responses and show them
