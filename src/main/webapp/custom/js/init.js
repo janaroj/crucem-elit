@@ -9,7 +9,7 @@
 	message,
 
 	//Define the main module.
-	app = angular.module('crucem-elit', [ 'ngRoute', 'ngResource' ]);
+	app = angular.module('crucem-elit', [ 'ngRoute', 'ngResource', 'ngTable' ]);
 
 	app.config(function($routeProvider, $httpProvider) {
 		//configure the routing of ng-view
@@ -35,7 +35,7 @@
 			templateUrl: 'partials/user/contacts.html'
 		})
 		.when('/user/gyms', {
-			controller: 'GymController',
+			controller: 'GymsController',
 			templateUrl: 'partials/user/gyms.html'
 		})
 		.otherwise({ redirectTo : "/"});
