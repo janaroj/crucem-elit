@@ -40,6 +40,8 @@ public @Data class User extends BaseEntity implements UserDetails {
 
     private String lastName;
 
+    private String gym;
+
     @Column(name = "INVALID_LOGIN_COUNT")
     private int invalidLoginCount;
 
