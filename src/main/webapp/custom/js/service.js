@@ -31,18 +31,12 @@
 		};
 	});
 	
-	app.service('GymService', function($http, $q) {
+	app.service('gymService', function($http, $q) {
 		this.getGyms = function() {
-			var deferred = $q.defer();
-			$http.post("/api/user/getGyms", user).success(
-					function(data, status, headers, config) {
-						deferred.resolve(data);
-					}).error(function(data, status, headers, config) {
-				alert("AJAX failed!");
-				deferred.reject("Error")
+			return $http.get('/api/user/gyms').then(function(result) {
+				return result.data;
 			});
-			return deferred.promise;
-		}
+		};
 	});
 
 	app.service('base64',function() {
