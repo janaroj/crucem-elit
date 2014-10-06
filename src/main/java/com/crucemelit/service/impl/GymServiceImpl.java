@@ -20,4 +20,9 @@ public class GymServiceImpl implements GymService {
         return gymRepository.findAll();
     }
 
+    @Override
+    public Gym getGym(long id) {
+        return gymRepository.findOne(id);
+    }
+
 }

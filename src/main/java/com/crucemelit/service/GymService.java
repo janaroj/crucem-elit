@@ -8,4 +8,6 @@ public interface GymService {
 
     List<Gym> getGyms();
 
+    Gym getGym(long id);
+
 }

@@ -1,9 +1,13 @@
 package com.crucemelit.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -29,6 +33,9 @@ public @Data class Gym extends BaseEntity {
     private String trainers;
 
     private String contact;
+
+    @OneToMany(mappedBy = "gym", fetch = FetchType.EAGER)
+    private List<User> users;
 
     public String getFullAddress() {
         return String.format("%s, %s", getCity(), getAddress());

@@ -5,9 +5,14 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -41,9 +46,17 @@ public @Data class User extends BaseEntity implements UserDetails {
 
     private String lastName;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "gym")
     private Gym gym;
 
-    private List<User> contacts;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "connections", joinColumns = @JoinColumn(name = "personId"), inverseJoinColumns = @JoinColumn(name = "friendId"))
+    private List<User> friends;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "connections", joinColumns = @JoinColumn(name = "friendId"), inverseJoinColumns = @JoinColumn(name = "personId"))
+    private List<User> friendOf;
 
     @Column(name = "INVALID_LOGIN_COUNT")
     private int invalidLoginCount;
@@ -84,6 +97,11 @@ public @Data class User extends BaseEntity implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public void addFriend(User user) {
+        friends.add(user);
+
     }
 
 }

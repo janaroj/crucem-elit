@@ -14,4 +14,6 @@ public interface UserService {
 
     void register(User user);
 
+    User getUser(long id);
+
 }
