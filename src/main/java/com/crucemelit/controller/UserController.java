@@ -5,12 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.crucemelit.model.Gym;
-import com.crucemelit.model.User;
 import com.crucemelit.service.GymService;
 
 @Controller
@@ -22,7 +20,7 @@ public class UserController {
 
     @RequestMapping(value = "/gyms")
     @ResponseBody
-    public List<Gym> register(@RequestBody User user) {
+    public List<Gym> getGyms() {
         return gymService.getGyms();
     }
 
