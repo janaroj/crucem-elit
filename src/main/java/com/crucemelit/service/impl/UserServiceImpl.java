@@ -19,6 +19,7 @@ import com.crucemelit.web.Role;
 import com.crucemelit.web.UserContext;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
@@ -66,10 +67,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         userRepository.save(user);
     }
 
-    @Transactional
     @Override
     public List<User> getContacts() {
-        User user = userContext.getUser();
+        User user = getUser(userContext.getUser().getId());
         List<User> contacts = Utility.getUniqueList(user.getFriends(), user.getGym().getUsers());
         contacts.remove(user);
         return contacts;

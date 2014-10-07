@@ -21,3 +21,7 @@
        -moz-border-radius: 8px !important;
             border-radius: 8px !important;
 }
+
+.btn-gym {
+	width: 70px;
+}

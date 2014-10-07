@@ -23,6 +23,14 @@
 		        }
 		    });
 		 
+		 $scope.inGym = function(gym) {
+			 return angular.equals($scope.user.gym, gym);
+		 }
+		 
+		 $scope.joinGym = function(id) {
+			 alert("Not yet implemented");
+		 }
+		 
 		 $scope.viewGym = function(id) {
 				$location.path('/user/gyms/' + id);
 			};
