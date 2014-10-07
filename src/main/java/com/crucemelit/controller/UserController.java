@@ -47,4 +47,10 @@ public class UserController {
     public User getContact(@RequestBody long id) {
         return userService.getUser(id);
     }
+    
+    @RequestMapping(value = "/profile")
+    @ResponseBody
+    public User getProfile() {
+        return userService.getProfile();
+    }
 }

@@ -16,9 +16,15 @@
 
 	app.controller('ContactController', function($scope, $routeParams, userService) {
 		$scope.init = function() {
-			userService.getUserById($routeParams.id).then(function(data) {
+			if (true) {
+				userService.getProfile().then(function(data) {
+					$scope.user = data;
+				});
+			}
+			else {userService.getUserById($routeParams.id).then(function(data) {
 				$scope.user = data;
 			});
+			}
 		}
 	});
 }());

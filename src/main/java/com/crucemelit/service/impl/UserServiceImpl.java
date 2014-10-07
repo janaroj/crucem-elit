@@ -74,4 +74,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         contacts.remove(user);
         return contacts;
     }
+    @Override
+	public User getProfile() {
+		return userContext.getUser();
+	}
 }
