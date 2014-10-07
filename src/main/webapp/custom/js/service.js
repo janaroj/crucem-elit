@@ -34,6 +34,11 @@
 				return result.data;
 			});
 		};
+		this.getUserById = function(id) {
+			return $http.get('/api/user/users/' + id).then(function(result) {
+				return result.data;
+			});
+		};
 	});
 	
 	app.service('gymService', function($http, $q) {
