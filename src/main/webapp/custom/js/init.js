@@ -31,7 +31,7 @@
 			templateUrl: 'partials/user/main.html'
 		})
 		.when('/user/contacts', {
-			controller: 'ContactController',
+			controller: 'ContactsController',
 			templateUrl: 'partials/user/contacts.html'
 		})
 		.when('/user/gyms', {

@@ -31,6 +31,7 @@
 	<!-- JPA Example -->
 	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="packagesToScan" value="com.crucemelit"/>
 		<property name="dataSource" ref="dataSource" />
 		<property name="jpaVendorAdapter">
 			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
@@ -48,5 +49,7 @@
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 		<property name="dataSource" ref="dataSource" />
 	</bean>
+	
+	<tx:annotation-driven transaction-manager="transactionManager"/>
 
 </beans>

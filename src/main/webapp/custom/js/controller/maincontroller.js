@@ -2,9 +2,6 @@
 	var app = angular.module('crucem-elit');
 	app.controller('MainController', function($scope, $rootScope, i18n, $location) {
 		
-		$scope.init = function() {
-		}
-
 		$scope.language = function() {
 			return i18n.language;
 		};

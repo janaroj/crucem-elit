@@ -9,15 +9,15 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.crucemelit.model.User;
 import com.crucemelit.repository.UserRepository;
 import com.crucemelit.service.UserService;
+import com.crucemelit.util.Utility;
 import com.crucemelit.web.Role;
+import com.crucemelit.web.UserContext;
 
-/**
- * UserService that accesses the spring credentials.
- */
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
 
@@ -26,6 +26,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
     private BCryptPasswordEncoder encoder;
+
+    @Autowired
+    private UserContext userContext;
 
     @Override
     public List<User> getUsers() {
@@ -61,5 +64,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public void register(User user) {
         user.setPasswordHash(encoder.encode(new String(Base64.decodeBase64(user.getPasswordHash())))); // UGLY
         userRepository.save(user);
+    }
+
+    @Transactional
+    @Override
+    public List<User> getContacts() {
+        User user = userContext.getUser();
+        List<User> contacts = Utility.getUniqueList(user.getFriends(), user.getGym().getUsers());
+        contacts.remove(user);
+        return contacts;
     }
 }

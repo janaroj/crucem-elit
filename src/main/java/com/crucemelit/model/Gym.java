@@ -36,7 +36,7 @@ public @Data class Gym extends BaseEntity {
 
     private String contact;
 
-    @OneToMany(mappedBy = "gym", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "gym", fetch = FetchType.EAGER)
     @JsonManagedReference
     private List<User> users;
 

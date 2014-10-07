@@ -29,6 +29,11 @@
 			});
 			return deferred.promise;
 		};
+		this.getContacts = function() {
+			return $http.get('/api/user/contacts').then(function(result) {
+				return result.data;
+			});
+		};
 	});
 	
 	app.service('gymService', function($http, $q) {
