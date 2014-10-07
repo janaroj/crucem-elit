@@ -22,12 +22,20 @@
 						}
 		        }
 		    });
+		 
+		 $scope.viewGym = function(id) {
+				$location.path('/user/gyms/' + id);
+			};
 		    
 	});
 
 
-	app.controller('GymController', function($scope, $location) {
-		
+	app.controller('GymController', function($scope, $routeParams, gymService) {
+		$scope.init = function() {
+			gymService.getGymById($routeParams.id).then(function(data) {
+				$scope.user = data;
+			});
+		}
 	});
 
 }());

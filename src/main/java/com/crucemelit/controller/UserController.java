@@ -30,6 +30,12 @@ public class UserController {
         return gymService.getGyms();
     }
 
+    @RequestMapping(value = "/gyms/{id}")
+    @ResponseBody
+    public Gym getGym(@RequestBody long id) {
+        return gymService.getGym(id);
+    }
+
     @RequestMapping(value = "/contacts")
     @ResponseBody
     public List<User> getContacts() {

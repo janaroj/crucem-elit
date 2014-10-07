@@ -47,6 +47,11 @@
 				return result.data;
 			});
 		};
+		this.getGymById = function(id) {
+			return $http.get('/api/user/gyms/' + id).then(function(result) {
+				return result.data;
+			});
+		}
 	});
 
 	app.service('base64',function() {
