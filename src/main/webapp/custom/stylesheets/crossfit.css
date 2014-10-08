@@ -77,6 +77,7 @@
 	width:49px;
 	text-decoration:none;
 	text-align:center;
+}
 
 .btn-gym {
 	width: 70px;
@@ -95,4 +96,26 @@
 .contactText{
     font-size: 25px;
     line-height: 30px;
+}
+.main-btn{
+    max-width: 200px;
+    min-width: 200px;
+    margin-left: 33px;
+
+}
+
+.main-btn-xlarge{
+    margin-bottom: 30px !important;
+    margin-top: 50px !important;
+    padding: 18px 58px !important;
+    font-size: 22px !important; 
+    line-height: normal !important;
+    -webkit-border-radius: 8px !important;
+       -moz-border-radius: 8px !important;
+            border-radius: 8px !important;
+}
+
+.main-bar{
+    width: 40%;
+    float: right;
 }
