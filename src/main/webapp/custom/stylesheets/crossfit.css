@@ -25,3 +25,18 @@
 .btn-gym {
 	width: 70px;
 }
+
+.contactBar{
+    overflow: hidden;
+    float: right;
+    width: 50%;
+    background: #d4d4d4;
+    border: 50px solid #d4d4d4;
+    margin-top: 100px;
+    border-radius: 9px;
+}
+
+.contactText{
+    font-size: 25px;
+    line-height: 30px;
+}
