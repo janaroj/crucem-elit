@@ -50,15 +50,15 @@ public @Data class User extends BaseEntity implements UserDetails {
 
     @ManyToOne
     @JoinColumn(name = "gym")
-    @JsonBackReference
+    @JsonManagedReference
     private Gym gym;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "connections", joinColumns = @JoinColumn(name = "personId"), inverseJoinColumns = @JoinColumn(name = "friendId"))
     @JsonManagedReference
     private List<User> friends;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "connections", joinColumns = @JoinColumn(name = "friendId"), inverseJoinColumns = @JoinColumn(name = "personId"))
     @JsonBackReference
     private List<User> friendOf;

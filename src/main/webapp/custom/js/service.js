@@ -34,6 +34,16 @@
 				return result.data;
 			});
 		};
+		this.getUserById = function(id) {
+			return $http.get('/api/user/users/' + id).then(function(result) {
+				return result.data;
+			});
+		};
+		this.getProfile = function() {
+			return $http.get('/api/user/profile').then(function(result) {
+				return result.data;
+			});
+		};
 	});
 	
 	app.service('gymService', function($http, $q) {
@@ -42,6 +52,11 @@
 				return result.data;
 			});
 		};
+		this.getGymById = function(id) {
+			return $http.get('/api/user/gyms/' + id).then(function(result) {
+				return result.data;
+			});
+		}
 	});
 
 	app.service('base64',function() {

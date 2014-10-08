@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -29,10 +30,27 @@ public class UserController {
         return gymService.getGyms();
     }
 
+    @RequestMapping(value = "/gyms/{id}")
+    @ResponseBody
+    public Gym getGym(@RequestBody long id) {
+        return gymService.getGym(id);
+    }
+
     @RequestMapping(value = "/contacts")
     @ResponseBody
     public List<User> getContacts() {
         return userService.getContacts();
     }
 
+    @RequestMapping(value = "/users/{id}")
+    @ResponseBody
+    public User getContact(@RequestBody long id) {
+        return userService.getUser(id);
+    }
+    
+    @RequestMapping(value = "/profile")
+    @ResponseBody
+    public User getProfile() {
+        return userService.getProfile();
+    }
 }
