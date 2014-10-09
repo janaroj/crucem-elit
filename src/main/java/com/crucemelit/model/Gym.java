@@ -14,7 +14,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "GYM")
@@ -37,7 +37,7 @@ public @Data class Gym extends BaseEntity {
     private String contact;
 
     @OneToMany(mappedBy = "gym", fetch = FetchType.LAZY)
-    @JsonBackReference
+    @JsonIgnore
     private List<User> users;
 
     public String getFullAddress() {

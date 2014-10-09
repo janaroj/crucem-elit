@@ -29,6 +29,12 @@ public class AuthController {
     private AuthenticationManager authenticationManager;
 
     @ResponseBody
+    @RequestMapping(value = "/check")
+    public User check() {
+        return userService.getCurrentUser();
+    }
+
+    @ResponseBody
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST, produces = "application/json")
     public User authenticate(@RequestParam("username") String username, @RequestParam("password") String password) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username,

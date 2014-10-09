@@ -1,6 +1,6 @@
 (function() {
 	var app = angular.module('crucem-elit');
-	app.controller('MainController', function($scope, $rootScope, i18n, $location, $http, $cookieStore, loginService, toaster) {
+	app.controller('MainController', function($scope, $rootScope, i18n, $location, $http, $cookieStore, authService, toaster) {
 		
 		$scope.language = function() {
 			return i18n.language;
@@ -17,7 +17,7 @@
 		};
 		
 		$scope.login = function() {
-			loginService.authenticate($.param({username: $scope.username, password: $scope.password}))
+			authService.authenticate($.param({username: $scope.username, password: $scope.password}))
 			.success(function(user) {
 				$rootScope.user = user;
 				$http.defaults.headers.common['X-Auth-Token'] = user.token;

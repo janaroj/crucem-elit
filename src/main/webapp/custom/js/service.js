@@ -17,7 +17,7 @@
 		this.setLanguage('ee');
 	});
 
-	app.service('loginService', function($http) {
+	app.service('authService', function($http) {
 		this.authenticate = function(user) {
 			var config = {
 					headers : {
@@ -25,25 +25,25 @@
 					}
 				};
 				return $http.post('api/auth/authenticate', user, config);
+		};
+		this.checkAuth = function() {
+			return $http.get('api/auth/check');
 		}
 	});
 
-	app.service('userService', function($http, $q) {
+	app.service('userService', function($http) {
 		this.register = function(user) {
-			var deferred = $q.defer();
-			$http.post("/api/register", user).success(
-					function(data, status, headers, config) {
-						deferred.resolve(data);
-					}).error(function(data, status, headers, config) {
-				alert("AJAX failed!");
-				deferred.reject("Error")
+			return $http.post("/api/register", user).then(function(result) {
+				result.data
 			});
-			return deferred.promise;
 		};
 		this.getContacts = function() {
 			return $http.get('/api/user/contacts').then(function(result) {
 				return result.data;
 			});
+		};
+		this.removeContact = function(id) {
+			return id;
 		};
 		this.getUserById = function(id) {
 			return $http.get('/api/user/users/' + id).then(function(result) {

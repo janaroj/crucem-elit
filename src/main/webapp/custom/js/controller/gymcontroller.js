@@ -1,7 +1,7 @@
 (function() {
 	var app = angular.module('crucem-elit');
 	
-	app.controller('GymsController', function($scope, $location, $filter, gymService, userService, ngTableParams) {
+	app.controller('GymsController', function($scope, $location, $filter, gymService, userService, ngTableParams, toaster) {
 		var gymData = null;
 		 $scope.tableParams = new ngTableParams({
 		        page: 1,            // show first page
@@ -24,7 +24,7 @@
 		    });
 		 
 		 $scope.inGym = function(gym) {
-			 if (!$scope.user.gym) {
+			 if (!$scope.user || !$scope.user.gym) {
 				 return false;
 			 }
 			 return angular.equals($scope.user.gym, gym);
@@ -34,6 +34,7 @@
 			 if (confirm("Are you sure you wish to join " + gym.name )) {
 				 userService.joinGym(gym.id).then(function(data) {
 					 $scope.user.gym = gym;
+					 toaster.pop('success', 'Gym', 'Joined gym successfully!');
 				 }) ;
 			 }
 		 }
@@ -42,6 +43,7 @@
 			 if (confirm("Are you sure you wish to leave from " + gym.name )) {
 				 userService.leaveGym().then(function(data) {
 					$scope.user.gym = null;
+					toaster.pop('success', 'Gym', 'Left from gym successfully!');
 				 });
 			 }
 		 }

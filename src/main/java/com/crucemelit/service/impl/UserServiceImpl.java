@@ -16,6 +16,7 @@ import com.crucemelit.model.User;
 import com.crucemelit.repository.UserRepository;
 import com.crucemelit.service.UserService;
 import com.crucemelit.util.Utility;
+import com.crucemelit.web.Role;
 
 @Service("userService")
 @Transactional
@@ -39,7 +40,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return userRepository.findByEmailIgnoreCase(email);
+        User user = userRepository.findByEmailIgnoreCase(email);
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found");
+        }
+        return user;
     }
 
     @Override
@@ -58,12 +63,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public void register(User user) {
         user.setPasswordHash(encoder.encode(user.getPasswordHash()));
+        user.setRole(Role.USER);
         userRepository.saveAndFlush(user);
     }
 
     @Override
     public List<User> getContacts() {
-        User user = getUser(getCurrentUser().getId());
+        User user = getCurrentUser();
         List<User> contacts = Utility.getUniqueList(user.getFriends(), user.getContactsFromGym());
         contacts.remove(user);
         return contacts;
@@ -71,14 +77,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void joinGym(Gym gym) {
-        User user = getUser(getCurrentUser().getId());
+        User user = getCurrentUser();
         user.setGym(gym);
         userRepository.saveAndFlush(user);
     }
 
     @Override
     public void leaveGym() {
-        User user = getUser(getCurrentUser().getId());
+        User user = getCurrentUser();
         user.setGym(null);
         userRepository.saveAndFlush(user);
     }
@@ -87,7 +93,7 @@ public class UserServiceImpl implements UserService {
     public User getCurrentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null) {
-            return (User) auth.getPrincipal();
+            return getUser(((User) auth.getPrincipal()).getId());
         }
         else {
             return null;

@@ -20,23 +20,20 @@ public class ErrorController {
         return new ServerException(ex);
     }
 
-    // @ResponseBody
-    // @ExceptionHandler(Exception.class)
-    // @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    // public String unknownError(Exception e) throws ServerException {
-    //
-    // String error = "Unknown error occurred.";
-    //
-    // if (e != null) {
-    // if (StringUtils.hasText(e.getMessage())) {
-    // error = e.getMessage();
-    // }
-    // else if (e.getCause() != null && StringUtils.hasText(e.getCause().getMessage())) {
-    // error = e.getCause().getMessage();
-    // }
-    // }
-    //
-    // return error;
-    // }
+    /*
+     * @ResponseBody
+     * 
+     * @ExceptionHandler(Exception.class)
+     * 
+     * @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR) public String unknownError(Exception e) throws ServerException
+     * {
+     * 
+     * String error = "Unknown error occurred.";
+     * 
+     * if (e != null) { if (StringUtils.hasText(e.getMessage())) { error = e.getMessage(); } else if (e.getCause() !=
+     * null && StringUtils.hasText(e.getCause().getMessage())) { error = e.getCause().getMessage(); } }
+     * 
+     * return error; }
+     */
 
 }

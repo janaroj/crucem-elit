@@ -28,13 +28,18 @@
 
     })
     //monitoring route changes
-    app.run(function ($route, $rootScope, $http, $location, $cookieStore, $anchorScroll) {
+    app.run(function ($route, $rootScope, $http, $location, $cookieStore, authService) {
 
         $rootScope.$on('$routeChangeStart', function (event, next, current) {
             var user = $cookieStore.get('user');
             if (user !== undefined) {
-                $rootScope.user = user;
-                $http.defaults.headers.common['X-Auth-Token'] = user.token;
+            	authService.checkAuth().then(function(result) {
+            		$rootScope.user = result.data;
+            	});
+            	$http.defaults.headers.common['X-Auth-Token'] = user.token;
+                if ($location.url() === "/") {
+                	$location.url("/user/main");
+                }
             }
         });
     });

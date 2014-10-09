@@ -1,11 +1,12 @@
 <div ng-init="init()"/>
 <ul>
-<li ng-repeat="contact in contacts">
-	<a href="" ng-click="viewContact(contact.id)" class="classname">
-		<img class="setImgSize" src="http://thumbs.dreamstime.com/z/smiling-sun-illustration-character-34434947.jpg">
-		{{ contact.firstName + " " + contact.lastName + " " + "Tartu Crossfit on v6ll!" }}
-		<a href="" ng-click="removeContact(contact)" class="removeFriend">X</a>
-	</a>	
-</li>
+	<text ng-repeat="contact in contacts">
+	<div class="contactBox">
+   		<a href="" ng-click="viewContact(contact.id)">
+   			<img class="setImgSize" src="http://thumbs.dreamstime.com/z/smiling-sun-illustration-character-34434947.jpg">
+   		</a>
+   		<a href="" ng-click="viewContact(contact.id)">{{ contact.firstName + " " + contact.lastName}}</a>
+   		{{ contact.gym.name }}
+   		<a href="" ng-click="removeContact(contact.id)" class="removeFriend del-Btn">X</a>
+	</div>	
 </ul>
-

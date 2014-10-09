@@ -30,9 +30,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.crucemelit.util.Utility;
 import com.crucemelit.web.Role;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "PERSON")
@@ -56,17 +55,16 @@ public @Data class User extends BaseEntity implements UserDetails {
 
     @ManyToOne
     @JoinColumn(name = "gym")
-    @JsonManagedReference
     private Gym gym;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "connections", joinColumns = @JoinColumn(name = "personId"), inverseJoinColumns = @JoinColumn(name = "friendId"))
-    @JsonManagedReference
+    @JsonIgnore
     private List<User> friends;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "connections", joinColumns = @JoinColumn(name = "friendId"), inverseJoinColumns = @JoinColumn(name = "personId"))
-    @JsonBackReference
+    @JsonIgnore
     private List<User> friendOf;
 
     @Column(name = "INVALID_LOGIN_COUNT")
@@ -105,6 +103,11 @@ public @Data class User extends BaseEntity implements UserDetails {
     @JsonIgnore
     public String getPasswordHash() {
         return this.passwordHash;
+    }
+
+    @JsonProperty
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
     }
 
     @Override
