@@ -1,3 +1,17 @@
 This one gym
 <div ng-init="init()"/>
-{{gym}}
+<div class="jumbotron">
+
+  <div class="container">
+    <div class="gymspan">
+       <img src="../images/cf.jpg" alt="">   
+   </div>
+   <div class="text-right gymspan">
+    <h1 style="margin-top:0px;color:#000">{{gym.name}}</h1>
+    <p>Name: {{gym.name}}</p>
+    <p>Address: {{gym.fullAddress}}</p>
+    <p>Contact: {{gym.contact}}</p>
+    <p>Trainer(s): {{gym.trainers}}</p>
+  </div>
+  </div>
+</div>
