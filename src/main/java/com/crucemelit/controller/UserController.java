@@ -3,9 +3,11 @@ package com.crucemelit.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -32,8 +34,15 @@ public class UserController {
 
     @RequestMapping(value = "/gyms/{id}")
     @ResponseBody
-    public Gym getGym(@RequestBody long id) {
+    public Gym getGym(@PathVariable long id) {
         return gymService.getGym(id);
+    }
+
+    @RequestMapping(value = "/gym/leave")
+    @ResponseBody
+    public ResponseEntity<String> leaveGym() {
+        userService.leaveGym();
+        return new ResponseEntity<String>("Successful", HttpStatus.OK);
     }
 
     @RequestMapping(value = "/contacts")
@@ -44,13 +53,13 @@ public class UserController {
 
     @RequestMapping(value = "/users/{id}")
     @ResponseBody
-    public User getContact(@RequestBody long id) {
+    public User getContact(@PathVariable long id) {
         return userService.getUser(id);
     }
-    
+
     @RequestMapping(value = "/profile")
     @ResponseBody
     public User getProfile() {
-        return userService.getProfile();
+        return userService.getCurrentUser();
     }
 }

@@ -6,25 +6,19 @@
              http://www.springframework.org/schema/security
              http://www.springframework.org/schema/security/spring-security.xsd">
 
-	<!--  Spring Security -->
-	<global-method-security pre-post-annotations="enabled"
-		secured-annotations="enabled" />
-
-	<http use-expressions="true">
-		<intercept-url pattern="/api/admin/**" access="hasRole('ADMIN')" />
+	<http use-expressions="true" auto-config="false" create-session="stateless" entry-point-ref="unauthorizedEntryPoint"
+		authentication-manager-ref="authenticationManager">
+		<custom-filter ref="authenticationTokenProcessingFilter" position="FORM_LOGIN_FILTER" />
 		<intercept-url pattern="/api/auth/**" access="permitAll" />
-		<intercept-url pattern="/api/user/**" access="hasAnyRole('ADMIN','USER')" />
-		<http-basic entry-point-ref="restAuthenticationEntryPoint"/>
-		
-		<logout invalidate-session="true" delete-cookies="JSESSIONID" />
-		<session-management session-fixation-protection="newSession"/>
+		<intercept-url pattern="/api/admin/**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/api/user/**" access="hasAnyRole('ROLE_ADMIN','ROLE_USER')" />
 	</http>
 
 	<beans:bean id="passwordEncoder"
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 
 	<authentication-manager alias="authenticationManager">
-		<authentication-provider user-service-ref="userServiceImpl"> 
+		<authentication-provider user-service-ref="userService"> 
 			<password-encoder ref="passwordEncoder" />
 		</authentication-provider>
 	</authentication-manager>

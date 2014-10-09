@@ -1,0 +1,78 @@
+(function() {
+
+	app = angular.module('crucem-elit');
+
+	app.config(function($routeProvider, $httpProvider, $locationProvider) {
+		//configure the routing of ng-view
+		$routeProvider
+		.when('/', {
+			controller: 'MainController',
+			templateUrl: 'partials/home.html'
+		})
+		.when('/register', {
+			controller: 'RegisterController',
+			templateUrl: 'partials/register.html'
+		})
+		.when('/login', {
+			controller: 'MainController',
+			templateUrl: 'partials/login.html'
+		})
+		.when('/user/main', {
+			controller: 'MainController',
+			templateUrl: 'partials/user/main.html'
+		})
+		.when('/user/contacts', {
+			controller: 'ContactsController',
+			templateUrl: 'partials/user/contacts.html'
+		})
+		.when('/user/gyms', {
+			controller: 'GymsController',
+			templateUrl: 'partials/user/gyms.html'
+		})
+		.when('/user/gyms/:id', {
+			controller: 'GymController',
+			templateUrl: 'partials/user/gym.html'
+		})
+		.when('/user/users/:id', {
+			controller: 'ContactController',
+			templateUrl: 'partials/user/contact.html'
+		})
+		.otherwise({ redirectTo : "/"});
+
+		/* Intercept http errors */
+		var interceptor = function ($rootScope, $q, $location) {
+
+	        function success(response) {
+	            return response;
+	        };
+
+	        function error(response) {
+	        	
+	            var status = response.status;
+	            var config = response.config;
+	            var method = config.method;
+	            var url = config.url;
+
+	            if (status == 401) {
+	            	$rootScope.redirectUrl = $location.url();
+	            	$rootScope.redirectStatus = 401;
+	            	$rootScope.logout();
+	            } else if (status == 403) {
+	            	$location.url('/403');
+	            } else if (status == 500) {
+	            	$location.url('/500');
+	            } else{
+	            	//skip others
+	            }
+	            
+	            return $q.reject(response);
+	        };
+
+	        return function (promise) {
+	            return promise.then(success, error);
+	        };
+	    };
+	    $httpProvider.responseInterceptors.push(interceptor);
+	});
+	
+}());
