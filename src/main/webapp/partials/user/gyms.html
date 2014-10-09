@@ -2,11 +2,17 @@
 <table ng-table="tableParams" show-filter="true" class="table">
 	<tbody>
 		<tr ng-repeat="gym in $data">
-			<td data-title="'name'" sortable="'name'" filter="{ 'name': 'text' }">{{gym.name}}</td>
+			<td data-title="'name'" sortable="'name'" filter="{ 'name': 'text' }">
+				<a href="" ng-click="viewGym(gym.id)">{{gym.name}}</a>
+			</td>
 			<td data-title="'city'" sortable="'city'" filter="{ 'city': 'text'}">{{gym.city}}</td>
 			<td data-title="'address'" sortable="'address'" filter="{ 'address': 'text' }">{{gym.address}}</td>
 			<td data-title="'trainers'" sortable="'trainers'" filter="{ 'trainers': 'text' }">{{gym.trainers}}</td>
 			<td data-title="'contact'" sortable="'contact'" filter="{ 'contact': 'text' }">{{gym.contact}}</td>
+			<td>
+				<button class="btn btn-gym btn-success" ng-click="joinGym(gym)" ng-hide="inGym(gym)"><msg key="join"/></button>
+				<button class="btn btn-gym btn-danger" ng-click="leaveGym(gym)" ng-show="inGym(gym)"><msg key="leave"/></button>
+			</td>
 		</tr>
 	</tbody>
 </table>

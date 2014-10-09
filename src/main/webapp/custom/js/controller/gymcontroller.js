@@ -1,7 +1,7 @@
 (function() {
 	var app = angular.module('crucem-elit');
 	
-	app.controller('GymsController', function($scope, $location, $filter, gymService, ngTableParams) {
+	app.controller('GymsController', function($scope, $location, $filter, gymService, userService, ngTableParams) {
 		var gymData = null;
 		 $scope.tableParams = new ngTableParams({
 		        page: 1,            // show first page
@@ -22,6 +22,27 @@
 						}
 		        }
 		    });
+		 
+		 $scope.inGym = function(gym) {
+			 if (!$scope.user.gym) {
+				 return false;
+			 }
+			 return angular.equals($scope.user.gym, gym);
+		 }
+		 
+		 $scope.joinGym = function(gym) {
+			 if (confirm("Are you sure you wish to join " + gym.name )) {
+				 
+			 }
+		 }
+		 
+		 $scope.leaveGym = function(gym) {
+			 if (confirm("Are you sure you wish to leave from " + gym.name )) {
+				 userService.leaveGym().then(function(data) {
+					 
+				 });
+			 }
+		 }
 		 
 		 $scope.viewGym = function(id) {
 				$location.path('/user/gyms/' + id);

@@ -7,11 +7,15 @@
 <script type="text/javascript" src="js/i18n.props-min-1.0.9.js"></script>
 <script type="text/javascript" src="js/angular-resource.js"></script>
 <script type="text/javascript" src="js/angular-route.js"></script>
+<script type="text/javascript" src="js/angular-cookies.js"></script>
+<script type="text/javascript" src="js/angular-animate.js"></script>
+<script type="text/javascript" src="js/toaster.js"></script>
 <script type="text/javascript" src="custom/js/init.js"></script>
 <script type="text/javascript" src="custom/js/controller/contactcontroller.js"></script>
 <script type="text/javascript" src="custom/js/controller/gymcontroller.js"></script>
 <script type="text/javascript" src="custom/js/controller/maincontroller.js"></script>
 <script type="text/javascript" src="custom/js/controller/registercontroller.js"></script>
+<script type="text/javascript" src="custom/js/config.js"></script>
 <script type="text/javascript" src="custom/js/directive.js"></script>
 <script type="text/javascript" src="custom/js/project.js"></script>
 <script type="text/javascript" src="custom/js/service.js"></script>
@@ -22,13 +26,15 @@
 <link rel = "stylesheet" type = "text/css" href = "custom/stylesheets/crossfit.css">
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
 <link href="css/ng-table.css" rel="stylesheet">
+<link href="css/toaster.css" rel="stylesheet">
 <title>Crucem Elit - CrossFit Tracker</title>
 </head>
+
 <body ng-controller="MainController">
 
 	<div class="navbar navbar-fixed">
 		<div class="navbar-inner">
-			<a class="brand" href="#"> <msg key="title"></msg>
+			<a class="brand" href="#/user/main"> <msg key="title"></msg>
 			</a>
 			<ul class="nav">
 				<li ng-class="activeWhen(path()=='/user/trainings')" ng-show="user"><a href="#/user/trainings"><msg key="trainings"/></a></li>
@@ -48,7 +54,7 @@
                 </button>    
                 <ul class="dropdown-menu dropdown-user">
                     <li>
-                        <a href="/#/profile" class="dropdown-option"><msg key="profile"/></a>
+                        <a href="/#/user/users/profile" class="dropdown-option"><msg key="profile"/></a>
                     </li>
                     <li class="divider"></li>
                     <li>
@@ -59,10 +65,7 @@
 		</div>
 	</div>
 	<div class="container">
-		<div ng-class="'alert alert-'+message().type" ng-show="message().show">
-			<button type="button" class="close" ng-click="message().show=false">×</button>
-			<msg key-expr="message().text"/>
-		</div>
+		<toaster-container toaster-options="{'time-out': 3000, 'position-class': 'toast-top-right'}"></toaster-container>
 		<ng-view />
 	</div>
 </body>
