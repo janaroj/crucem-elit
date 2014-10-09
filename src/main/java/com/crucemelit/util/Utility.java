@@ -7,6 +7,9 @@ import java.util.Set;
 
 public final class Utility {
 
+    @SuppressWarnings("rawtypes")
+    public static final List EMPTY_LIST = new ArrayList<>();
+
     @SafeVarargs
     public static final <T> List<T> getUniqueList(List<T>... lists) {
         Set<T> set = new HashSet<>();
