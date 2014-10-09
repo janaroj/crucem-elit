@@ -22,6 +22,100 @@
             border-radius: 8px !important;
 }
 
+.classname {
+	margin-top: 10px;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ffffff), color-stop(1, #ffffff) );
+	background:-moz-linear-gradient( center top, #ffffff 5%, #ffffff 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ffffff');
+	background-color:#ffffff;
+	border:1px solid #cadaeb;
+	display:inline-block;
+	color:#0980ab;
+	font-family:Arial;
+	font-size:20px;
+	font-weight:bold;
+	font-style:normal;
+	height:100px;
+	line-height:100px;
+	width:500px;
+	text-decoration:none;
+	text-align:left;
+}
+
+.setImgSize{
+    width:100px;
+    height:100px;    
+}
+
+.removeFriend {
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #fe1a00), color-stop(1, #ce0100) );
+	background:-moz-linear-gradient( center top, #fe1a00 5%, #ce0100 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fe1a00', endColorstr='#ce0100');
+	background-color:#fe1a00;
+	-webkit-border-top-left-radius:42px;
+	-moz-border-radius-topleft:42px;
+	border-top-left-radius:42px;
+	-webkit-border-top-right-radius:42px;
+	-moz-border-radius-topright:42px;
+	border-top-right-radius:42px;
+	-webkit-border-bottom-right-radius:42px;
+	-moz-border-radius-bottomright:42px;
+	border-bottom-right-radius:42px;
+	-webkit-border-bottom-left-radius:42px;
+	-moz-border-radius-bottomleft:42px;
+	border-bottom-left-radius:42px;
+	text-indent:0;
+	border:1px solid #d83526;
+	display:inline-block;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:31px;
+	font-weight:bold;
+	font-style:normal;
+	height:45px;
+	line-height:45px;
+	width:49px;
+	text-decoration:none;
+	text-align:center;
+}
+
 .btn-gym {
 	width: 70px;
+}
+
+.contactBar{
+    overflow: hidden;
+    float: right;
+    width: 50%;
+    background: #d4d4d4;
+    border: 50px solid #d4d4d4;
+    margin-top: 100px;
+    border-radius: 9px;
+}
+
+.contactText{
+    font-size: 25px;
+    line-height: 30px;
+}
+.main-btn{
+    max-width: 200px;
+    min-width: 200px;
+    margin-left: 33px;
+
+}
+
+.main-btn-xlarge{
+    margin-bottom: 30px !important;
+    margin-top: 50px !important;
+    padding: 18px 58px !important;
+    font-size: 22px !important; 
+    line-height: normal !important;
+    -webkit-border-radius: 8px !important;
+       -moz-border-radius: 8px !important;
+            border-radius: 8px !important;
+}
+
+.main-bar{
+    width: 40%;
+    float: right;
 }

@@ -50,8 +50,14 @@
 				return result.data;
 			});
 		};
+
 		this.leaveGym = function() {
 			return $http.get('/api/user/gym/leave').then(function(result) {
+				return result.data;
+			});
+		};
+		this.getProfile = function() {
+			return $http.get('/api/user/profile').then(function(result) {
 				return result.data;
 			});
 		};
