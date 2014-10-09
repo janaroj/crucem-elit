@@ -50,7 +50,11 @@
 				return result.data;
 			});
 		};
-
+		this.joinGym = function(id) {
+			return $http.post('api/user/gym/join/' + id).then(function(result) {
+				return result.data;
+			});
+		}
 		this.leaveGym = function() {
 			return $http.get('/api/user/gym/leave').then(function(result) {
 				return result.data;

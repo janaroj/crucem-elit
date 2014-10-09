@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.crucemelit.model.Gym;
@@ -36,6 +37,13 @@ public class UserController {
     @ResponseBody
     public Gym getGym(@PathVariable long id) {
         return gymService.getGym(id);
+    }
+
+    @RequestMapping(value = "/gym/join/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<String> joinGym(@PathVariable long id) {
+        userService.joinGym(gymService.getGym(id));
+        return new ResponseEntity<String>("Success", HttpStatus.OK);
     }
 
     @RequestMapping(value = "/gym/leave")

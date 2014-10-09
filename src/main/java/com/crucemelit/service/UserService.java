@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import com.crucemelit.model.Gym;
 import com.crucemelit.model.User;
 
 public interface UserService extends UserDetailsService {
@@ -23,5 +24,7 @@ public interface UserService extends UserDetailsService {
     void leaveGym();
 
     User getCurrentUser();
+
+    void joinGym(Gym gym);
 
 }

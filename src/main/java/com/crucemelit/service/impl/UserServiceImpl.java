@@ -11,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.crucemelit.model.Gym;
 import com.crucemelit.model.User;
 import com.crucemelit.repository.UserRepository;
 import com.crucemelit.service.UserService;
@@ -69,6 +70,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void joinGym(Gym gym) {
+        User user = getUser(getCurrentUser().getId());
+        user.setGym(gym);
+        userRepository.saveAndFlush(user);
+    }
+
+    @Override
     public void leaveGym() {
         User user = getUser(getCurrentUser().getId());
         user.setGym(null);
@@ -85,4 +93,5 @@ public class UserServiceImpl implements UserService {
             return null;
         }
     }
+
 }

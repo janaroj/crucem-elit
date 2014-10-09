@@ -57,6 +57,7 @@
 	            	$rootScope.redirectUrl = $location.url();
 	            	$rootScope.redirectStatus = 401;
 	            	$rootScope.logout();
+	            	$location.url('/login');
 	            } else if (status == 403) {
 	            	$location.url('/403');
 	            } else if (status == 500) {

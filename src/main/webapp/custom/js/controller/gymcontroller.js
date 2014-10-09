@@ -32,14 +32,16 @@
 		 
 		 $scope.joinGym = function(gym) {
 			 if (confirm("Are you sure you wish to join " + gym.name )) {
-				 
+				 userService.joinGym(gym.id).then(function(data) {
+					 $scope.user.gym = gym;
+				 }) ;
 			 }
 		 }
 		 
 		 $scope.leaveGym = function(gym) {
 			 if (confirm("Are you sure you wish to leave from " + gym.name )) {
 				 userService.leaveGym().then(function(data) {
-					 
+					$scope.user.gym = null;
 				 });
 			 }
 		 }

@@ -16,7 +16,7 @@
 
 	app.controller('ContactController', function($scope, $routeParams, userService) {
 		$scope.init = function() {
-			if (true) {
+			if (isNan($routeParams.id)) {
 				userService.getProfile().then(function(data) {
 					$scope.user = data;
 				});
