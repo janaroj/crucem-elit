@@ -1,14 +1,11 @@
 <div ng-init="init()"/>
 All the contacts you could be having:
 <ul>
-<li ng-repeat="x in contacts">
-	<a href="" class="classname">
-		<img class="setImgSize" src="http://thumbs.dreamstime.com/z/smiling-sun-illustration-character-34434947.jpg">
-		{{ x.firstName + " " + x.lastName + " " + "Tartu Crossfit on v6ll!" }}
-		<a href="#" class="removeFriend">X</a>
-	</a>	
-</li>
+	<text ng-repeat="x in contacts">
+	<div class="contactBox">
+   		<a href=""><img class="setImgSize" src="http://thumbs.dreamstime.com/z/smiling-sun-illustration-character-34434947.jpg"></a>
+   		<a href="">{{ x.firstName + " " + x.lastName}}</a>
+   		"Tartu Crossfit on v6ll!"
+   		<a href="" class="removeFriend del-Btn">X</a>
+	</div>	
 </ul>
-
-<p> </p>
-{{contacts}}
