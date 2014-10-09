@@ -2,10 +2,10 @@ package com.crucemelit.service.impl;
 
 import java.util.List;
 
-import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,21 +15,16 @@ import com.crucemelit.model.User;
 import com.crucemelit.repository.UserRepository;
 import com.crucemelit.service.UserService;
 import com.crucemelit.util.Utility;
-import com.crucemelit.web.Role;
-import com.crucemelit.web.UserContext;
 
-@Service
+@Service("userService")
 @Transactional
-public class UserServiceImpl implements UserService, UserDetailsService {
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
     private BCryptPasswordEncoder encoder;
-
-    @Autowired
-    private UserContext userContext;
 
     @Override
     public List<User> getUsers() {
@@ -42,15 +37,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public User loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findByEmailIgnoreCase(email);
-        user.setAuthorities(AuthorityUtils.createAuthorityList(Role.USER.name()));
-        return user;
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return userRepository.findByEmailIgnoreCase(email);
     }
 
     @Override
     public void addLoginFailure(String email) {
-        User user = loadUserByUsername(email);
+        User user = (User) loadUserByUsername(email);
         user.setInvalidLoginCount(user.getInvalidLoginCount() + 1);
         userRepository.saveAndFlush(user);
     }
@@ -63,15 +56,34 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public void register(User user) {
-        user.setPasswordHash(encoder.encode(new String(Base64.decodeBase64(user.getPasswordHash())))); // UGLY
-        userRepository.save(user);
+        user.setPasswordHash(encoder.encode(user.getPasswordHash()));
+        userRepository.saveAndFlush(user);
     }
 
     @Override
     public List<User> getContacts() {
-        User user = getUser(userContext.getUser().getId());
-        List<User> contacts = Utility.getUniqueList(user.getFriends(), user.getGym().getUsers());
+        User user = getUser(getCurrentUser().getId());
+        List<User> contacts = Utility.getUniqueList(user.getFriends(), user.getContactsFromGym());
         contacts.remove(user);
         return contacts;
     }
+
+    @Override
+    public void leaveGym() {
+        User user = getUser(getCurrentUser().getId());
+        user.setGym(null);
+        userRepository.saveAndFlush(user);
+    }
+
+    @Override
+    public User getCurrentUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null) {
+            return (User) auth.getPrincipal();
+        }
+        else {
+            return null;
+        }
+    }
+
 }
