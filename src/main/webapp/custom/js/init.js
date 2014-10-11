@@ -23,6 +23,7 @@
             delete $rootScope.user;
             delete $http.defaults.headers.common['X-Auth-Token'];
             $cookieStore.remove('user');
+            $location.path('/login');
         };
 
     })

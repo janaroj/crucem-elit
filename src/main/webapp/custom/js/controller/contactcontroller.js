@@ -39,6 +39,12 @@
 				userId = $scope.user.id;
 				userService.getProfile().then(function(result) {
 					$scope.contact = result.data;
+					userService.getProfilePicture(userId).then(function(result) {
+						ui.util.image.addImage(result.data, $scope.contact.sex);
+					}, 
+					function(result) {
+						toaster.pop('error', 'Contact' , result.data.message);
+					});
 				}, function(result) {
 					toaster.pop('error', 'Contact' , result.data.message);
 				});
@@ -47,17 +53,18 @@
 				var userId = $routeParams.id;
 				userService.getUserById($routeParams.id).then(function(result) {
 				$scope.contact = result.data;
+				userService.getProfilePicture(userId).then(function(result) {
+					ui.util.image.addImage(result.data, $scope.contact.sex);
+				}, 
+				function(result) {
+					toaster.pop('error', 'Contact' , result.data.message);
+				});
 			}, function(result) {
 				toaster.pop('error', 'Contact' , result.data.message);
 			});
 			}
 			
-			userService.getProfilePicture(userId).then(function(result) {
-				ui.util.image.addImage(result.data, $scope.contact.sex);
-			}, 
-			function(result) {
-				toaster.pop('error', 'Contact' , result.data.message);
-			});
+			
 		}
 		
 		$scope.isMyProfile = function() {
