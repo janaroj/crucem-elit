@@ -21,6 +21,15 @@
 //			});
 		};
 		
+		$scope.getPicture = function(id, sex) {
+			userService.getProfilePicture(id).then(function(result) {
+				ui.util.image.addImage(result.data, sex);
+			}, 
+			function(result) {
+				toaster.pop('error', 'Contact' , result.data.message);
+			});
+		}
+		
 	});
 
 	app.controller('ContactController', function($scope, $routeParams, userService, toaster) {

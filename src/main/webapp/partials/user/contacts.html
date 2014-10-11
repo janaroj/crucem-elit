@@ -1,9 +1,9 @@
 <div ng-init="init()"/>
 <ul>
 	<text ng-repeat="contact in contacts">
-	<div class="contactBox">
+	<div class="contactBox" ng-init="getPicture(contact.id, contact.sex)">
    		<a href="" ng-click="viewContact(contact.id)">
-   			<img class="setImgSize" src="http://thumbs.dreamstime.com/z/smiling-sun-illustration-character-34434947.jpg">
+   			<div class="setImgSize" id="imgDiv"/>
    		</a>
    		<a href="" ng-click="viewContact(contact.id)">{{ contact.firstName + " " + contact.lastName}}</a>
    		{{ contact.gym.name }}
