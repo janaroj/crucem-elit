@@ -22,12 +22,14 @@ import javax.persistence.Transient;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import org.hibernate.validator.constraints.Email;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.crucemelit.domain.Sex;
 import com.crucemelit.util.Utility;
 import com.crucemelit.web.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -36,6 +38,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Entity
 @Table(name = "PERSON")
 @NoArgsConstructor
+// For debugging, remove later
+@ToString(exclude = { "gym", "friendOf", "friends", "picture", "token", "passwordHash" })
 @EqualsAndHashCode(callSuper = false)
 public @Data class User extends BaseEntity implements UserDetails {
 
@@ -53,6 +57,9 @@ public @Data class User extends BaseEntity implements UserDetails {
 
     private String lastName;
 
+    @Enumerated(EnumType.STRING)
+    private Sex sex;
+
     @ManyToOne
     @JoinColumn(name = "gym")
     private Gym gym;
@@ -67,6 +74,9 @@ public @Data class User extends BaseEntity implements UserDetails {
     @JsonIgnore
     private List<User> friendOf;
 
+    @JsonIgnore
+    private byte[] picture;
+
     @Column(name = "INVALID_LOGIN_COUNT")
     @JsonIgnore
     private int invalidLoginCount;
@@ -74,7 +84,6 @@ public @Data class User extends BaseEntity implements UserDetails {
     @Transient
     private String token;
 
-    @Column
     @Enumerated(EnumType.STRING)
     @JsonIgnore
     private Role role;
@@ -134,7 +143,7 @@ public @Data class User extends BaseEntity implements UserDetails {
         if (gym != null) {
             return gym.getUsers();
         }
-        return Utility.EMPTY_LIST;
+        return (List<User>) Utility.EMPTY_LIST;
     }
 
     public void addFriend(User user) {
@@ -148,4 +157,15 @@ public @Data class User extends BaseEntity implements UserDetails {
         authorities.add(authority);
         return authorities;
     }
+
+    @JsonIgnore
+    public void resetInvalidLoginCount() {
+        this.invalidLoginCount = 0;
+    }
+
+    @JsonIgnore
+    public void increaseInvalidLoginCount() {
+        this.invalidLoginCount++;
+    }
+
 }

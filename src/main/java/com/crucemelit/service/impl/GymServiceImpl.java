@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.crucemelit.exception.EntityNotFoundException;
 import com.crucemelit.model.Gym;
 import com.crucemelit.repository.GymRepository;
 import com.crucemelit.service.GymService;
@@ -24,7 +25,11 @@ public class GymServiceImpl implements GymService {
 
     @Override
     public Gym getGym(long id) {
-        return gymRepository.findOne(id);
+        Gym gym = gymRepository.findOne(id);
+        if (gym == null) {
+            throw new EntityNotFoundException();
+        }
+        return gym;
     }
 
 }

@@ -2,22 +2,34 @@ package com.crucemelit.controller.advice;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.crucemelit.exception.CredentialsExpiredException;
+import com.crucemelit.exception.EntityNotFoundException;
 import com.crucemelit.exception.ServerException;
+import com.crucemelit.exception.UserAlreadyExistsException;
 
 @ControllerAdvice
 public class ErrorController {
 
-    @ExceptionHandler({ UsernameNotFoundException.class, BadCredentialsException.class })
+    @ExceptionHandler({ UsernameNotFoundException.class, LockedException.class, BadCredentialsException.class,
+            UserAlreadyExistsException.class, CredentialsExpiredException.class })
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ResponseBody
-    public ServerException usernameError(Exception ex) {
-        return new ServerException(ex);
+    public ServerException authError(Exception ex) {
+        return new ServerException(ex.getMessage(), ex);
+    }
+
+    @ExceptionHandler({ EntityNotFoundException.class })
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseBody
+    public ServerException entityNotFoundError(Exception ex) {
+        return new ServerException(ex.getMessage(), ex);
     }
 
     /*

@@ -16,67 +16,78 @@
 		};
 		this.setLanguage('ee');
 	});
+	
+	app.factory('CheckAuthentication', function($rootScope, authService, toaster) {
+		return function() {
+             return authService.checkAuth().then(function(result) {
+         		$rootScope.user = result;
+         	}, function(result) {
+         		$rootScope.logout();
+         		toaster.pop('error', 'Session', result.message);
+         	});
+		}
+	});
 
-	app.service('authService', function($http) {
-		this.authenticate = function(user) {
-			var config = {
-					headers : {
-						'Content-Type' : 'application/x-www-form-urlencoded',
-					}
-				};
-				return $http.post('api/auth/authenticate', user, config);
-		};
-		this.checkAuth = function() {
-			return $http.get('api/auth/check');
+	app.factory('authService', function($http, $q) {
+		return {
+			authenticate : function(user) {
+				var config = {
+						headers : {
+							'Content-Type' : 'application/x-www-form-urlencoded',
+						}
+					};
+					return $http.post('api/auth/authenticate', user, config);
+			},
+			checkAuth : function() {
+				var deferred = $q.defer();
+				$http.get('api/auth/check').then(function(result) {
+					deferred.resolve(result.data);
+				});
+				return deferred.promise;
+			}
 		}
 	});
 
 	app.service('userService', function($http) {
 		this.register = function(user) {
-			return $http.post("/api/register", user).then(function(result) {
-				result.data
-			});
+			return $http.post("/api/register", user);
 		};
 		this.getContacts = function() {
-			return $http.get('/api/user/contacts').then(function(result) {
-				return result.data;
-			});
+			return $http.get('/api/user/contacts');
 		};
 		this.removeContact = function(id) {
 			return id;
 		};
 		this.getUserById = function(id) {
-			return $http.get('/api/user/users/' + id).then(function(result) {
-				return result.data;
-			});
+			return $http.get('/api/user/users/' + id);
 		};
 		this.joinGym = function(id) {
-			return $http.post('api/user/gym/join/' + id).then(function(result) {
-				return result.data;
-			});
+			return $http.post('api/user/gym/join/' + id);
 		}
 		this.leaveGym = function() {
-			return $http.get('/api/user/gym/leave').then(function(result) {
-				return result.data;
-			});
+			return $http.get('/api/user/gym/leave');
 		};
 		this.getProfile = function() {
-			return $http.get('/api/user/profile').then(function(result) {
-				return result.data;
-			});
+			return $http.get('/api/user/profile');
+		};
+		this.getProfilePicture = function(id) {
+			return $http.get('/api/user/profile/picture/' + id);
+		};
+		this.uploadProfilePicture = function(image) {
+			return  $upload.upload({
+		        url: 'api/user/profile/picture', 
+		        method:'PUT',
+		        file: image, 
+		      });
 		};
 	});
 
 	app.service('gymService', function($http) {
 		this.getGyms = function() {
-			return $http.get('/api/user/gyms').then(function(result) {
-				return result.data;
-			});
+			return $http.get('/api/user/gyms');
 		};
 		this.getGymById = function(id) {
-			return $http.get('/api/user/gyms/' + id).then(function(result) {
-				return result.data;
-			});
+			return $http.get('/api/user/gyms/' + id);
 		}
 	});
 

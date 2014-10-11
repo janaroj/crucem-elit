@@ -18,10 +18,10 @@
 		
 		$scope.login = function() {
 			authService.authenticate($.param({username: $scope.username, password: $scope.password}))
-			.success(function(user) {
-				$rootScope.user = user;
-				$http.defaults.headers.common['X-Auth-Token'] = user.token;
-				$cookieStore.put('user', user);
+			.then(function(result){
+				$rootScope.user = result.data;
+				$http.defaults.headers.common['X-Auth-Token'] = result.data.token;
+				$cookieStore.put('user', result.data);
 				
 				if($rootScope.redirectUrl != null && $rootScope.redirectUrl.indexOf('/login') == -1) {
 					$location.url($rootScope.redirectUrl);
@@ -32,12 +32,11 @@
 				
 				$rootScope.redirectUrl = null;
             	$rootScope.redirectStatus = null;
-			
-			})
-			.error(function(err) {
+			},
+			function(result) {
 				if($rootScope.redirectStatus == 401) {
 					$location.url($rootScope.redirectUrl);
-					toaster.pop('error', 'Authentication', 'Authentication failed!');
+					toaster.pop('error', 'Authentication', result.data.message);
 				}
 			});
 		};

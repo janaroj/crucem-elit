@@ -11,6 +11,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.crucemelit.domain.Sex;
+import com.crucemelit.exception.CredentialsExpiredException;
+import com.crucemelit.exception.EntityNotFoundException;
+import com.crucemelit.exception.UserAlreadyExistsException;
 import com.crucemelit.model.Gym;
 import com.crucemelit.model.User;
 import com.crucemelit.repository.UserRepository;
@@ -35,7 +39,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUser(long id) {
-        return userRepository.findOne(id);
+        User user = userRepository.findOne(id);
+        if (user == null) {
+            throw new EntityNotFoundException();
+        }
+        return user;
     }
 
     @Override
@@ -50,21 +58,36 @@ public class UserServiceImpl implements UserService {
     @Override
     public void addLoginFailure(String email) {
         User user = (User) loadUserByUsername(email);
-        user.setInvalidLoginCount(user.getInvalidLoginCount() + 1);
+        user.increaseInvalidLoginCount();
         userRepository.saveAndFlush(user);
     }
 
     @Override
     public void resetLoginFailures(User user) {
-        user.setInvalidLoginCount(0);
+        user.resetInvalidLoginCount();
         userRepository.saveAndFlush(user);
     }
 
     @Override
     public void register(User user) {
+        verifyUserDoesntExist(user.getEmail());
+        seDefaultValuesForUser(user);
+        userRepository.saveAndFlush(user);
+    }
+
+    private void verifyUserDoesntExist(String email) {
+        try {
+            loadUserByUsername(email);
+            throw new UserAlreadyExistsException();
+        }
+        catch (UsernameNotFoundException expected) {
+        }
+    }
+
+    private void seDefaultValuesForUser(User user) {
         user.setPasswordHash(encoder.encode(user.getPasswordHash()));
         user.setRole(Role.USER);
-        userRepository.saveAndFlush(user);
+        user.setSex(Sex.UNDEFINED);
     }
 
     @Override
@@ -93,11 +116,22 @@ public class UserServiceImpl implements UserService {
     public User getCurrentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null) {
-            return getUser(((User) auth.getPrincipal()).getId());
+            if (auth.getPrincipal() instanceof User) {
+                return getUser(((User) auth.getPrincipal()).getId());
+            }
         }
-        else {
-            return null;
-        }
+        throw new CredentialsExpiredException();
     }
 
+    @Override
+    public void setProfilePicture(byte[] picture) {
+        User user = getCurrentUser();
+        user.setPicture(picture);
+        userRepository.saveAndFlush(user);
+    }
+
+    @Override
+    public String getProfilePicture(long id) {
+        return Utility.getImgSourceFromBytes(getUser(id).getPicture());
+    }
 }

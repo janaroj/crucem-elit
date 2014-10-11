@@ -1,7 +1,14 @@
 package com.crucemelit.controller;
 
+import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.fileupload.FileItemIterator;
+import org.apache.commons.fileupload.FileItemStream;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,6 +23,7 @@ import com.crucemelit.model.Gym;
 import com.crucemelit.model.User;
 import com.crucemelit.service.GymService;
 import com.crucemelit.service.UserService;
+import com.crucemelit.util.Utility;
 
 @Controller
 @RequestMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -69,5 +77,28 @@ public class UserController {
     @ResponseBody
     public User getProfile() {
         return userService.getCurrentUser();
+    }
+
+    @RequestMapping(value = "/profile/picture", method = RequestMethod.PUT)
+    @ResponseBody
+    public void uploadProfilePicture(HttpServletRequest req) {
+        try {
+            ServletFileUpload upload = new ServletFileUpload();
+            FileItemIterator iterator = upload.getItemIterator(req);
+
+            if (iterator.hasNext()) {
+                FileItemStream itemStream = iterator.next();
+                userService.setProfilePicture(Utility.getBytesFromStream(itemStream.openStream()));
+            }
+        }
+        catch (FileUploadException | IOException e) {
+            // TODO throw new unchecked Exception? + add to controller advice
+        }
+    }
+
+    @RequestMapping(value = "/profile/picture/{id}")
+    @ResponseBody
+    public String getProfilePicture(@PathVariable long id) {
+        return userService.getProfilePicture(id);
     }
 }

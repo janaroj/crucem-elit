@@ -27,4 +27,8 @@ public interface UserService extends UserDetailsService {
 
     void joinGym(Gym gym);
 
+    void setProfilePicture(byte[] picture);
+
+    String getProfilePicture(long id);
+
 }

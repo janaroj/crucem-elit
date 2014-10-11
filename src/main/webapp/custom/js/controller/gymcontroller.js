@@ -12,9 +12,11 @@
 		        total: 0,           // length of data
 		        getData: function($defer, params) {
 		        	if (gymData===null) {
-						gymService.getGyms($scope.tableParams, $defer).then(function(data) {
-							gymData = data;
+						gymService.getGyms($scope.tableParams, $defer).then(function(result) {
+							gymData = result.data;
 							ui.util.table.prepareData($defer, $filter, params, gymData);
+						}, function(result) {
+							toaster.pop('error', 'Gyms' , result.data.message);
 						});
 					}
 					else {
@@ -32,18 +34,22 @@
 		 
 		 $scope.joinGym = function(gym) {
 			 if (confirm("Are you sure you wish to join " + gym.name )) {
-				 userService.joinGym(gym.id).then(function(data) {
+				 userService.joinGym(gym.id).then(function() {
 					 $scope.user.gym = gym;
 					 toaster.pop('success', 'Gym', 'Joined gym successfully!');
+				 }, function(result) {
+					 toaster.pop('error', 'Gyms' , result.data.message);
 				 }) ;
 			 }
 		 }
 		 
 		 $scope.leaveGym = function(gym) {
 			 if (confirm("Are you sure you wish to leave from " + gym.name )) {
-				 userService.leaveGym().then(function(data) {
+				 userService.leaveGym().then(function() {
 					$scope.user.gym = null;
 					toaster.pop('success', 'Gym', 'Left from gym successfully!');
+				 }, function(result) {
+					 toaster.pop('error', 'Gym' , result.data.message);
 				 });
 			 }
 		 }
@@ -57,8 +63,10 @@
 
 	app.controller('GymController', function($scope, $routeParams, gymService) {
 		$scope.init = function() {
-			gymService.getGymById($routeParams.id).then(function(data) {
-				$scope.gym = data;
+			gymService.getGymById($routeParams.id).then(function(result) {
+				$scope.gym = result.data;
+			}, function(result) {
+				toaster.pop('error', 'Gym' , result.data.message);
 			});
 		}
 	});

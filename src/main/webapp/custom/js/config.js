@@ -2,7 +2,7 @@
 
 	app = angular.module('crucem-elit');
 
-	app.config(function($routeProvider, $httpProvider, $locationProvider) {
+	app.config(function($routeProvider, $httpProvider) {
 		//configure the routing of ng-view
 		$routeProvider
 		.when('/', {
@@ -19,26 +19,31 @@
 		})
 		.when('/user/main', {
 			controller: 'MainController',
-			templateUrl: 'partials/user/main.html'
+			templateUrl: 'partials/user/main.html',
+			resolve: {authentication : function(CheckAuthentication) {return CheckAuthentication();}}
 		})
 		.when('/user/contacts', {
 			controller: 'ContactsController',
-			templateUrl: 'partials/user/contacts.html'
+			templateUrl: 'partials/user/contacts.html',
+			resolve: {authentication : function(CheckAuthentication) {return CheckAuthentication();}}
 		})
 		.when('/user/gyms', {
 			controller: 'GymsController',
-			templateUrl: 'partials/user/gyms.html'
+			templateUrl: 'partials/user/gyms.html',
+			resolve: {authentication : function(CheckAuthentication) {return CheckAuthentication();}}
 		})
 		.when('/user/gyms/:id', {
 			controller: 'GymController',
-			templateUrl: 'partials/user/gym.html'
+			templateUrl: 'partials/user/gym.html',
+			resolve: {authentication : function(CheckAuthentication) {return CheckAuthentication();}}
 		})
 		.when('/user/users/:id', {
 			controller: 'ContactController',
-			templateUrl: 'partials/user/contact.html'
+			templateUrl: 'partials/user/contact.html',
+			resolve: {authentication : function(CheckAuthentication) {return CheckAuthentication();}}
 		})
 		.otherwise({ redirectTo : "/"});
-
+		
 		/* Intercept http errors */
 		var interceptor = function ($rootScope, $q, $location) {
 
@@ -57,7 +62,9 @@
 	            	$rootScope.redirectUrl = $location.url();
 	            	$rootScope.redirectStatus = 401;
 	            	$rootScope.logout();
-	            	$location.url('/login');
+	            	if ($location.url() !== "/register") {
+	            		$location.url('/login');
+	            	}
 	            } else if (status == 403) {
 	            	$location.url('/403');
 	            } else if (status == 500) {
@@ -73,7 +80,9 @@
 	            return promise.then(success, error);
 	        };
 	    };
+	    
 	    $httpProvider.responseInterceptors.push(interceptor);
+	    
 	});
 	
 }());

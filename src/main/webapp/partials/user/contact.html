@@ -19,12 +19,17 @@
 	<div class="pull-right contactText" >
 
             <div ng-init="init()"/>
-            {{user.firstName}}
+            {{contact.firstName}}
             </br>
-            {{user.lastName}}
+            {{contact.lastName}}
             </br>
-            {{user.email}}
+            {{contact.email}}
             </br>
 
+	</div>
+	<div id="imgDiv" />
+	<div class="form-group" ng-show="isMyProfile()">
+		<label>File*</label> <input type="file" class="col-lg-8 pull-right"
+			name="picture" ng-file-select="onFileSelect($files)" accept="image/*"/>
 	</div>
 </div>

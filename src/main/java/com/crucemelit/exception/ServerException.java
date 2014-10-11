@@ -1,11 +1,16 @@
 package com.crucemelit.exception;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @SuppressWarnings("serial")
 @JsonPropertyOrder({ "message", "key", "cause" })
 public class ServerException extends Exception {
 
+    @Getter
+    @Setter
     private String key;
 
     public ServerException(String message) {
@@ -23,14 +28,6 @@ public class ServerException extends Exception {
 
     public ServerException(Throwable cause) {
         super(cause);
-    }
-
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
     }
 
 }

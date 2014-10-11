@@ -3,8 +3,10 @@
 
 	app.controller('ContactsController', function($scope, $location, userService, toaster) {
 		$scope.init = function() {
-			userService.getContacts().then(function(data) {
-				$scope.contacts = data;
+			userService.getContacts().then(function(result) {
+				$scope.contacts = result.data;
+			}, function(result) {
+				toaster.pop('error', 'Contacts' , result.data.message);
 			});
 		}
 		
@@ -21,17 +23,48 @@
 		
 	});
 
-	app.controller('ContactController', function($scope, $routeParams, userService) {
+	app.controller('ContactController', function($scope, $routeParams, userService, toaster) {
 		$scope.init = function() {
+			var userId;
 			if (isNaN($routeParams.id)) {
-				userService.getProfile().then(function(data) {
-					$scope.user = data;
+				userId = $scope.user.id;
+				userService.getProfile().then(function(result) {
+					$scope.contact = result.data;
+				}, function(result) {
+					toaster.pop('error', 'Contact' , result.data.message);
 				});
 			}
-			else {userService.getUserById($routeParams.id).then(function(data) {
-				$scope.user = data;
+			else {
+				var userId = $routeParams.id;
+				userService.getUserById($routeParams.id).then(function(result) {
+				$scope.contact = result.data;
+			}, function(result) {
+				toaster.pop('error', 'Contact' , result.data.message);
 			});
 			}
+			
+			userService.getProfilePicture(userId).then(function(result) {
+				ui.util.image.addImage(result.data, $scope.contact.sex);
+			}, 
+			function(result) {
+				toaster.pop('error', 'Contact' , result.data.message);
+			});
 		}
+		
+		$scope.isMyProfile = function() {
+			if (!$scope.contact || !$scope.user) {
+				return false;
+			}
+			return angular.equals($scope.user, $scope.contact);
+		}
+		
+		 $scope.onFileSelect = function($files) {
+			      userService.uploadProfilePicture($files[0]).then(function() {
+			    	  toaster.pop('success', 'Contact', 'File uploaded successfully!');
+			      }, function(result) {
+			    	  toaster.pop('error', 'Upload', 'Uploading file failed');
+			      });
+		 };
+
 	});
 }());

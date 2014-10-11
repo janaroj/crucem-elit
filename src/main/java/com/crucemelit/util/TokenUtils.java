@@ -61,6 +61,10 @@ public class TokenUtils {
 
     public boolean validateToken(String authToken, UserDetails userDetails) {
 
+        if (authToken == null || userDetails == null) {
+            return false;
+        }
+
         String[] parts = authToken.split(":");
         long expires = Long.parseLong(parts[1]);
         String signature = parts[2];
