@@ -89,6 +89,9 @@ public @Data class User extends BaseEntity implements UserDetails {
     private Role role;
 
     public String getFullName() {
+        if (getFirstName() == null && getLastName() == null) {
+            return getEmail();
+        }
         return String.format("%s %s", getFirstName(), getLastName());
     }
 

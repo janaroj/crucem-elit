@@ -15,16 +15,16 @@ ui.util = {
 		}
 	},
 	image : {
-		addImage : function(image, sex) {
-			$("#imgDiv").append(ui.util.image.processImage(image, sex));
+		addImage : function(location, image, sex) {
+			$(location).append(ui.util.image.processImage(image, sex));
 		},
 		processImage : function(image, sex) {
 			if (image instanceof Object) { //Image missing, show default
 				var imgSrc = sex === "FEMALE" ? "jane_doe_test.png" : "john_doe_test.png";
-				return '<img src="../../images/' + imgSrc + '">';
+				return '<img class="setImgSize" src="../../images/' + imgSrc + '">';
 			}
 			else {
-				return '<img src="data:image/png;base64,' + image.replace(/\"/g, "") + '">'; //regex to remove quotes
+				return '<img class="setImgSize" src="data:image/png;base64,' + image.replace(/\"/g, "") + '">'; //regex to remove quotes
 			}
 		}
 	}

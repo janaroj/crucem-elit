@@ -21,9 +21,9 @@
 //			});
 		};
 		
-		$scope.getPicture = function(id, sex) {
+		$scope.getPicture = function(id, location, sex) {
 			userService.getProfilePicture(id).then(function(result) {
-				ui.util.image.addImage(result.data, sex);
+				ui.util.image.addImage(location, result.data, sex);
 			}, 
 			function(result) {
 				toaster.pop('error', 'Contact' , result.data.message);
@@ -40,7 +40,7 @@
 				userService.getProfile().then(function(result) {
 					$scope.contact = result.data;
 					userService.getProfilePicture(userId).then(function(result) {
-						ui.util.image.addImage(result.data, $scope.contact.sex);
+						ui.util.image.addImage("#image", result.data, $scope.contact.sex);
 					}, 
 					function(result) {
 						toaster.pop('error', 'Contact' , result.data.message);
@@ -54,7 +54,7 @@
 				userService.getUserById($routeParams.id).then(function(result) {
 				$scope.contact = result.data;
 				userService.getProfilePicture(userId).then(function(result) {
-					ui.util.image.addImage(result.data, $scope.contact.sex);
+					ui.util.image.addImage("#image",result.data, $scope.contact.sex);
 				}, 
 				function(result) {
 					toaster.pop('error', 'Contact' , result.data.message);
