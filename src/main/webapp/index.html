@@ -15,6 +15,7 @@
 <script src="custom/js/init.js"></script>
 <script src="custom/js/controller/contactcontroller.js"></script>
 <script src="custom/js/controller/gymcontroller.js"></script>
+<script src="custom/js/controller/invitecontroller.js"></script>
 <script src="custom/js/controller/maincontroller.js"></script>
 <script src="custom/js/controller/registercontroller.js"></script>
 <script src="custom/js/config.js"></script>
@@ -55,13 +56,10 @@
                         {{user.fullName}} 
                 </button>    
                 <ul class="dropdown-menu dropdown-user">
-                    <li>
-                        <a href="/#/user/users/profile" class="dropdown-option"><msg key="profile"/></a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                        <a ng-click="logout()" class="dropdown-option"><msg key="logout"/></a>
-                    </li>
+                    <li><a href="/#/user/users/profile" class="dropdown-option"><msg key="profile"/></a></li>
+                    <li><a href="/#/user/invite" class="dropdown-option"><msg key="invite"/></a></li>
+                    <div class="divider"></div>
+                    <li><a ng-click="logout()" class="dropdown-option"><msg key="logout"/></a></li>
                 </ul>
             </ul>            
 		</div>

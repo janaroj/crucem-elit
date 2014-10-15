@@ -42,6 +42,11 @@
 			templateUrl: 'partials/user/contact.html',
 			resolve: {authentication : function(CheckAuthentication) {return CheckAuthentication();}}
 		})
+		.when('/user/invite', {
+			controller: 'InviteController',
+			templateUrl: 'partials/user/invite.html',
+			resolve: {authentication : function(CheckAuthentication) {return CheckAuthentication();}}
+		})
 		.otherwise({ redirectTo : "/"});
 		
 		/* Intercept http errors */

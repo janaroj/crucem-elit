@@ -90,6 +90,12 @@
 			return $http.get('/api/user/gyms/' + id);
 		}
 	});
+	
+	app.service('emailService', function($http) {
+		this.sendInviteEmail = function(email) {
+			return $http.post('/api/user/invite', email);
+		};
+	});
 
 	app.service('base64', function() {
 

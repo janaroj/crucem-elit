@@ -1,13 +1,13 @@
 package com.crucemelit.controller;
 
-import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import lombok.SneakyThrows;
+
 import org.apache.commons.fileupload.FileItemIterator;
 import org.apache.commons.fileupload.FileItemStream;
-import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,10 +15,12 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.crucemelit.dto.EmailDto;
 import com.crucemelit.model.Gym;
 import com.crucemelit.model.User;
 import com.crucemelit.service.GymService;
@@ -81,18 +83,14 @@ public class UserController {
 
     @RequestMapping(value = "/profile/picture", method = RequestMethod.PUT)
     @ResponseBody
+    @SneakyThrows
     public void uploadProfilePicture(HttpServletRequest req) {
-        try {
-            ServletFileUpload upload = new ServletFileUpload();
-            FileItemIterator iterator = upload.getItemIterator(req);
+        ServletFileUpload upload = new ServletFileUpload();
+        FileItemIterator iterator = upload.getItemIterator(req);
 
-            if (iterator.hasNext()) {
-                FileItemStream itemStream = iterator.next();
-                userService.setProfilePicture(Utility.getBytesFromStream(itemStream.openStream()));
-            }
-        }
-        catch (FileUploadException | IOException e) {
-            // TODO throw new unchecked Exception? + add to controller advice
+        if (iterator.hasNext()) {
+            FileItemStream itemStream = iterator.next();
+            userService.setProfilePicture(Utility.getBytesFromStream(itemStream.openStream()));
         }
     }
 
@@ -100,5 +98,11 @@ public class UserController {
     @ResponseBody
     public String getProfilePicture(@PathVariable long id) {
         return userService.getProfilePicture(id);
+    }
+
+    @RequestMapping(value = "/invite", method = RequestMethod.POST)
+    @ResponseBody
+    public void inviteUser(@RequestBody EmailDto emailDto) {
+        userService.sendInviteEmail(emailDto.getEmail());
     }
 }

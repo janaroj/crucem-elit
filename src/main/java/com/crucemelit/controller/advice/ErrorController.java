@@ -1,5 +1,11 @@
 package com.crucemelit.controller.advice;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+
+import javax.mail.MessagingException;
+
+import org.apache.commons.fileupload.FileUploadException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.LockedException;
@@ -29,6 +35,20 @@ public class ErrorController {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
     public ServerException entityNotFoundError(Exception ex) {
+        return new ServerException(ex.getMessage(), ex);
+    }
+
+    @ExceptionHandler({ MessagingException.class, UnsupportedEncodingException.class })
+    @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
+    @ResponseBody
+    public ServerException emailMessageException(Exception ex) {
+        return new ServerException(ex.getMessage(), ex);
+    }
+
+    @ExceptionHandler({ FileUploadException.class, IOException.class })
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public ServerException IOException(Exception ex) {
         return new ServerException(ex.getMessage(), ex);
     }
 

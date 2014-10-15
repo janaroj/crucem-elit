@@ -1,6 +1,15 @@
 package com.crucemelit.service.impl;
 
 import java.util.List;
+import java.util.Properties;
+
+import javax.mail.Message;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
+import lombok.SneakyThrows;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -133,5 +142,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public String getProfilePicture(long id) {
         return Utility.getImgSourceFromBytes(getUser(id).getPicture());
+    }
+
+    @Override
+    @SneakyThrows
+    public void sendInviteEmail(String email) {
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "mailhost here probably have to use gmail?");
+        Session session = Session.getInstance(props, null);
+        User currentUser = getCurrentUser();
+
+        Message msg = new MimeMessage(session);
+        msg.setFrom(new InternetAddress(currentUser.getEmail(), currentUser.getFullName()));
+        msg.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
+        msg.setSubject("CrossFit application!");
+        msg.setText("Hey, check out our application at crucem-elit.herokuapp.com");
+        Transport.send(msg);
     }
 }

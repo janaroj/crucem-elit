@@ -31,4 +31,6 @@ public interface UserService extends UserDetailsService {
 
     String getProfilePicture(long id);
 
+    void sendInviteEmail(String email);
+
 }
