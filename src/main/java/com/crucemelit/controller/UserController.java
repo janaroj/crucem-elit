@@ -105,4 +105,5 @@ public class UserController {
     public void inviteUser(@RequestBody EmailDto emailDto) {
         userService.sendInviteEmail(emailDto.getEmail());
     }
+
 }
