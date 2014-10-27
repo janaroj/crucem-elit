@@ -1,31 +1,39 @@
-ui = {};
+$(function() {
 
-ui.util = {
-	table : {
-		prepareData : function($defer, $filter, params, data) {
+	ui = {};
 
-			data = params.filter() ? $filter('filter')(data, params.filter()) : data;
+	ui.util = {
+		table : {
+			prepareData : function($defer, $filter, params, data) {
 
-			data = params.sorting() ? $filter('orderBy')
-					(data, params.orderBy()) : data;
-			params.total(data.length);
+				data = params.filter() ? $filter('filter')(data,
+						params.filter()) : data;
 
-			$defer.resolve(data.slice((params.page() - 1) * params.count(),
-					params.page() * params.count()));
-		}
-	},
-	image : {
-		addImage : function(location, image, sex) {
-			$(location).append(ui.util.image.processImage(image, sex));
-		},
-		processImage : function(image, sex) {
-			if (image instanceof Object) { //Image missing, show default
-				var imgSrc = sex === "FEMALE" ? "jane_doe_test.png" : "john_doe_test.png";
-				return '<img class="setImgSize" src="../../images/' + imgSrc + '">';
+				data = params.sorting() ? $filter('orderBy')(data,
+						params.orderBy()) : data;
+				params.total(data.length);
+
+				$defer.resolve(data.slice((params.page() - 1) * params.count(),
+						params.page() * params.count()));
 			}
-			else {
-				return '<img class="setImgSize" src="data:image/png;base64,' + image.replace(/\"/g, "") + '">'; //regex to remove quotes
+		},
+		image : {
+			addImage : function(location, image, sex) {
+				$(location).append(ui.util.image.processImage(image, sex));
+			},
+			processImage : function(image, sex) {
+				if (image instanceof Object) { // Image missing, show default
+					var imgSrc = sex === "FEMALE" ? "jane_doe_test.png"
+							: "john_doe_test.png";
+					return '<img class="setImgSize" src="../../images/'
+							+ imgSrc + '">';
+				} else {
+					return '<img class="setImgSize" src="data:image/png;base64,'
+							+ image.replace(/\"/g, "") + '">'; // regex to
+																// remove quotes
+				}
 			}
 		}
 	}
-}
+
+});

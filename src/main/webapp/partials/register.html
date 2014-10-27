@@ -1,7 +1,6 @@
 <div>
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <h1><msg key="registration"/></h1>
 
             <div class="alert alert-success" ng-show="success">
                 <strong>Registration saved!</strong>
@@ -45,7 +44,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label>New password</label>
+                    <label>Parool</label>
                     <input type="password" class="form-control" name="password"
                            ng-model="registerAccount.password" ng-minlength=5 ng-maxlength=50 required>
                     <div ng-show="form.password.$dirty && form.password.$invalid">
@@ -64,7 +63,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label>New password confirmation</label>
+                    <label>Parool uuesti</label>
                     <input type="password" class="form-control" name="confirmPassword"
                            ng-model="confirmPassword" ng-minlength=5 ng-maxlength=50 required>
                     <div ng-show="form.confirmPassword.$dirty && form.confirmPassword.$invalid">
