@@ -25,48 +25,53 @@
 <script src="bootstrap/js/bootstrap.min.js"></script>
 <script src="js/ui-bootstrap-tpls-0.11.2.min.js"></script>
 <script src="js/ng-table.js"></script>
+<script src="js/jquery-ui.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel = "stylesheet" type = "text/css" href = "custom/stylesheets/crossfit.css">
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
 <link href="css/ng-table.css" rel="stylesheet">
 <link href="css/toaster.css" rel="stylesheet">
+<link href="css/jquery-ui.min.css" rel="stylesheet">
 <title>Crucem Elit - CrossFit Tracker</title>
 </head>
 
 <body ng-controller="MainController">
-
-	<div class="navbar navbar-fixed">
-		<div class="navbar-inner">
-			<a class="brand" href="#/"> <msg key="title"></msg>
-			</a>
-			<ul class="nav">
-				<li ng-class="activeWhen(path()=='/user/trainings')" ng-show="user"><a href="#/user/trainings"><msg key="trainings"/></a></li>
-				<li ng-class="activeWhen(path()=='/user/gym')" ng-show="user"><a href="#/user/gyms"><msg key="gym"/></a></li>
-                <li ng-class="activeWhen(path()=='/user/contacts')" ng-show="user"><a href="#/user/contacts"><msg key="contacts"/></a></li>
-				<li ng-class="activeWhen(path()=='/user/records')" ng-show="user"><a href="#/user/records"><msg key="records"/></a></li>
-				<li ng-class="activeWhen(path()=='/login')" ng-show="!user"><a href="#/login"><msg key="login"/></a></li>
-				<li ng-class="activeWhen(path()=='/register')" ng-show="!user"><a href="#/register"><msg key="register"/></a></li>
-			</ul>
-			<ul class="nav nav-pills pull-right">
-				<li ng-class="activeWhen(language()=='ee')"><a ng-click="setLanguage('ee')"><msg key="language_ee"/></a></li>
-				<li ng-class="activeWhen(language()=='en')"><a ng-click="setLanguage('en')"><msg key="language_en"/></a></li>
-			</ul>
-            <ul class="nav nav-pills pull-right" ng-show="user" style="margin-right: 5em">
-                <button  class="btn btn-default dropdown-toggle" data-toggle="dropdown" ng-show="user.fullName">
-                        {{user.fullName}} 
-                </button>    
-                <ul class="dropdown-menu dropdown-user">
-                    <li><a href="/#/user/users/profile" class="dropdown-option"><msg key="profile"/></a></li>
-                    <li><a href="/#/user/invite" class="dropdown-option"><msg key="invite"/></a></li>
-                    <div class="divider"></div>
-                    <li><a ng-click="logout()" class="dropdown-option"><msg key="logout"/></a></li>
-                </ul>
-            </ul>            
+<div class="container">
+	<div class="navbar navbar-default" role="navigation">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#"> <msg key="title"></msg></a>
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav" ng-show="user">
+					<li ng-class="activeWhen(path()=='/user/trainings')"><a href="#/user/trainings"><msg key="trainings"/></a></li>
+					<li ng-class="activeWhen(path()=='/user/gyms')"><a href="#/user/gyms"><msg key="gym"/></a></li>
+                	<li ng-class="activeWhen(path()=='/user/contacts')"><a href="#/user/contacts"><msg key="contacts"/></a></li>
+					<li ng-class="activeWhen(path()=='/user/records')"><a href="#/user/records"><msg key="records"/></a></li>
+					<li><a><span class="glyphicon glyphicon-search"></span> Search</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li ng-class="activeWhen(path()=='/login')" ng-show="!user"><a href="#/login"><msg key="login"/></a></li>
+					<li ng-class="activeWhen(path()=='/register')" ng-show="!user"><a href="#/register"><msg key="register"/></a></li>
+					<li class="dropdown" ng-show="user">
+      					<a href class="dropdown-toggle">{{user.fullName}}</a>
+      						<ul class="dropdown-menu dropdown-user">
+                    			<li><a href="/#/user/users/profile" class="dropdown-option"><msg key="profile"/></a></li>
+                    			<li><a href="/#/user/invite" class="dropdown-option"><msg key="invite"/></a></li>
+                    			<li class="divider" />
+                    			<li><a ng-click="logout()" class="dropdown-option"><msg key="logout"/></a></li>
+      						</ul>
+    				</li>
+					<li><a ng-click="setLanguage('ee')"><img src = "../images/estonianFlag.png" /></a></li>
+					<li><a ng-click="setLanguage('en')"><img src = "../images/englishFlag.png" /></a></li>
+				</ul>
+            </div>         
 		</div>
 	</div>
 	<div class="container">
 		<toaster-container toaster-options="{'time-out': 3000, 'position-class': 'toast-top-right'}"></toaster-container>
 		<ng-view />
 	</div>
+</div>
 </body>
 </html>

@@ -1,7 +1,7 @@
 //Define a function scope, variables used inside it will NOT be globally visible.
 (function() {
 
-    app = angular.module('crucem-elit', [ 'ngRoute', 'ngResource', 'ngTable', 'ngCookies','angularFileUpload', 'ngAnimate', 'toaster' ]);
+    app = angular.module('crucem-elit', [ 'ui.bootstrap','ngRoute', 'ngResource', 'ngTable', 'ngCookies','angularFileUpload', 'ngAnimate', 'toaster' ]);
 	
 	 //user operations
     app.run(function ($rootScope, $http, $location, $cookieStore) {

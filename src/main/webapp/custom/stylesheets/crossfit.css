@@ -1,3 +1,12 @@
+body {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.navbar {
+  margin-bottom: 20px;
+}
+
 .homeIntro{
 	margin-top: 200px;
 	text-align: justify;
