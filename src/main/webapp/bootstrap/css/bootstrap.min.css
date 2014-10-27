@@ -172,9 +172,9 @@ a:hover {
 }
 
 .img-circle {
-	-webkit-border-radius: 500px;
-	-moz-border-radius: 500px;
-	border-radius: 500px
+	-webkit-border-radius: 100px;
+	-moz-border-radius: 100px;
+	border-radius: 100px
 }
 
 .row {

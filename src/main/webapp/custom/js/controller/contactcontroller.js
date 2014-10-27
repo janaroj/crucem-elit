@@ -1,6 +1,6 @@
 (function() {
 	var app = angular.module('crucem-elit');
-
+	
 	app.controller('ContactsController', function($scope, $location, userService, toaster) {
 		$scope.init = function() {
 			userService.getContacts().then(function(result) {
@@ -33,12 +33,15 @@
 	});
 
 	app.controller('ContactController', function($scope, $routeParams, userService, toaster) {
+		$scope.isChangeable = false;
+		$scope.isChangeInProgress = false;
 		$scope.init = function() {
 			var userId;
 			if (isNaN($routeParams.id)) {
 				userId = $scope.user.id;
 				userService.getProfile().then(function(result) {
 					$scope.contact = result.data;
+					$scope.isChangeable = true;
 					userService.getProfilePicture(userId).then(function(result) {
 						ui.util.image.addImage("#image", result.data, $scope.contact.sex);
 					}, 
@@ -72,6 +75,22 @@
 				return false;
 			}
 			return angular.equals($scope.user, $scope.contact);
+		}
+		
+		$scope.changeProfile = function() {
+			$scope.isChangeInProgress = true;
+			$scope.isChangeable = false;
+		}
+		
+		$scope.cancelProfile = function(){
+			$("#form")[0].reset();
+			
+			$scope.isChangeInProgress = false;
+			$scope.isChangeable = true;
+		}
+		
+		$scope.updateProfile = function() {
+			
 		}
 		
 		 $scope.onFileSelect = function($files) {
