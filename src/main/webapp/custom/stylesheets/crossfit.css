@@ -1,3 +1,12 @@
+body {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.navbar {
+  margin-bottom: 20px;
+}
+
 .homeIntro{
 	margin-top: 200px;
 	text-align: justify;
@@ -101,7 +110,7 @@
 .contactBar{
     overflow: hidden;
     float: right;
-    width: 50%;
+    width: 70%;
     background: #d4d4d4;
     border: 50px solid #d4d4d4;
     margin-top: 100px;
