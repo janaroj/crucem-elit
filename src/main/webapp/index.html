@@ -51,7 +51,16 @@
 					<li><a><span class="glyphicon glyphicon-search"></span> Search</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li ng-class="activeWhen(path()=='/login')" ng-show="!user"><a href="#/login"><msg key="login"/></a></li>
+					
+					<li class="pop" ng-show="!user" data-placement="bottom" data-toggle="popover" data-container="body"
+					data-content='
+					<input type="text" placeholder="Kasutajanimi" class="form-control" maxlength="5"> 
+					<input type="text" placeholder="Parool" class="form-control" maxlength="5">
+					<br>
+					<button type="submit" class="btn btn-primary">Logi sisse »</button>
+					<a href="">Unustasid Parooli?</a>'>
+					<a><msg key="login"/></a></li>
+					
 					<li ng-class="activeWhen(path()=='/register')" ng-show="!user"><a href="#/register"><msg key="register"/></a></li>
 					<li class="dropdown" ng-show="user">
       					<a href class="dropdown-toggle">{{user.fullName}}</a>
