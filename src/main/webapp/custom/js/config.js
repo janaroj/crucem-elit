@@ -13,10 +13,6 @@
 			controller: 'RegisterController',
 			templateUrl: 'partials/register.html'
 		})
-		.when('/login', {
-			controller: 'MainController',
-			templateUrl: 'partials/login.html'
-		})
 		.when('/user/main', {
 			controller: 'MainController',
 			templateUrl: 'partials/user/main.html',
@@ -68,7 +64,7 @@
 	            	$rootScope.redirectStatus = 401;
 	            	$rootScope.logout();
 	            	if ($location.url() !== "/register") {
-	            		$location.url('/login');
+	            		$location.url('/');
 	            	}
 	            } else if (status == 403) {
 	            	$location.url('/403');

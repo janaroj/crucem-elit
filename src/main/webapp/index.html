@@ -2,10 +2,10 @@
 <html ng-app="crucem-elit">
 <head>
 <meta charset="utf-8">
+<script src="js/jquery-2.1.1.js"></script>
 <script src="js/angular-file-upload-html5-shim.js"></script>
 <script src="js/angular.js"></script>
 <script src="js/angular-file-upload.js"></script> 
-<script src="js/jquery-1.9.1.js"></script>
 <script src="js/i18n.props-min-1.0.9.js"></script>
 <script src="js/angular-resource.js"></script>
 <script src="js/angular-route.js"></script>
@@ -48,28 +48,34 @@
 					<li ng-class="activeWhen(path()=='/user/gyms')"><a href="#/user/gyms"><msg key="gym"/></a></li>
                 	<li ng-class="activeWhen(path()=='/user/contacts')"><a href="#/user/contacts"><msg key="contacts"/></a></li>
 					<li ng-class="activeWhen(path()=='/user/records')"><a href="#/user/records"><msg key="records"/></a></li>
-					<li><a><span class="glyphicon glyphicon-search"></span> Search</a></li>
+					<li>
+						<a data-toggle="popover" data-placement="bottom" data-target=".popover-target-search"><span class="glyphicon glyphicon-search"></span> Search</a>
+						<div class="popover-target popover-target-search">
+							<input type="text" placeholder="search" class="form-control" data-ng-model="search" auto-complete/> 
+						</div>
+					</li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					
-					<li class="pop" ng-show="!user" data-placement="bottom" data-toggle="popover" data-container="body"
-					data-content='
-					<input type="text" placeholder="Kasutajanimi" class="form-control" maxlength="5"> 
-					<input type="text" placeholder="Parool" class="form-control" maxlength="5">
-					<br>
-					<button type="submit" class="btn btn-primary">Logi sisse »</button>
-					<a href="">Unustasid Parooli?</a>'>
-					<a><msg key="login"/></a></li>
-					
+					<li ng-show="!user">
+						<a data-toggle="popover" data-placement="bottom" data-target=".popover-target-login"><msg key="login"/></a>
+						<div class="popover-target popover-target-login">
+      						<input type="text" placeholder="Email" class="form-control" data-ng-model="username"/> 
+							<input type="password" placeholder="Parool" class="form-control" data-ng-model="password"/>
+							<a class="btn btn-primary" ng-click="login()">Logi sisse »</a>
+							<a href="">Unustasid Parooli?</a>           
+  						</div>                      
+					</li>
 					<li ng-class="activeWhen(path()=='/register')" ng-show="!user"><a href="#/register"><msg key="register"/></a></li>
 					<li class="dropdown" ng-show="user">
-      					<a href class="dropdown-toggle">{{user.fullName}}</a>
-      						<ul class="dropdown-menu dropdown-user">
+      					<a data-toggle="popover" data-placement="bottom" data-target=".popover-target-user"><span class="glyphicon glyphicon-user"> {{user.fullName}}</span></a>
+						<div class="popover-target popover-target-user">
+      						<ul class="dropdown dropdown-user">
                     			<li><a href="/#/user/users/profile" class="dropdown-option"><msg key="profile"/></a></li>
                     			<li><a href="/#/user/invite" class="dropdown-option"><msg key="invite"/></a></li>
                     			<li class="divider" />
                     			<li><a ng-click="logout()" class="dropdown-option"><msg key="logout"/></a></li>
-      						</ul>
+      						</ul>       
+  						</div>    
     				</li>
 					<li><a ng-click="setLanguage('ee')"><img src = "../images/estonianFlag.png" /></a></li>
 					<li><a ng-click="setLanguage('en')"><img src = "../images/englishFlag.png" /></a></li>

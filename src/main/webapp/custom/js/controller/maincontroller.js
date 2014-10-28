@@ -23,7 +23,7 @@
 				$http.defaults.headers.common['X-Auth-Token'] = result.data.token;
 				$cookieStore.put('user', result.data);
 				
-				if($rootScope.redirectUrl != null && $rootScope.redirectUrl.indexOf('/login') == -1) {
+				if($rootScope.redirectUrl != null) {
 					$location.url($rootScope.redirectUrl);
 				}
 				else {

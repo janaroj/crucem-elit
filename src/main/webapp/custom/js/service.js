@@ -47,6 +47,17 @@
 			}
 		}
 	});
+	
+	
+	app.factory("autoCompleteService", ["$http", function ($http) {
+	    return {
+	    	getSuggestions: function (term) {
+	            return $http.get("/api/user/search/" + term).then(function (response) {
+	                return response.data;
+	            });
+	        }
+	    };
+	}]);
 
 	app.service('userService', function($http) {
 		this.register = function(user) {

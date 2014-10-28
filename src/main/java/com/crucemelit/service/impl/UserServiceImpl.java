@@ -159,4 +159,9 @@ public class UserServiceImpl implements UserService {
         msg.setText("Hey, check out our application at crucem-elit.herokuapp.com");
         Transport.send(msg);
     }
+
+    @Override
+    public List<User> search(String term) {
+        return userRepository.findBySearchTerm(term);
+    }
 }

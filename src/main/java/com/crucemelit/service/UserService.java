@@ -33,4 +33,6 @@ public interface UserService extends UserDetailsService {
 
     void sendInviteEmail(String email);
 
+    List<User> search(String term);
+
 }

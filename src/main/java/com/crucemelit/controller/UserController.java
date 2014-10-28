@@ -49,6 +49,12 @@ public class UserController {
         return gymService.getGym(id);
     }
 
+    @RequestMapping(value = "/search/{term}")
+    @ResponseBody
+    public List<User> search(@PathVariable String term) {
+        return userService.search(term);
+    }
+
     @RequestMapping(value = "/gym/join/{id}", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<String> joinGym(@PathVariable long id) {

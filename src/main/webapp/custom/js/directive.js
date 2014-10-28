@@ -17,4 +17,32 @@
 			}
 		};
 	});
+	
+	app.directive("autoComplete", ["$location", "autoCompleteService", function ($location, autoCompleteService) {
+	    return {
+	        restrict: "A",
+	        link: function (scope, elem, attr, ctrl) {
+	            elem.autocomplete({
+	                source: function (searchTerm, response) {
+	                    autoCompleteService.getSuggestions(searchTerm.term).then(function (autoCompleteResults) {
+	                        response($.map(autoCompleteResults, function (result) {
+	                            return {
+	                                label: result.fullName,
+	                                value: result.id 
+	                            }
+	                        }))
+	                    });
+	                },
+	                minLength: 2,
+	                delay: 500,
+	                select: function (event, selected) {
+	                	$location.path('/user/users/' + selected.item.value);
+	                	$('.navbar [data-toggle="popover"]').popover('hide');
+	                	scope.$apply();
+	                    event.preventDefault();
+	                }
+	            });
+	        }
+	    };
+	}]);
 }());

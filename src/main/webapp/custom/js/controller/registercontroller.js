@@ -14,7 +14,7 @@
 				$scope.registerAccount.passwordHash = $scope.registerAccount.password;
 				delete $scope.registerAccount.password;
 				userService.register($scope.registerAccount).then(function() {
-					$location.url("/login");
+					$location.url("/");
 					toaster.pop('success', 'Registration', 'Account registred successfully!');
 				 }, function(result) {
 					 toaster.pop('error', 'Registration', result.data.message);
