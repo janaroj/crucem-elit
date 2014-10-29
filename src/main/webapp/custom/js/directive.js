@@ -27,8 +27,9 @@
 	                    autoCompleteService.getSuggestions(searchTerm.term).then(function (autoCompleteResults) {
 	                        response($.map(autoCompleteResults, function (result) {
 	                            return {
-	                                label: result.fullName,
-	                                value: result.id 
+	                                label: result.text,
+	                                type: result.type,
+	                                id: result.id 
 	                            }
 	                        }))
 	                    });
@@ -36,10 +37,11 @@
 	                minLength: 2,
 	                delay: 500,
 	                select: function (event, selected) {
-	                	$location.path('/user/users/' + selected.item.value);
+	                	$location.path('/user/' + selected.item.type +'/' + selected.item.id);
 	                	$('.navbar [data-toggle="popover"]').popover('hide');
 	                	scope.$apply();
 	                    event.preventDefault();
+	                    scope.search = '';
 	                }
 	            });
 	        }

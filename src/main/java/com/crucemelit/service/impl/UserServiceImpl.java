@@ -1,5 +1,6 @@
 package com.crucemelit.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -21,6 +22,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.crucemelit.domain.Sex;
+import com.crucemelit.domain.SuggestionType;
+import com.crucemelit.dto.Suggestion;
 import com.crucemelit.exception.CredentialsExpiredException;
 import com.crucemelit.exception.EntityNotFoundException;
 import com.crucemelit.exception.UserAlreadyExistsException;
@@ -161,7 +164,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> search(String term) {
-        return userRepository.findBySearchTerm(term);
+    public List<Suggestion> search(String term) {
+    	List<Suggestion> suggestions = new ArrayList<>();
+    	List<User> suggestedUsers = userRepository.findBySearchTerm(term);
+    	for (User user : suggestedUsers) {
+    		suggestions.add(new Suggestion(user.getId(), user.getFullName(), SuggestionType.USER));
+    	}
+        return suggestions;
     }
 }

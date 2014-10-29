@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import com.crucemelit.dto.Suggestion;
 import com.crucemelit.model.Gym;
 import com.crucemelit.model.User;
 
@@ -33,6 +34,6 @@ public interface UserService extends UserDetailsService {
 
     void sendInviteEmail(String email);
 
-    List<User> search(String term);
+    List<Suggestion> search(String term);
 
 }

@@ -1,5 +1,6 @@
 package com.crucemelit.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.crucemelit.dto.EmailDto;
+import com.crucemelit.dto.Suggestion;
 import com.crucemelit.model.Gym;
 import com.crucemelit.model.User;
 import com.crucemelit.service.GymService;
@@ -51,8 +53,11 @@ public class UserController {
 
     @RequestMapping(value = "/search/{term}")
     @ResponseBody
-    public List<User> search(@PathVariable String term) {
-        return userService.search(term);
+    public List<Suggestion> search(@PathVariable String term) {
+    	List<Suggestion> suggestions = new ArrayList<>();
+    	suggestions.addAll(userService.search(term));
+    	suggestions.addAll(gymService.search(term));
+        return suggestions;
     }
 
     @RequestMapping(value = "/gym/join/{id}", method = RequestMethod.POST)
