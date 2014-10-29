@@ -17,6 +17,27 @@
 		this.setLanguage('ee');
 	});
 	
+	/* Intercept http errors */
+	app.factory('interceptor', function ($rootScope, $q, $location) {
+		return {
+			'response': function(response) {
+				return response;
+			},
+			'responseError': function(response) {
+				var status = response.status;
+				if (status == 401) {
+					$rootScope.redirectUrl = $location.url();
+					$rootScope.redirectStatus = 401;
+					$rootScope.logout();
+					if ($location.url() !== "/register") {
+						$location.url('/');
+					}
+				}
+				return $q.reject(response);
+			}
+		};
+	});
+	
 	app.factory('CheckAuthentication', function($rootScope, authService, toaster) {
 		return function() {
              return authService.checkAuth().then(function(result) {

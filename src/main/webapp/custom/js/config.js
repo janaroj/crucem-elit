@@ -2,7 +2,7 @@
 
 	app = angular.module('crucem-elit');
 
-	app.config(function($routeProvider, $httpProvider) {
+	app.config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
 		//configure the routing of ng-view
 		$routeProvider
 		.when('/', {
@@ -45,45 +45,8 @@
 		})
 		.otherwise({ redirectTo : "/"});
 		
-		/* Intercept http errors */
-		var interceptor = function ($rootScope, $q, $location) {
-
-	        function success(response) {
-	            return response;
-	        };
-
-	        function error(response) {
-	        	
-	            var status = response.status;
-	            var config = response.config;
-	            var method = config.method;
-	            var url = config.url;
-
-	            if (status == 401) {
-	            	$rootScope.redirectUrl = $location.url();
-	            	$rootScope.redirectStatus = 401;
-	            	$rootScope.logout();
-	            	if ($location.url() !== "/register") {
-	            		$location.url('/');
-	            	}
-	            } else if (status == 403) {
-	            	$location.url('/403');
-	            } else if (status == 500) {
-	            	$location.url('/500');
-	            } else{
-	            	//skip others
-	            }
-	            
-	            return $q.reject(response);
-	        };
-
-	        return function (promise) {
-	            return promise.then(success, error);
-	        };
-	    };
+	    $httpProvider.interceptors.push('interceptor');
 	    
-	    $httpProvider.interceptors.push(interceptor);
-	    
-	});
+	}]);
 	
 }());
