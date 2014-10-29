@@ -2,9 +2,13 @@ package com.crucemelit.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpServletRequest;
 
+import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 
 import org.apache.commons.fileupload.FileItemIterator;
@@ -26,6 +30,7 @@ import com.crucemelit.dto.Suggestion;
 import com.crucemelit.model.Gym;
 import com.crucemelit.model.User;
 import com.crucemelit.service.GymService;
+import com.crucemelit.service.SearchService;
 import com.crucemelit.service.UserService;
 import com.crucemelit.util.Utility;
 
@@ -53,10 +58,25 @@ public class UserController {
 
     @RequestMapping(value = "/search/{term}")
     @ResponseBody
-    public List<Suggestion> search(@PathVariable String term) {
-    	List<Suggestion> suggestions = new ArrayList<>();
-    	suggestions.addAll(userService.search(term));
-    	suggestions.addAll(gymService.search(term));
+    @SneakyThrows
+    public List<Suggestion> search(@PathVariable final String term) {
+    	final List<Suggestion> suggestions = new ArrayList<>();
+    	
+    	@AllArgsConstructor class SearchTask implements Runnable {
+    		SearchService service;
+
+    		@Override
+			public void run() {
+				suggestions.addAll(service.search(term));
+			}
+    	};
+    	
+    	ExecutorService executorService = Executors.newFixedThreadPool(2);
+    	executorService.execute(new SearchTask(userService));
+    	executorService.execute(new SearchTask(gymService));
+    	executorService.shutdown();
+    	executorService.awaitTermination(5, TimeUnit.SECONDS);
+    	
         return suggestions;
     }
 
