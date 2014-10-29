@@ -82,7 +82,7 @@
 	        };
 	    };
 	    
-	    $httpProvider.responseInterceptors.push(interceptor);
+	    $httpProvider.interceptors.push(interceptor);
 	    
 	});
 	

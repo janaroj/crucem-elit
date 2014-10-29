@@ -2,25 +2,18 @@ package com.crucemelit.model;
 
 import java.util.Date;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import com.crucemelit.domain.Sex;
+
+@AllArgsConstructor
 public @Data class UserRecordResult {
-    private String fullName;
+    private String name;
     private String exerciseName;
     private String exerciseResult;
-    private String sex;
+    private Sex sex;
     private String boxName;
     private Date workoutDate;
-
-    public UserRecordResult(String fullName, String exerciseName, String exerciseResult, String sex, String boxName,
-            Date workoutDate) {
-        super();
-        this.fullName = fullName;
-        this.exerciseName = exerciseName;
-        this.exerciseResult = exerciseResult;
-        this.sex = sex;
-        this.boxName = boxName;
-        this.workoutDate = workoutDate;
-    }
 
 }

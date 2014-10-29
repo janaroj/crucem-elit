@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table(name = "GYM")
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public @Data class Gym extends BaseEntity {
+public @Data class Gym extends BaseEntity implements Suggestable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

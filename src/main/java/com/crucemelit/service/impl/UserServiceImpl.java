@@ -1,6 +1,5 @@
 package com.crucemelit.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -156,7 +155,7 @@ public class UserServiceImpl implements UserService {
         User currentUser = getCurrentUser();
 
         Message msg = new MimeMessage(session);
-        msg.setFrom(new InternetAddress(currentUser.getEmail(), currentUser.getFullName()));
+        msg.setFrom(new InternetAddress(currentUser.getEmail(), currentUser.getName()));
         msg.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
         msg.setSubject("CrossFit application!");
         msg.setText("Hey, check out our application at crucem-elit.herokuapp.com");
@@ -165,11 +164,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<Suggestion> search(String term) {
-    	List<Suggestion> suggestions = new ArrayList<>();
-    	List<User> suggestedUsers = userRepository.findBySearchTerm(term);
-    	for (User user : suggestedUsers) {
-    		suggestions.add(new Suggestion(user.getId(), user.getFullName(), SuggestionType.USER));
-    	}
-        return suggestions;
+        return Utility.getSuggestions(userRepository.findBySearchTerm(term), SuggestionType.USER);
     }
 }

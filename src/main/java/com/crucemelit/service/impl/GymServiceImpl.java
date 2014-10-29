@@ -1,6 +1,5 @@
 package com.crucemelit.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +12,7 @@ import com.crucemelit.exception.EntityNotFoundException;
 import com.crucemelit.model.Gym;
 import com.crucemelit.repository.GymRepository;
 import com.crucemelit.service.GymService;
+import com.crucemelit.util.Utility;
 
 @Service
 @Transactional
@@ -34,15 +34,10 @@ public class GymServiceImpl implements GymService {
         }
         return gym;
     }
-    
+
     @Override
     public List<Suggestion> search(String term) {
-    	List<Suggestion> suggestions = new ArrayList<>();
-    	List<Gym> suggestedGyms = gymRepository.findBySearchTerm(term);
-    	for (Gym gym : suggestedGyms) {
-    		suggestions.add(new Suggestion(gym.getId(), gym.getName(), SuggestionType.GYM));
-    	}
-        return suggestions;
+        return Utility.getSuggestions(gymRepository.findBySearchTerm(term), SuggestionType.GYM);
     }
 
 }

@@ -42,7 +42,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 // For debugging, remove later
 @ToString(exclude = { "gym", "friendOf", "friends", "picture", "token", "passwordHash" })
 @EqualsAndHashCode(callSuper = false)
-public @Data class User extends BaseEntity implements UserDetails {
+public @Data class User extends BaseEntity implements UserDetails, Suggestable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -93,11 +93,12 @@ public @Data class User extends BaseEntity implements UserDetails {
     @JsonIgnore
     private Role role;
 
-    public String getFullName() {
+    @Override
+    public String getName() {
         if (getFirstName() == null && getLastName() == null) {
             return getEmail();
         }
-        return String.format("%s %s", getFirstName(), getLastName());
+        return Utility.formatStrings(getFirstName(), getLastName());
     }
 
     @Override
