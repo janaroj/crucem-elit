@@ -8,7 +8,7 @@
 			}, function(result) {
 				toaster.pop('error', 'Contacts' , result.data.message);
 			});
-		}
+		};
 		
 		$scope.viewContact = function(id) {
 			$location.path('/user/users/' + id);
@@ -28,7 +28,7 @@
 			function(result) {
 				toaster.pop('error', 'Contact' , result.data.message);
 			});
-		}
+		};
 		
 	});
 
@@ -66,32 +66,30 @@
 				toaster.pop('error', 'Contact' , result.data.message);
 			});
 			}
-			
-			
-		}
+		};
 		
 		$scope.isMyProfile = function() {
 			if (!$scope.contact || !$scope.user) {
 				return false;
 			}
 			return angular.equals($scope.user, $scope.contact);
-		}
+		};
 		
 		$scope.changeProfile = function() {
 			$scope.isChangeInProgress = true;
 			$scope.isChangeable = false;
-		}
+		};
 		
 		$scope.cancelProfile = function(){
 			$("#form")[0].reset();
 			
 			$scope.isChangeInProgress = false;
 			$scope.isChangeable = true;
-		}
+		};
 		
 		$scope.updateProfile = function() {
 			
-		}
+		};
 		
 		 $scope.onFileSelect = function($files) {
 			      userService.uploadProfilePicture($files[0]).then(function() {

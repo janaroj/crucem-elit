@@ -30,8 +30,8 @@
 	                                label: result.text,
 	                                type: result.type,
 	                                id: result.id 
-	                            }
-	                        }))
+	                            };
+	                        }));
 	                    });
 	                },
 	                minLength: 2,

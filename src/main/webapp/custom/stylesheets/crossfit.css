@@ -7,6 +7,24 @@ body {
   margin-bottom: 20px;
 }
 
+.flag {
+	display: inline-block;
+	width: 14px;
+	height: 12px;
+}
+
+.flag-ee {
+	background-image:url("../../images/estonianFlag.png")
+}
+
+.flag-en {
+	background-image:url("../../images/englishFlag.png")
+}
+
+.pad-left {
+	padding-left: 10px;
+}
+
 .popover-target {
     display: none;
 }

@@ -8,7 +8,7 @@
 			}, function(result) {
 				toaster.pop('error', 'Invite', result.data.message);
 			});
-		}
+		};
 	});
 
 }());

@@ -18,6 +18,10 @@
             }
             return false;
         };
+        
+        $rootScope.getTranslation = function(key) {
+			 return $.i18n.prop(key);
+		 };
 
         $rootScope.logout = function () {
             delete $rootScope.user;
@@ -28,14 +32,15 @@
 
     })
     //monitoring route changes
-    app.run(function ($route, $rootScope, $http, $location, $cookieStore) {
+    app.run(function ($rootScope, $http, $location, $cookieStore, $timeout) {
 
-        $rootScope.$on('$routeChangeStart', function (event, next, current) {
+        $rootScope.$on('$locationChangeStart', function (event, next, current) {
             var user = $cookieStore.get('user');
             if (user !== undefined) {
             	$http.defaults.headers.common['X-Auth-Token'] = user.token;
                 if ($location.url() === "/") {
-                	$location.url("/user/main");
+                	event.preventDefault();
+                	$timeout(function(){$location.path("/user/main");});
                 }
             }
         });

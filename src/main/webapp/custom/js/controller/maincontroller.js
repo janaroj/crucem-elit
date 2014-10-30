@@ -2,6 +2,8 @@
 	var app = angular.module('crucem-elit');
 	app.controller('MainController', function($scope, $rootScope, i18n, $location, $http, $cookieStore, authService, toaster) {
 		
+		$scope.availableLanguages = ["ee", "en"];
+		
 		$scope.language = function() {
 			return i18n.language;
 		};

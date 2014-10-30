@@ -30,7 +30,7 @@
 				 return false;
 			 }
 			 return angular.equals($scope.user.gym, gym);
-		 }
+		 };
 		 
 		 $scope.joinGym = function(gym) {
 			 if (confirm("Are you sure you wish to join " + gym.name )) {
@@ -41,7 +41,7 @@
 					 toaster.pop('error', 'Gyms' , result.data.message);
 				 }) ;
 			 }
-		 }
+		 };
 		 
 		 $scope.leaveGym = function(gym) {
 			 if (confirm("Are you sure you wish to leave from " + gym.name )) {
@@ -52,7 +52,7 @@
 					 toaster.pop('error', 'Gym' , result.data.message);
 				 });
 			 }
-		 }
+		 };
 		 
 		 $scope.viewGym = function(id) {
 				$location.path('/user/gyms/' + id);
@@ -68,7 +68,7 @@
 			}, function(result) {
 				toaster.pop('error', 'Gym' , result.data.message);
 			});
-		}
+		};
 	});
 
 }());

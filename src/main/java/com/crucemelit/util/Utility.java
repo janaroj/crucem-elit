@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -43,15 +42,17 @@ public final class Utility {
 
     public static final List<Suggestion> getSuggestions(List<? extends Suggestable> suggestables, SuggestionType type) {
         List<Suggestion> suggestions = new ArrayList<>();
-        for (Suggestable suggestable : suggestables) {
-            suggestions.add(new Suggestion(suggestable.getId(), suggestable.getName(), type));
+        if (suggestables != null) {
+        	for (Suggestable suggestable : suggestables) {
+        		suggestions.add(new Suggestion(suggestable.getId(), suggestable.getName(), type));
+        	}
         }
         return suggestions;
     }
 
     public static final String formatStrings(String... strings) {
         List<String> stringList = new ArrayList<>(Arrays.asList(strings));
-        stringList.removeAll(Collections.singleton(null));
+        stringList.removeAll(Arrays.asList(null,""));
         return StringUtils.collectionToDelimitedString(stringList, " ");
     }
 }

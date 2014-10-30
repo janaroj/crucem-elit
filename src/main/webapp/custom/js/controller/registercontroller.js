@@ -20,7 +20,7 @@
 					 toaster.pop('error', 'Registration', result.data.message);
 				 });
 			}
-		}
+		};
 	});
 
 }());

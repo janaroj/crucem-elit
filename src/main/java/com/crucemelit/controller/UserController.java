@@ -63,7 +63,7 @@ public class UserController {
     	final List<Suggestion> suggestions = new ArrayList<>();
     	
     	@AllArgsConstructor class SearchTask implements Runnable {
-    		SearchService service;
+    		private SearchService service;
 
     		@Override
 			public void run() {
