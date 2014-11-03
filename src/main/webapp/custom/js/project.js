@@ -44,6 +44,18 @@ ui.navbar = {
 	}
 }
 ui.util = {
+	object : {
+		path: function(obj, path, def){
+
+		    for(var i = 0,path = path.split('.'),len = path.length; i < len; i++){
+		        if(!obj || typeof obj !== 'object') return def;
+		        obj = obj[path[i]];
+		    }
+
+		    if(obj === undefined) return def;
+		    return obj;
+		}
+	},
 	table : {
 		prepareData : function($defer, $filter, params, data) {
 			data = params.filter() ? $filter('filter')(data, params.filter())
