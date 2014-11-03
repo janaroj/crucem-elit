@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.crucemelit.dto.EmailDto;
 import com.crucemelit.model.User;
 import com.crucemelit.service.UserService;
 
@@ -22,6 +23,13 @@ public class MainController {
     @ResponseBody
     public ResponseEntity<String> register(@RequestBody User user) {
         userService.register(user);
+        return new ResponseEntity<String>("Success", HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/forgot/password", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<String> forgotPassword(@RequestBody EmailDto emailDto) {
+        userService.forgotPassword(emailDto.getEmail());
         return new ResponseEntity<String>("Success", HttpStatus.OK);
     }
 

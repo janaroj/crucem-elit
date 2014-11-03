@@ -133,6 +133,9 @@
 		this.sendInviteEmail = function(email) {
 			return $http.post('/api/user/invite', email);
 		};
+		this.sendNewPassword = function(email) {
+			return $http.post('/api/forgot/password', email);
+		};
 	});
 	
 	app.service('workoutService', function($http) {

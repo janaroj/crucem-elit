@@ -48,6 +48,10 @@
 			templateUrl: 'partials/user/invite.html',
 			resolve: {authentication : function(CheckAuthentication) {return CheckAuthentication();}}
 		})
+		.when('/forgot', {
+			controller: 'MainController',
+			templateUrl: 'partials/forgot.html'
+		})
 		.when('/user/workouts', {
 			controller: 'WorkoutController',
 			templateUrl: 'partials/user/workouts.html',

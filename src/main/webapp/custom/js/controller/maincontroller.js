@@ -1,6 +1,6 @@
 (function() {
 	var app = angular.module('crucem-elit');
-	app.controller('MainController', function($scope, $rootScope, i18n, $location, $http, $cookieStore, authService, toaster) {
+	app.controller('MainController', function($scope, $rootScope, i18n, $location, $http, $cookieStore, emailService, authService, toaster) {
 		
 		$scope.availableLanguages = ["ee", "en"];
 		
@@ -43,6 +43,14 @@
 			});
 		};
 		
+		$scope.forgot = function() {
+			emailService.sendNewPassword({email : $scope.email}).then(function() {
+				$scope.email = null;
+				toaster.pop('success', 'Forgot password', 'Email sent successfully!');
+			}, function(result) {
+				toaster.pop('error', 'Forgot password', result.data.message);
+			});
+		};	
 	});
 	
 }());

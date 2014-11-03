@@ -64,7 +64,7 @@
       						<input type="text" placeholder="{{ getTranslation('email') }}" class="form-control" data-ng-model="username"/> 
 							<input type="password" placeholder="{{ getTranslation('password') }}" class="form-control" data-ng-model="password"/>
 							<a class="btn btn-primary" ng-click="login()"><msg key="login"/> »</a>
-							<a href=""><msg key="forgot.password"/></a>           
+							<a href="/#/forgot"><msg key="forgot.password"/></a>           
   						</div>                      
 					</li>
 					<li ng-class="activeWhen(path()=='/register')" ng-show="!user"><a href="#/register"><msg key="register"/></a></li>

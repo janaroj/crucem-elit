@@ -164,4 +164,20 @@ public class UserServiceImpl implements UserService {
     public List<Suggestion> search(String term) {
         return Utility.getSuggestions(userRepository.findBySearchTerm(term), SuggestionType.USER);
     }
+
+    @SneakyThrows
+    @Override
+    public void forgotPassword(String email) {
+        User user = (User) loadUserByUsername(email);
+        String password = Utility.generateRandomPassword(8);
+        user.setPasswordHash(encoder.encode(password));
+        userRepository.saveAndFlush(user);
+        Session session = Session.getInstance(Utility.getEmailProperties(), Utility.getEmailAuthenticator());
+
+        Message msg = new MimeMessage(session);
+        msg.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
+        msg.setSubject("Your new crossfit password");
+        msg.setText("Here is your new crossfit password: " + password);
+        Transport.send(msg);
+    }
 }
