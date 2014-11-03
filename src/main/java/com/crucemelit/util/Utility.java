@@ -2,11 +2,13 @@ package com.crucemelit.util;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
+import java.util.Random;
 import java.util.Set;
 
 import javax.mail.Authenticator;
@@ -23,7 +25,10 @@ import com.crucemelit.model.Suggestable;
 public final class Utility {
 
     public static final List<?> EMPTY_LIST = new ArrayList<>();
+
     private static Authenticator authenticator;
+
+    private static Random random;
 
     @SafeVarargs
     public static final <T> List<T> getUniqueList(List<T>... lists) {
@@ -83,5 +88,25 @@ public final class Utility {
             };
         }
         return authenticator;
+    }
+
+    public static final String generateRandomPassword(int length) {
+        // Pick from some letters that won't be easily mistaken for each
+        // other. So, for example, omit o O and 0, 1 l and L.
+        String letters = "abcdefghjkmnpqrstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ23456789";
+
+        String pw = "";
+        for (int i = 0; i < length; i++) {
+            int index = (int) (getRandom().nextDouble() * letters.length());
+            pw += letters.substring(index, index + 1);
+        }
+        return pw;
+    }
+
+    private static final Random getRandom() {
+        if (random == null) {
+            random = new SecureRandom();
+        }
+        return random;
     }
 }
