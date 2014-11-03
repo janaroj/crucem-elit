@@ -28,9 +28,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.crucemelit.dto.EmailDto;
 import com.crucemelit.dto.Suggestion;
 import com.crucemelit.model.Gym;
+import com.crucemelit.model.Result;
 import com.crucemelit.model.User;
 import com.crucemelit.model.Workout;
 import com.crucemelit.service.GymService;
+import com.crucemelit.service.ResultService;
 import com.crucemelit.service.SearchService;
 import com.crucemelit.service.UserService;
 import com.crucemelit.service.WorkoutService;
@@ -48,6 +50,9 @@ public class UserController {
 
     @Autowired
     private WorkoutService workoutService;
+
+    @Autowired
+    private ResultService resultService;
 
     @RequestMapping(value = "/gyms")
     @ResponseBody
@@ -148,6 +153,12 @@ public class UserController {
     @ResponseBody
     public List<Workout> getWorkouts() {
         return workoutService.getWorkouts();
+    }
+
+    @RequestMapping(value = "/records")
+    @ResponseBody
+    public List<Result> getResults() {
+        return resultService.getResults();
     }
 
 }

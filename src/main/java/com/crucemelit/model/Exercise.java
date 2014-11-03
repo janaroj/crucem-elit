@@ -35,6 +35,6 @@ public @Data class Exercise extends BaseEntity {
 
     @OneToMany(mappedBy = "exercise", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore
-    private List<WorkoutExerciseResult> results;
+    private List<Result> results;
 
 }
