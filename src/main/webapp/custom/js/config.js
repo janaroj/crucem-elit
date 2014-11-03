@@ -43,6 +43,10 @@
 			templateUrl: 'partials/user/invite.html',
 			resolve: {authentication : function(CheckAuthentication) {return CheckAuthentication();}}
 		})
+		.when('/forgot', {
+			controller: 'MainController',
+			templateUrl: 'partials/forgot.html',
+		})
 		.otherwise({ redirectTo : "/"});
 		
 	    $httpProvider.interceptors.push('interceptor');
