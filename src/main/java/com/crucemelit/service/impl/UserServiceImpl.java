@@ -1,7 +1,6 @@
 package com.crucemelit.service.impl;
 
 import java.util.List;
-import java.util.Properties;
 
 import javax.mail.Message;
 import javax.mail.Session;
@@ -149,9 +148,8 @@ public class UserServiceImpl implements UserService {
     @Override
     @SneakyThrows
     public void sendInviteEmail(String email) {
-        Properties props = new Properties();
-        props.put("mail.smtp.host", "mailhost here probably have to use gmail?");
-        Session session = Session.getInstance(props, null);
+
+        Session session = Session.getInstance(Utility.getEmailProperties(), Utility.getEmailAuthenticator());
         User currentUser = getCurrentUser();
 
         Message msg = new MimeMessage(session);
