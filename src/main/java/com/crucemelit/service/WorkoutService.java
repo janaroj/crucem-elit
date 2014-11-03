@@ -1,8 +1,11 @@
 package com.crucemelit.service;
 
+import java.util.List;
+
+import com.crucemelit.model.Workout;
 
 public interface WorkoutService {
 
-    // Workout getWorkout(long id);
+    List<Workout> getWorkouts();
 
 }

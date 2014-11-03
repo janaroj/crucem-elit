@@ -1,0 +1,10 @@
+
+<table ng-table="tableParams" show-filter="true" class="table">
+	<tbody>
+		<tr ng-repeat="workout in $data">
+			<td data-title="getTranslation('workout.table.workout')" sortable="'name'" filter="{ 'name': 'text' }">{{workout.name}}</td>
+			<td data-title="getTranslation('workout.table.wod')" sortable="'city'" filter="{ 'city': 'text'}">{{workout.wod}}</td>
+			<td data-title="getTranslation('workout.table.date')" sortable="'date'" filter="{ 'date': 'text' }">{{workout.date}}</td>
+		</tr>
+	</tbody>
+</table>

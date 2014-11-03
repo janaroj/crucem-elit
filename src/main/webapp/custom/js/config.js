@@ -43,6 +43,11 @@
 			templateUrl: 'partials/user/invite.html',
 			resolve: {authentication : function(CheckAuthentication) {return CheckAuthentication();}}
 		})
+		.when('/user/workouts', {
+			controller: 'WorkoutController',
+			templateUrl: 'partials/user/workouts.html',
+			resolve: {authentication : function(CheckAuthentication) {return CheckAuthentication();}}
+		})
 		.otherwise({ redirectTo : "/"});
 		
 	    $httpProvider.interceptors.push('interceptor');

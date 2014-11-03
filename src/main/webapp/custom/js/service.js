@@ -128,6 +128,12 @@
 			return $http.post('/api/user/invite', email);
 		};
 	});
+	
+	app.service('workoutService', function($http) {
+		this.getWorkouts = function() {
+			return $http.get('/api/user/workouts');
+		};
+	});
 
 	app.service('base64', function() {
 

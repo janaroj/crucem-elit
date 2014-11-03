@@ -29,9 +29,11 @@ import com.crucemelit.dto.EmailDto;
 import com.crucemelit.dto.Suggestion;
 import com.crucemelit.model.Gym;
 import com.crucemelit.model.User;
+import com.crucemelit.model.Workout;
 import com.crucemelit.service.GymService;
 import com.crucemelit.service.SearchService;
 import com.crucemelit.service.UserService;
+import com.crucemelit.service.WorkoutService;
 import com.crucemelit.util.Utility;
 
 @Controller
@@ -43,6 +45,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private WorkoutService workoutService;
 
     @RequestMapping(value = "/gyms")
     @ResponseBody
@@ -60,23 +65,25 @@ public class UserController {
     @ResponseBody
     @SneakyThrows
     public List<Suggestion> search(@PathVariable final String term) {
-    	final List<Suggestion> suggestions = new ArrayList<>();
-    	
-    	@AllArgsConstructor class SearchTask implements Runnable {
-    		private SearchService service;
+        final List<Suggestion> suggestions = new ArrayList<>();
 
-    		@Override
-			public void run() {
-				suggestions.addAll(service.search(term));
-			}
-    	};
-    	
-    	ExecutorService executorService = Executors.newFixedThreadPool(2);
-    	executorService.execute(new SearchTask(userService));
-    	executorService.execute(new SearchTask(gymService));
-    	executorService.shutdown();
-    	executorService.awaitTermination(5, TimeUnit.SECONDS);
-    	
+        @AllArgsConstructor
+        class SearchTask implements Runnable {
+            private SearchService service;
+
+            @Override
+            public void run() {
+                suggestions.addAll(service.search(term));
+            }
+        }
+        ;
+
+        ExecutorService executorService = Executors.newFixedThreadPool(2);
+        executorService.execute(new SearchTask(userService));
+        executorService.execute(new SearchTask(gymService));
+        executorService.shutdown();
+        executorService.awaitTermination(5, TimeUnit.SECONDS);
+
         return suggestions;
     }
 
@@ -135,6 +142,12 @@ public class UserController {
     @ResponseBody
     public void inviteUser(@RequestBody EmailDto emailDto) {
         userService.sendInviteEmail(emailDto.getEmail());
+    }
+
+    @RequestMapping(value = "/workouts")
+    @ResponseBody
+    public List<Workout> getWorkouts() {
+        return workoutService.getWorkouts();
     }
 
 }
