@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "WORKOUTEXERCISERESULT")
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public @Data class WorkoutExerciseResult extends BaseEntity {
+public @Data class Result extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,5 +34,6 @@ public @Data class WorkoutExerciseResult extends BaseEntity {
 
     @Column(name = "result")
     private int result;
+    
 
 }

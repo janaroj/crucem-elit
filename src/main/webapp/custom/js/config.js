@@ -33,6 +33,11 @@
 			templateUrl: 'partials/user/gym.html',
 			resolve: {authentication : function(CheckAuthentication) {return CheckAuthentication();}}
 		})
+		.when('/user/records', {
+			controller: 'RecordController',
+			templateUrl: 'partials/user/records.html',
+			resolve: {authentication : function(CheckAuthentication) {return CheckAuthentication();}}
+		})
 		.when('/user/users/:id', {
 			controller: 'ContactController',
 			templateUrl: 'partials/user/contact.html',
@@ -45,7 +50,12 @@
 		})
 		.when('/forgot', {
 			controller: 'MainController',
-			templateUrl: 'partials/forgot.html',
+			templateUrl: 'partials/forgot.html'
+		})
+		.when('/user/workouts', {
+			controller: 'WorkoutController',
+			templateUrl: 'partials/user/workouts.html',
+			resolve: {authentication : function(CheckAuthentication) {return CheckAuthentication();}}
 		})
 		.otherwise({ redirectTo : "/"});
 		
