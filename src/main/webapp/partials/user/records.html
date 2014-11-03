@@ -1,0 +1,13 @@
+
+<table ng-table="tableParams" show-filter="true" class="table">
+	<tbody>
+		<tr ng-repeat="record in $data">
+			<td data-title="getTranslation('result.table.user')" sortable="'workout.user.name'" filter="{ 'workout.user.name': 'text'}">{{record.workout.user.name}}</td>
+			<td data-title="getTranslation('result.table.exercise')" sortable="'exercise.name'" filter="{ 'exercise.name': 'text' }">{{record.exercise.name}}</td>
+			<td data-title="getTranslation('result.table.result')" sortable="'result'" filter="{ 'result': 'text' }">{{record.result}}</td>
+			<td data-title="getTranslation('result.table.sex')" sortable="'workout.user.sex'" filter="{ 'workout.user.sex': 'text' }">{{record.workout.user.sex}}</td>
+			<td data-title="getTranslation('result.table.box')" sortable="'workout.user.gym.name'" filter="{ 'workout.user.gym.name': 'text' }">{{record.workout.user.gym.name}}</td>
+			<td data-title="getTranslation('result.table.date')" sortable="'workout.date'" filter="{ 'workout.date': 'text' }">{{record.workout.date}}</td>
+		</tr>
+	</tbody>
+</table>

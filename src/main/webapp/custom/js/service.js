@@ -120,7 +120,13 @@
 		};
 		this.getGymById = function(id) {
 			return $http.get('/api/user/gyms/' + id);
-		}
+		};
+	});
+	
+	app.service('recordService', function($http) {
+		this.getRecords = function() {
+			return $http.get('/api/user/records');
+		};
 	});
 	
 	app.service('emailService', function($http) {
