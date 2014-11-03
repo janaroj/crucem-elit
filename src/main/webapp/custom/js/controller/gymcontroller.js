@@ -59,9 +59,11 @@
 			};
 		    
 	});
+	
+	
 
 
-	app.controller('GymController', function($scope, $routeParams, gymService) {
+	app.controller('GymController', function($scope, $routeParams, gymService, toaster) {
 		$scope.init = function() {
 			gymService.getGymById($routeParams.id).then(function(result) {
 				$scope.gym = result.data;
@@ -69,6 +71,13 @@
 				toaster.pop('error', 'Gym' , result.data.message);
 			});
 		};
+		 $scope.onFileSelect = function($files) {
+		      gymService.uploadGymPicture($files[0], $routeParams.id).then(function() {
+		    	  toaster.pop('success', 'Gym', 'File uploaded successfully!');
+		      }, function(result) {
+		    	  toaster.pop('error', 'Upload', 'Uploading file failed');
+		      });
+	 };
 	});
 
 }());

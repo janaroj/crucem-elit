@@ -40,6 +40,9 @@ public @Data class Gym extends BaseEntity implements Suggestable {
     @JsonIgnore
     private List<User> users;
 
+    @JsonIgnore
+    private byte[] picture;
+
     public String getFullAddress() {
         return String.format("%s, %s", getCity(), getAddress());
     }
