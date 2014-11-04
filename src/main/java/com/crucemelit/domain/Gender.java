@@ -1,5 +1,5 @@
 package com.crucemelit.domain;
 
-public enum Sex {
+public enum Gender {
     MALE, FEMALE, UNDEFINED;
 }

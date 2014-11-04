@@ -14,9 +14,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     User findByEmailIgnoreCase(String email);
 
-    @Query("select u from User u where (lower(u.firstName) like ('%' || lower(:term) || '%')) "
-            + " or (lower(u.lastName) like ('%' || lower(:term) || '%'))"
-            + " or (lower(u.email) like ('%' || lower(:term) || '%'))")
+    @Query("select u from User u where (lower(u.firstName) like (lower(:term) || '%')) "
+            + " or (lower(u.lastName) like (lower(:term) || '%'))"
+            + " or (lower(u.email) like (lower(:term) || '%'))")
     List<User> findBySearchTerm(@Param("term") String term);
 
 }

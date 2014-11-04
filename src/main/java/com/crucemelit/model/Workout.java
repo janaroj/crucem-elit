@@ -33,15 +33,17 @@ public @Data class Workout extends BaseEntity {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "person")
+    @JoinColumn(name = "person", nullable = false)
     private User user;
 
     @Temporal(TemporalType.DATE)
+    @Column(nullable = false)
     private Date date;
 
+    @Column(nullable = false)
     private String name;
 
     @OneToMany(mappedBy = "workout", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Result> results;
+    private List<Exercise> exercises;
 
 }

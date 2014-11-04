@@ -12,7 +12,7 @@ import com.crucemelit.model.Gym;
 @Repository
 public interface GymRepository extends JpaRepository<Gym, Long> {
 
-	@Query("select g from Gym g where (lower(g.name) like ('%' || lower(:term) || '%'))")
+	@Query("select g from Gym g where (lower(g.name) like (lower(:term) || '%'))")
 	List<Gym> findBySearchTerm(@Param("term") String term);
 
 }
