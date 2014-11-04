@@ -12,6 +12,7 @@ import java.util.Random;
 import java.util.Set;
 
 import javax.mail.Authenticator;
+import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 
 import org.apache.commons.io.IOUtils;
@@ -109,4 +110,13 @@ public final class Utility {
         }
         return random;
     }
+
+    public static final void sendInvite(String from, String to, String subject, String text) throws MessagingException {
+        new MessageSender().setFrom(from).addRecipient(to).setSubject(subject).setText(text).send();
+    }
+
+    public static final void sendForgottenPassword(String email, String subject, String text) throws MessagingException {
+        new MessageSender().addRecipient(email).setSubject(subject).setText(text).send();
+    }
+
 }

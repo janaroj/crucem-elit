@@ -2,12 +2,6 @@ package com.crucemelit.service.impl;
 
 import java.util.List;
 
-import javax.mail.Message;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-
 import lombok.SneakyThrows;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -148,16 +142,11 @@ public class UserServiceImpl implements UserService {
     @Override
     @SneakyThrows
     public void sendInviteEmail(String email) {
-
-        Session session = Session.getInstance(Utility.getEmailProperties(), Utility.getEmailAuthenticator());
         User currentUser = getCurrentUser();
+        String subject = "CrossFit application!";
+        String text = "Hey, check out our application at crucem-elit.herokuapp.com";
 
-        Message msg = new MimeMessage(session);
-        msg.setFrom(new InternetAddress(currentUser.getEmail(), currentUser.getName()));
-        msg.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
-        msg.setSubject("CrossFit application!");
-        msg.setText("Hey, check out our application at crucem-elit.herokuapp.com");
-        Transport.send(msg);
+        Utility.sendInvite(currentUser.getEmail(), email, subject, text);
     }
 
     @Override
@@ -172,12 +161,10 @@ public class UserServiceImpl implements UserService {
         String password = Utility.generateRandomPassword(8);
         user.setPasswordHash(encoder.encode(password));
         userRepository.saveAndFlush(user);
-        Session session = Session.getInstance(Utility.getEmailProperties(), Utility.getEmailAuthenticator());
 
-        Message msg = new MimeMessage(session);
-        msg.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
-        msg.setSubject("Your new crossfit password");
-        msg.setText("Here is your new crossfit password: " + password);
-        Transport.send(msg);
+        String subject = "Your new crossfit password";
+        String text = "Here is your new crossfit password: " + password;
+
+        Utility.sendForgottenPassword(email, subject, text);
     }
 }
