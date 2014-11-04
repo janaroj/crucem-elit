@@ -38,7 +38,7 @@
 			templateUrl: 'partials/user/records.html',
 			resolve: {authentication : function(CheckAuthentication) {return CheckAuthentication();}}
 		})
-		.when('/user/users/:id', {
+		.when('/user/contacts/:id', {
 			controller: 'ContactController',
 			templateUrl: 'partials/user/contact.html',
 			resolve: {authentication : function(CheckAuthentication) {return CheckAuthentication();}}

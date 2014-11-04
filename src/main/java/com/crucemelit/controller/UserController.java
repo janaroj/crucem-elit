@@ -11,9 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 
-import org.apache.commons.fileupload.FileItemIterator;
-import org.apache.commons.fileupload.FileItemStream;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -36,7 +33,6 @@ import com.crucemelit.service.GymService;
 import com.crucemelit.service.RecordService;
 import com.crucemelit.service.SearchService;
 import com.crucemelit.service.UserService;
-import com.crucemelit.service.WorkoutService;
 import com.crucemelit.util.Utility;
 
 @Controller
@@ -48,9 +44,6 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private WorkoutService workoutService;
 
     @Autowired
     private RecordService recordService;
@@ -81,7 +74,8 @@ public class UserController {
             public void run() {
                 suggestions.addAll(service.search(term));
             }
-        };
+        }
+        ;
 
         ExecutorService executorService = Executors.newFixedThreadPool(2);
         executorService.execute(new SearchTask(userService));
@@ -124,23 +118,16 @@ public class UserController {
         return userService.getCurrentUser();
     }
 
-    @RequestMapping(value = "/profile/picture", method = RequestMethod.PUT) //TODO check if works
+    @RequestMapping(value = "/profile/picture", method = RequestMethod.PUT)
     @ResponseBody
-    @SneakyThrows
     public void uploadProfilePicture(HttpServletRequest req) {
-        ServletFileUpload upload = new ServletFileUpload();
-        FileItemIterator iterator = upload.getItemIterator(req);
-
-        if (iterator.hasNext()) {
-            FileItemStream itemStream = iterator.next();
-            userService.setProfilePicture(Utility.getBytesFromStream(itemStream.openStream()));
-        }
+        Utility.uploadPicture(req, userService);
     }
 
     @RequestMapping(value = "/profile/picture/{id}")
     @ResponseBody
     public String getProfilePicture(@PathVariable long id) {
-        return userService.getProfilePicture(id);
+        return userService.getPicture(id);
     }
 
     @RequestMapping(value = "/invite", method = RequestMethod.POST)
@@ -152,7 +139,7 @@ public class UserController {
     @RequestMapping(value = "/workouts")
     @ResponseBody
     public List<Workout> getWorkouts() {
-        return workoutService.getWorkouts();
+        return userService.getUserWorkouts();
     }
 
     @RequestMapping(value = "/records")
@@ -160,30 +147,24 @@ public class UserController {
     public List<Record> getRecords() {
         return recordService.getRecords();
     }
-    
+
     @RequestMapping(value = "/genders")
     @ResponseBody
     public Gender[] getGenders() {
         return Gender.values();
     }
 
-    @RequestMapping(value = "/gym/{id}/picture", method = RequestMethod.PUT) //TODO TAKE A LOOK
+    @RequestMapping(value = "/gym/{id}/picture", method = RequestMethod.PUT)
     @ResponseBody
     @SneakyThrows
     public void uploadGymPicture(HttpServletRequest req, @PathVariable long id) {
-        ServletFileUpload upload = new ServletFileUpload();
-        FileItemIterator iterator = upload.getItemIterator(req);
-
-        if (iterator.hasNext()) {
-            FileItemStream itemStream = iterator.next();
-            gymService.setGymPicture(Utility.getBytesFromStream(itemStream.openStream()), id);
-        }
+        Utility.uploadPicture(req, gymService, id);
     }
 
     @RequestMapping(value = "/gym/picture/{id}")
     @ResponseBody
     public String getGymPicture(@PathVariable long id) {
-        return gymService.getGymPicture(id);
+        return gymService.getPicture(id);
     }
 
 }

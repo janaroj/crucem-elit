@@ -25,6 +25,8 @@
 		        }
 		    });
 		 
+		 $scope.tableParams.settings().$loading = true;
+		 
 		 $scope.inGym = function(gym) {
 			 if (!$scope.user || !$scope.user.gym) {
 				 return false;
@@ -70,8 +72,13 @@
 			}, function(result) {
 				toaster.pop('error', 'Gym' , result.data.message);
 			});
+			
+			gymService.getGymPicture($routeParams.id).then(function(result) {
+				ui.util.image.addImage("#image", result.data);
+			});
 		};
-		 $scope.onFileSelect = function($files) {
+		
+		$scope.onFileSelect = function($files) {
 		      gymService.uploadGymPicture($files[0], $routeParams.id).then(function() {
 		    	  toaster.pop('success', 'Gym', 'File uploaded successfully!');
 		      }, function(result) {

@@ -6,8 +6,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 import com.crucemelit.model.Gym;
 import com.crucemelit.model.User;
+import com.crucemelit.model.Workout;
 
-public interface UserService extends UserDetailsService, SearchService {
+public interface UserService extends UserDetailsService, SearchService, PictureService {
 
     List<User> getUsers();
 
@@ -27,12 +28,10 @@ public interface UserService extends UserDetailsService, SearchService {
 
     void joinGym(Gym gym);
 
-    void setProfilePicture(byte[] picture);
-
-    String getProfilePicture(long id);
-
     void sendInviteEmail(String email);
 
     void forgotPassword(String email);
+
+    List<Workout> getUserWorkouts();
 
 }

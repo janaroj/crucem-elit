@@ -2,11 +2,15 @@
 	<table ng-table="tableParams" show-filter="true" class="table">
 		<tbody>
 			<tr ng-repeat="record in $data">
-				<td data-title="getTranslation('record.table.user')" sortable="'exercise.workout.user.name'" filter="{ 'exercise.workout.user.name': 'text'}">{{record.exercise.workout.user.name}}</td>
+				<td data-title="getTranslation('record.table.user')" sortable="'exercise.workout.user.name'" filter="{ 'exercise.workout.user.name': 'text'}">
+					<a href="" ng-click="viewUser(record.exercise.workout.user.id)">{{record.exercise.workout.user.name}}</a>
+				</td>
 				<td data-title="getTranslation('record.table.exercise')" sortable="'exercise.name'" filter="{ 'exercise.name': 'text' }">{{record.exercise.name}}</td>
 				<td data-title="getTranslation('record.table.result')" sortable="'result'" filter="{ 'result': 'text' }">{{record.result}}</td>
 				<td data-title="getTranslation('record.table.gender')" sortable="'exercise.workout.user.gender'" filter="{ 'exercise.workout.user.gender': 'select' }" filter-data="genders($column)">{{record.exercise.workout.user.gender}}</td>
-				<td data-title="getTranslation('record.table.box')" sortable="'exercise.workout.user.gym.name'" filter="{ 'exercise.workout.user.gym.name': 'text' }">{{record.exercise.workout.user.gym.name}}</td>
+				<td data-title="getTranslation('record.table.box')" sortable="'exercise.workout.user.gym.name'" filter="{ 'exercise.workout.user.gym.name': 'text' }">
+					<a href="" ng-click="viewGym(record.exercise.workout.user.gym.id)">{{record.exercise.workout.user.gym.name}}</a>
+				</td>
 				<td data-title="getTranslation('record.table.date')" sortable="'exercise.workout.date'" filter="{ 'exercise.workout.date': 'text', '$$name' : 'daterange' }">{{record.exercise.workout.date}}</td>
 			</tr>
 		</tbody>

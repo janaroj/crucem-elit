@@ -1,21 +1,25 @@
-
-<table ng-table="tableParams" show-filter="true" class="table">
+<div ng-init="init()"/>
+<div loading-container="newTableLoading">
+<table ng-table="tableParams1" show-filter="true" class="table">
 	<tbody>
 		<tr ng-repeat="workout in $data">
 			<td data-title="getTranslation('workout.table.workout')" sortable="'name'" filter="{ 'name': 'text' }">{{workout.name}}</td>
-			<td data-title="getTranslation('workout.table.wod')" sortable="'city'" filter="{ 'city': 'text'}">{{workout.wod}}</td>
+			<td data-title="getTranslation('workout.table.wod')" sortable="'wod'" filter="{ 'wod': 'text'}">{{workout.wod}}</td>
 			<td data-title="getTranslation('workout.table.date')" sortable="'date'" filter="{ 'date': 'text' }">{{workout.date}}</td>
 		</tr>
 	</tbody>
 </table>
+</div>
 
-<table ng-table="tableParams" show-filter="true" class="table">
+<div loading-container="doneTableLoading">
+<table ng-table="tableParams2" show-filter="true" class="table">
 	<tbody>
 		<tr ng-repeat="workout in $data">
 			<td data-title="getTranslation('workout.table.workout')" sortable="'name'" filter="{ 'name': 'text' }">{{workout.name}}</td>
-			<td data-title="getTranslation('workout.table.wod')" sortable="'city'" filter="{ 'city': 'text'}">{{workout.wod}}</td>
-			<td data-title="getTranslation('workout.table.result')" sortable="'city'" filter="{ 'city': 'text'}">{{workout.wod}}</td>
+			<td data-title="getTranslation('workout.table.wod')" sortable="'wod'" filter="{ 'wod': 'text'}">{{workout.wod}}</td>
+			<td data-title="getTranslation('workout.table.result')" sortable="'result'" filter="{ 'result': 'text'}">{{workout.result}}</td>
 			<td data-title="getTranslation('workout.table.date')" sortable="'date'" filter="{ 'date': 'text' }">{{workout.date}}</td>
 		</tr>
 	</tbody>
 </table>
+</div>

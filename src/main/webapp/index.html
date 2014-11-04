@@ -46,10 +46,10 @@
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav" ng-show="user">
-					<li ng-class="activeWhen(path()=='/user/trainings')"><a href="#/user/workouts"><msg key="workouts"/></a></li>
-					<li ng-class="activeWhen(path()=='/user/gyms')"><a href="#/user/gyms"><msg key="gym"/></a></li>
-                	<li ng-class="activeWhen(path()=='/user/contacts')"><a href="#/user/contacts"><msg key="contacts"/></a></li>
-					<li ng-class="activeWhen(path()=='/user/records')"><a href="#/user/records"><msg key="records"/></a></li>
+					<li ng-class="activeWhen(pathContains('/user/workouts'))"><a href="#/user/workouts"><msg key="workouts"/></a></li>
+					<li ng-class="activeWhen(pathContains('/user/gyms'))"><a href="#/user/gyms"><msg key="gym"/></a></li>
+                	<li ng-class="activeWhen(pathContains('/user/contacts'))"><a href="#/user/contacts"><msg key="contacts"/></a></li>
+					<li ng-class="activeWhen(pathContains('/user/records'))"><a href="#/user/records"><msg key="records"/></a></li>
 					<li>
 						<a data-toggle="popover" data-placement="bottom" data-target=".popover-target-search"><span class="glyphicon glyphicon-search"></span> <msg key="search"/></a>
 						<div class="popover-target popover-target-search">
@@ -67,12 +67,12 @@
 							<a href="/#/forgot"><msg key="forgot.password"/></a>           
   						</div>                      
 					</li>
-					<li ng-class="activeWhen(path()=='/register')" ng-show="!user"><a href="#/register"><msg key="register"/></a></li>
+					<li ng-class="activeWhen(pathContains('/register'))" ng-show="!user"><a href="#/register"><msg key="register"/></a></li>
 					<li class="dropdown" ng-show="user">
       					<a data-toggle="popover" data-placement="bottom" data-target=".popover-target-user"><span class="glyphicon glyphicon-user"> {{user.name}}</span></a>
 						<div class="popover-target popover-target-user">
       						<ul class="dropdown dropdown-user">
-                    			<li><a href="/#/user/users/profile" class="dropdown-option"><msg key="profile"/></a></li>
+                    			<li><a href="/#/user/contacts/profile" class="dropdown-option"><msg key="profile"/></a></li>
                     			<li><a href="/#/user/invite" class="dropdown-option"><msg key="invite"/></a></li>
                     			<li class="divider" />
                     			<li><a ng-click="logout()" class="dropdown-option"><msg key="logout"/></a></li>

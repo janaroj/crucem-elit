@@ -32,6 +32,8 @@ public @Data class Exercise extends BaseEntity {
 
     private String repetitionType;
 
+    private boolean wod;
+
     @OneToOne(mappedBy = "exercise")
     @JsonBackReference
     private Record record;

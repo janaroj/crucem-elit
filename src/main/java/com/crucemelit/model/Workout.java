@@ -21,6 +21,10 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import org.hibernate.Hibernate;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "WORKOUT")
 @NoArgsConstructor
@@ -44,6 +48,29 @@ public @Data class Workout extends BaseEntity {
     private String name;
 
     @OneToMany(mappedBy = "workout", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Exercise> exercises;
+
+    public Integer getResult() {
+        if (Hibernate.isInitialized(exercises)) {
+            for (Exercise exercise : getExercises()) {
+                if (exercise.isWod() && exercise.getRecord() != null) {
+                    return exercise.getRecord().getResult();
+                }
+            }
+        }
+        return null;
+    }
+
+    public String getWod() {
+        if (Hibernate.isInitialized(exercises)) {
+            for (Exercise exercise : getExercises()) {
+                if (exercise.isWod()) {
+                    return exercise.getName();
+                }
+            }
+        }
+        return null;
+    }
 
 }

@@ -1,7 +1,7 @@
 <div ng-init="init()"/>
 <ul>
 	<text ng-repeat="contact in contacts">
-	<div class="contactBox" ng-init="getPicture(contact.id,'#image' + contact.id, contact.sex)">
+	<div class="contactBox" ng-init="getPicture(contact.id,'#image' + contact.id, contact.gender)">
    		<a href="" ng-click="viewContact(contact.id)">
    			<span id="image{{contact.id}}"/>
    		</a>

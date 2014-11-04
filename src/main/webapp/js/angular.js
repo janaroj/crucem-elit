@@ -16424,7 +16424,13 @@ function filterFilter() {
             return false;
           }
           text = (''+text).toLowerCase();
-          return (''+obj).toLowerCase().indexOf(text) > -1;
+          var objects = (''+obj).split(" ");
+          for (var i = 0; i < objects.length; i++) {
+        	  if (objects[i].toLowerCase().indexOf(text) === 0) {
+					return true;
+				};
+          }
+          return (''+obj).toLowerCase().indexOf(text) === 0;
         };
       }
     }

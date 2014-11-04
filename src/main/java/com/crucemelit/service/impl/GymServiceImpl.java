@@ -41,14 +41,14 @@ public class GymServiceImpl implements GymService {
     }
 
     @Override
-    public void setGymPicture(byte[] picture, long id) {
-        Gym gym = getGym(id);
+    public void setPicture(byte[] picture, long... id) {
+        Gym gym = getGym(id[0]);
         gym.setPicture(picture);
         gymRepository.saveAndFlush(gym);
     }
 
     @Override
-    public String getGymPicture(long id) {
+    public String getPicture(long id) {
         return Utility.getImgSourceFromBytes(getGym(id).getPicture());
     }
 

@@ -11,7 +11,7 @@
 		};
 		
 		$scope.viewContact = function(id) {
-			$location.path('/user/users/' + id);
+			$location.path('/user/contacts/' + id);
 		};
 		
 		$scope.removeContact = function(id) {
@@ -21,9 +21,9 @@
 //			});
 		};
 		
-		$scope.getPicture = function(id, location, sex) {
+		$scope.getPicture = function(id, location, gender) {
 			userService.getProfilePicture(id).then(function(result) {
-				ui.util.image.addImage(location, result.data, sex);
+				ui.util.image.addImage(location, result.data, gender);
 			}, 
 			function(result) {
 				toaster.pop('error', 'Contact' , result.data.message);
@@ -43,7 +43,7 @@
 					$scope.contact = result.data;
 					$scope.isChangeable = true;
 					userService.getProfilePicture(userId).then(function(result) {
-						ui.util.image.addImage("#image", result.data, $scope.contact.sex);
+						ui.util.image.addImage("#image", result.data, $scope.contact.gender);
 					}, 
 					function(result) {
 						toaster.pop('error', 'Contact' , result.data.message);
@@ -57,7 +57,7 @@
 				userService.getUserById($routeParams.id).then(function(result) {
 				$scope.contact = result.data;
 				userService.getProfilePicture(userId).then(function(result) {
-					ui.util.image.addImage("#image",result.data, $scope.contact.sex);
+					ui.util.image.addImage("#image",result.data, $scope.contact.gender);
 				}, 
 				function(result) {
 					toaster.pop('error', 'Contact' , result.data.message);

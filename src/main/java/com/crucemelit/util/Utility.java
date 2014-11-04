@@ -14,7 +14,13 @@ import java.util.Set;
 import javax.mail.Authenticator;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
+import javax.servlet.http.HttpServletRequest;
 
+import lombok.SneakyThrows;
+
+import org.apache.commons.fileupload.FileItemIterator;
+import org.apache.commons.fileupload.FileItemStream;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.IOUtils;
 import org.springframework.security.crypto.codec.Base64;
 import org.springframework.util.StringUtils;
@@ -22,6 +28,7 @@ import org.springframework.util.StringUtils;
 import com.crucemelit.domain.SuggestionType;
 import com.crucemelit.dto.Suggestion;
 import com.crucemelit.model.Suggestable;
+import com.crucemelit.service.PictureService;
 
 public final class Utility {
 
@@ -115,8 +122,19 @@ public final class Utility {
         new MessageSender().setFrom(from).addRecipient(to).setSubject(subject).setText(text).send();
     }
 
-    public static final void sendForgottenPassword(String email, String subject, String text) throws MessagingException {
-        new MessageSender().addRecipient(email).setSubject(subject).setText(text).send();
+    public static final void sendForgottenPassword(String to, String subject, String text) throws MessagingException {
+        new MessageSender().addRecipient(to).setSubject(subject).setText(text).send();
+    }
+
+    @SneakyThrows
+    public static final void uploadPicture(HttpServletRequest req, PictureService service, long... id) {
+        ServletFileUpload upload = new ServletFileUpload();
+        FileItemIterator iterator = upload.getItemIterator(req);
+
+        if (iterator.hasNext()) {
+            FileItemStream itemStream = iterator.next();
+            service.setPicture(Utility.getBytesFromStream(itemStream.openStream()), id);
+        }
     }
 
 }

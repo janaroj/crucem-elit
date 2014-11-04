@@ -115,6 +115,9 @@
 		        file: image, 
 		      });
 		};
+		this.getWorkouts = function() {
+			return $http.get('/api/user/workouts');
+		};
 	});
 
 	app.service('gymService', function($http, $upload) {
@@ -153,9 +156,7 @@
 	});
 	
 	app.service('workoutService', function($http) {
-		this.getWorkouts = function() {
-			return $http.get('/api/user/workouts');
-		};
+		
 	});
 
 	app.service('base64', function() {

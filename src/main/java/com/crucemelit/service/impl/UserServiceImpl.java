@@ -4,6 +4,7 @@ import java.util.List;
 
 import lombok.SneakyThrows;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,6 +22,7 @@ import com.crucemelit.exception.EntityNotFoundException;
 import com.crucemelit.exception.UserAlreadyExistsException;
 import com.crucemelit.model.Gym;
 import com.crucemelit.model.User;
+import com.crucemelit.model.Workout;
 import com.crucemelit.repository.UserRepository;
 import com.crucemelit.service.UserService;
 import com.crucemelit.util.Utility;
@@ -128,14 +130,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void setProfilePicture(byte[] picture) {
+    public void setPicture(byte[] picture, long... id) {
         User user = getCurrentUser();
         user.setPicture(picture);
         userRepository.saveAndFlush(user);
     }
 
     @Override
-    public String getProfilePicture(long id) {
+    public String getPicture(long id) {
         return Utility.getImgSourceFromBytes(getUser(id).getPicture());
     }
 
@@ -166,5 +168,14 @@ public class UserServiceImpl implements UserService {
         String text = "Here is your new crossfit password: " + password;
 
         Utility.sendForgottenPassword(email, subject, text);
+    }
+
+    @Override
+    public List<Workout> getUserWorkouts() {
+        List<Workout> workouts = getCurrentUser().getWorkouts();
+        for (Workout workout : workouts) {
+            Hibernate.initialize(workout.getExercises());
+        }
+        return workouts;
     }
 }

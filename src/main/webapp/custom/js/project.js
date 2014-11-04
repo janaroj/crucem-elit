@@ -58,6 +58,9 @@ ui.util = {
 	},
 	table : {
 		prepareData : function($defer, $filter, params, data) {
+			//Remove empty filters
+			for(var key in params.filter()) {if(!params.filter()[key]) {delete params.filter()[key];}}
+			
 			data = params.filter() ? $filter('filter')(data, params.filter())
 					: data;
 			data = params.sorting() ? $filter('orderBy')
@@ -68,12 +71,12 @@ ui.util = {
 		}
 	},
 	image : {
-		addImage : function(location, image, sex) {
-			$(location).append(ui.util.image.processImage(image, sex));
+		addImage : function(location, image, gender) {
+			$(location).append(ui.util.image.processImage(image, gender));
 		},
-		processImage : function(image, sex) {
+		processImage : function(image, gender) {
 			if (image instanceof Object) { // Image missing, show default
-				var imgSrc = sex === "FEMALE" ? "jane_doe_test.png"
+				var imgSrc = gender === "FEMALE" ? "jane_doe_test.png"
 						: "john_doe_test.png";
 				return '<img class="setImgSize img-rounded" src="../../images/' + imgSrc
 						+ '">';

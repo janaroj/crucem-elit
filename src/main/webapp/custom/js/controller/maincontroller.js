@@ -13,11 +13,11 @@
 		$scope.activeWhen = function(value) {
 			return value ? 'active' : '';
 		};
-
-		$scope.path = function() {
-			return $location.url();
-		};
 		
+		$scope.pathContains = function(path) {
+			return $location.url().indexOf(path) > -1;
+		};
+
 		$scope.login = function() {
 			authService.authenticate($.param({username: $scope.username, password: $scope.password}))
 			.then(function(result){
