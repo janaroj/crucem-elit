@@ -5,8 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -24,12 +24,8 @@ public @Data class Result extends BaseEntity {
     @Column(name = "id", unique = true, nullable = false)
     private long id;
 
-    @ManyToOne
-    @JoinColumn(name = "workout_id")
-    private Workout workout;
-
-    @ManyToOne
-    @JoinColumn(name = "exercise_id")
+    @OneToOne
+    @PrimaryKeyJoinColumn
     private Exercise exercise;
 
     @Column(name = "result")

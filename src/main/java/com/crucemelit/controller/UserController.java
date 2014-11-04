@@ -80,8 +80,7 @@ public class UserController {
             public void run() {
                 suggestions.addAll(service.search(term));
             }
-        }
-        ;
+        };
 
         ExecutorService executorService = Executors.newFixedThreadPool(2);
         executorService.execute(new SearchTask(userService));
@@ -124,7 +123,7 @@ public class UserController {
         return userService.getCurrentUser();
     }
 
-    @RequestMapping(value = "/profile/picture", method = RequestMethod.PUT)
+    @RequestMapping(value = "/profile/picture", method = RequestMethod.PUT) //TODO check if works
     @ResponseBody
     @SneakyThrows
     public void uploadProfilePicture(HttpServletRequest req) {
@@ -161,7 +160,7 @@ public class UserController {
         return resultService.getResults();
     }
 
-    @RequestMapping(value = "/gym/{id}/picture", method = RequestMethod.PUT)
+    @RequestMapping(value = "/gym/{id}/picture", method = RequestMethod.PUT) //TODO TAKE A LOOK
     @ResponseBody
     @SneakyThrows
     public void uploadGymPicture(HttpServletRequest req, @PathVariable long id) {

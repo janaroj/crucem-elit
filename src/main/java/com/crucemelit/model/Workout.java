@@ -42,6 +42,6 @@ public @Data class Workout extends BaseEntity {
     private String name;
 
     @OneToMany(mappedBy = "workout", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Result> results;
+    private List<Exercise> exercises;
 
 }

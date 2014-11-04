@@ -45,7 +45,6 @@ public class GymServiceImpl implements GymService {
         Gym gym = getGym(id);
         gym.setPicture(picture);
         gymRepository.saveAndFlush(gym);
-
     }
 
     @Override
