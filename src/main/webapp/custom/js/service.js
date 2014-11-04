@@ -80,7 +80,7 @@
 	    };
 	}]);
 
-	app.service('userService', function($http) {
+	app.service('userService', function($http, $upload) {
 		this.register = function(user) {
 			return $http.post("/api/register", user);
 		};
@@ -114,12 +114,23 @@
 		};
 	});
 
-	app.service('gymService', function($http) {
+	app.service('gymService', function($http, $upload) {
 		this.getGyms = function() {
 			return $http.get('/api/user/gyms');
 		};
 		this.getGymById = function(id) {
 			return $http.get('/api/user/gyms/' + id);
+		};
+		
+		this.getGymPicture = function(id) {
+			return $http.get('/api/user/gym/picture/' + id);
+		};
+		this.uploadGymPicture = function(image, id) {
+			return  $upload.upload({
+		        url: 'api/user/gym/'+id+'/picture', 
+		        method:'PUT',
+		        file: image, 
+		      });
 		};
 	});
 	

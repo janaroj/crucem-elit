@@ -161,4 +161,23 @@ public class UserController {
         return resultService.getResults();
     }
 
+    @RequestMapping(value = "/gym/{id}/picture", method = RequestMethod.PUT)
+    @ResponseBody
+    @SneakyThrows
+    public void uploadGymPicture(HttpServletRequest req, @PathVariable long id) {
+        ServletFileUpload upload = new ServletFileUpload();
+        FileItemIterator iterator = upload.getItemIterator(req);
+
+        if (iterator.hasNext()) {
+            FileItemStream itemStream = iterator.next();
+            gymService.setGymPicture(Utility.getBytesFromStream(itemStream.openStream()), id);
+        }
+    }
+
+    @RequestMapping(value = "/gym/picture/{id}")
+    @ResponseBody
+    public String getGymPicture(@PathVariable long id) {
+        return gymService.getGymPicture(id);
+    }
+
 }

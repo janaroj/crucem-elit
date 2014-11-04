@@ -40,4 +40,17 @@ public class GymServiceImpl implements GymService {
         return Utility.getSuggestions(gymRepository.findBySearchTerm(term), SuggestionType.GYM);
     }
 
+    @Override
+    public void setGymPicture(byte[] picture, long id) {
+        Gym gym = getGym(id);
+        gym.setPicture(picture);
+        gymRepository.saveAndFlush(gym);
+
+    }
+
+    @Override
+    public String getGymPicture(long id) {
+        return Utility.getImgSourceFromBytes(getGym(id).getPicture());
+    }
+
 }

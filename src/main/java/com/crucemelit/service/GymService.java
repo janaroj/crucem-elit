@@ -10,4 +10,8 @@ public interface GymService extends SearchService {
 
     Gym getGym(long id);
 
+    void setGymPicture(byte[] bytesFromStream, long id);
+
+    String getGymPicture(long id);
+
 }

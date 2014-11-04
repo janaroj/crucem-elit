@@ -102,7 +102,7 @@ body {
 
 .setImgSize{
     width:100px;
-    height:100px;    
+    height:100px;
 }
 
 .removeFriend {
@@ -144,7 +144,7 @@ body {
 .contactBar{
     overflow: hidden;
     float: right;
-    width: 70%;
+    width: 60%;
     background: #d4d4d4;
     border: 50px solid #d4d4d4;
     margin-top: 100px;
@@ -176,4 +176,9 @@ body {
 .main-bar{
     width: 40%;
     float: right;
+}
+
+.profile-img{
+    margin-top: 100px;
+    margin-left: 75px;
 }
