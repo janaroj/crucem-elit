@@ -19,7 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.crucemelit.domain.Sex;
+import com.crucemelit.domain.Gender;
 import com.crucemelit.domain.SuggestionType;
 import com.crucemelit.dto.Suggestion;
 import com.crucemelit.exception.CredentialsExpiredException;
@@ -97,7 +97,7 @@ public class UserServiceImpl implements UserService {
     private void seDefaultValuesForUser(User user) {
         user.setPasswordHash(encoder.encode(user.getPasswordHash()));
         user.setRole(Role.USER);
-        user.setSex(Sex.UNDEFINED);
+        user.setGender(Gender.UNDEFINED);
     }
 
     @Override

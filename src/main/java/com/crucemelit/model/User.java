@@ -30,7 +30,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.crucemelit.domain.Sex;
+import com.crucemelit.domain.Gender;
 import com.crucemelit.util.Utility;
 import com.crucemelit.web.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -59,7 +59,7 @@ public @Data class User extends BaseEntity implements UserDetails, Suggestable {
     private String lastName;
 
     @Enumerated(EnumType.STRING)
-    private Sex sex;
+    private Gender gender;
 
     @ManyToOne
     @JoinColumn(name = "gym")

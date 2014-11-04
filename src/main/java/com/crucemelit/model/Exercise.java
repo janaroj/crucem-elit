@@ -14,6 +14,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "EXCERCISE")
 @NoArgsConstructor
@@ -30,7 +32,8 @@ public @Data class Exercise extends BaseEntity {
     private String repetitionType;
 
     @OneToOne(mappedBy = "exercise")
-    private Result result;
+    @JsonBackReference
+    private Record record;
     
     @ManyToOne
     @JoinColumn(name="workoutId")

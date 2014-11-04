@@ -13,11 +13,13 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "WORKOUTEXERCISERESULT")
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public @Data class Result extends BaseEntity {
+public @Data class Record extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,10 +28,10 @@ public @Data class Result extends BaseEntity {
 
     @OneToOne
     @PrimaryKeyJoinColumn
+    @JsonManagedReference
     private Exercise exercise;
 
-    @Column(name = "result")
-    private int result;
+    private Integer result;
     
 
 }

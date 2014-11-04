@@ -25,14 +25,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.crucemelit.domain.Gender;
 import com.crucemelit.dto.EmailDto;
 import com.crucemelit.dto.Suggestion;
 import com.crucemelit.model.Gym;
-import com.crucemelit.model.Result;
+import com.crucemelit.model.Record;
 import com.crucemelit.model.User;
 import com.crucemelit.model.Workout;
 import com.crucemelit.service.GymService;
-import com.crucemelit.service.ResultService;
+import com.crucemelit.service.RecordService;
 import com.crucemelit.service.SearchService;
 import com.crucemelit.service.UserService;
 import com.crucemelit.service.WorkoutService;
@@ -52,7 +53,7 @@ public class UserController {
     private WorkoutService workoutService;
 
     @Autowired
-    private ResultService resultService;
+    private RecordService recordService;
 
     @RequestMapping(value = "/gyms")
     @ResponseBody
@@ -156,8 +157,14 @@ public class UserController {
 
     @RequestMapping(value = "/records")
     @ResponseBody
-    public List<Result> getResults() {
-        return resultService.getResults();
+    public List<Record> getRecords() {
+        return recordService.getRecords();
+    }
+    
+    @RequestMapping(value = "/genders")
+    @ResponseBody
+    public Gender[] getGenders() {
+        return Gender.values();
     }
 
     @RequestMapping(value = "/gym/{id}/picture", method = RequestMethod.PUT) //TODO TAKE A LOOK

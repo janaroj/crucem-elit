@@ -87,6 +87,9 @@
 		this.getContacts = function() {
 			return $http.get('/api/user/contacts');
 		};
+		this.getGenders = function() {
+			return $http.get('/api/user/genders');
+		};
 		this.removeContact = function(id) {
 			return id;
 		};
