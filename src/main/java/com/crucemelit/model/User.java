@@ -57,6 +57,10 @@ public @Data class User extends BaseEntity implements UserDetails, Suggestable {
     private String firstName;
 
     private String lastName;
+    
+    private Double weight;
+    
+    private Integer heigth;
 
     @Enumerated(EnumType.STRING)
     private Sex sex;

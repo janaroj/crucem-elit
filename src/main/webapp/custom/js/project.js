@@ -63,10 +63,10 @@ ui.util = {
 			if (image instanceof Object) { // Image missing, show default
 				var imgSrc = sex === "FEMALE" ? "jane_doe_test.png"
 						: "john_doe_test.png";
-				return '<img class="setImgSize" src="../../images/' + imgSrc
+				return '<img class="setImgSize img-rounded" src="../../images/' + imgSrc
 						+ '">';
 			} else {
-				return '<img class="setImgSize" src="data:image/png;base64,'
+				return '<img class="setImgSize img-rounded" src="data:image/png;base64,'
 						+ image.replace(/\"/g, "") + '">'; // regex to remove quotes
 			}
 		}

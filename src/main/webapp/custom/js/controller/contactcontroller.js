@@ -90,6 +90,21 @@
 		$scope.updateProfile = function() {
 			
 		};
+        
+            $scope.open = function($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+
+            $scope.opened = true;
+        };
+
+        $scope.format = 'dd-MM-yyyy';
+        
+        $scope.toggleMax = function() {
+                $scope.maxDate = $scope.maxDate ? null : new Date();
+              };
+        $scope.toggleMax();
+
 		
 		 $scope.onFileSelect = function($files) {
 			      userService.uploadProfilePicture($files[0]).then(function() {
