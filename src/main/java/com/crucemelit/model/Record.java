@@ -32,6 +32,5 @@ public @Data class Record extends BaseEntity {
     private Exercise exercise;
 
     private Integer result;
-    
 
 }

@@ -27,6 +27,7 @@ public @Data class Exercise extends BaseEntity {
     @Column(name = "id", unique = true, nullable = false)
     private long id;
 
+    @Column(nullable = false)
     private String name;
 
     private String repetitionType;
@@ -34,9 +35,9 @@ public @Data class Exercise extends BaseEntity {
     @OneToOne(mappedBy = "exercise")
     @JsonBackReference
     private Record record;
-    
+
     @ManyToOne
-    @JoinColumn(name="workoutId")
+    @JoinColumn(name = "workoutId", nullable = false)
     private Workout workout;
 
 }
