@@ -2,6 +2,7 @@ package com.crucemelit.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -18,6 +19,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import lombok.Data;
@@ -57,10 +60,13 @@ public @Data class User extends BaseEntity implements UserDetails, Suggestable {
     private String firstName;
 
     private String lastName;
-    
+
     private Double weight;
-    
-    private Integer heigth;
+
+    private Integer length;
+
+    @Temporal(TemporalType.DATE)
+    private Date dateOfBirth;
 
     @Enumerated(EnumType.STRING)
     private Gender gender;

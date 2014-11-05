@@ -23,7 +23,10 @@
 			return $.i18n.prop(key);
 		};
 		
+		$rootScope.loginClicked = false;
+		
 		$rootScope.login = function(username, password) {
+			$rootScope.loginClicked = true;
 			authService.authenticate($.param({username: username, password: password}))
 			.then(function(result){
 				$rootScope.user = result.data;
@@ -39,8 +42,10 @@
 				
 				$rootScope.redirectUrl = null;
             	$rootScope.redirectStatus = null;
+            	$rootScope.loginClicked = false;
 			},
 			function(result) {
+				$rootScope.loginClicked = false;
 				if($rootScope.redirectStatus == 401) {
 					$location.url($rootScope.redirectUrl);
 					toaster.pop('error', 'Authentication', result.data.message);

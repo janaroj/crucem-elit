@@ -61,10 +61,16 @@
 					<li ng-show="!user">
 						<a data-toggle="popover" data-placement="bottom" data-target=".popover-target-login"><msg key="login"/></a>
 						<div class="popover-target popover-target-login">
-      						<input type="text" placeholder="{{ getTranslation('email') }}" class="form-control" data-ng-model="username"/> 
-							<input type="password" placeholder="{{ getTranslation('password') }}" class="form-control" data-ng-model="password"/>
-							<a class="btn btn-primary" ng-click="login()"><msg key="login"/> »</a>
-							<a href="/#/forgot"><msg key="forgot.password"/></a>           
+								<form name="loginForm" role="login" ng-submit="login()" novalidate show-validation>
+									<div class="form-group">
+										<input type="text" placeholder="{{ getTranslation('email') }}" class="form-control" data-ng-model="username" required ng-disabled="loginClicked"/>
+									</div>
+									<div class="form-group">
+										<input type="password" placeholder="{{ getTranslation('password') }}" class="form-control" data-ng-model="password" required ng-disabled="loginClicked"/>
+									</div>
+									<button type="submit" class="btn btn-primary" ng-disabled="loginform.$invalid || loginClicked"><msg key="login" /> »</button>
+									<a href="/#/forgot" class="forgot-password-link"><msg key="forgot.password"/></a>           
+								</form>
   						</div>                      
 					</li>
 					<li ng-class="activeWhen(pathContains('/register'))" ng-show="!user"><a href="#/register"><msg key="register"/></a></li>
