@@ -12,6 +12,12 @@
 	<form id="form" class="form-horizontal" role="form" name="form"
 		ng-init="init()" ng-submit="updateProfile()" novalidate
 		show-validation>
+		<div class="form-group" ng-hide="isChangeInProgress">
+			<label class="col-lg-3 control-label" >Email:</label>
+			<div class="col-lg-5">
+				<p class="form-control-static" >{{contact.email}}</p>
+			</div>
+		</div>
 		<div class="form-group">
 			<label class="col-lg-3 control-label">Eesnimi:</label>
 			<div class="col-lg-5">
@@ -26,20 +32,6 @@
 				<input class="form-control" type="text" ng-show="isChangeInProgress"
 					ng-model="contact.lastName">
 				<p class="form-control-static" ng-hide="isChangeInProgress">{{contact.lastName}}</p>
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-lg-3 control-label">Email:</label>
-			<div class="col-lg-5">
-				<input class="form-control" type="email" name="email"
-					ng-show="isChangeInProgress" ng-model="contact.email" required>
-				<p class="form-control-static" ng-hide="isChangeInProgress">{{contact.email}}</p>
-			</div>
-			<div ng-show="form.email.$dirty && form.email.$invalid">
-				<p class="help-block" ng-show="form.email.$error.required">Your
-					e-mail is required.</p>
-				<p class="help-block" ng-show="form.email.$error.email">Your
-					e-mail is invalid.</p>
 			</div>
 		</div>
 		<div class="form-group">

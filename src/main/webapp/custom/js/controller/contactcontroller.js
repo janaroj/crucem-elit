@@ -83,6 +83,7 @@
 		$scope.cancelProfile = function(){
 			$scope.isChangeInProgress = false;
 			$scope.isChangeable = true;
+			$scope.contact = $scope.user;
 		};
 
 		$scope.updateProfile = function() {
