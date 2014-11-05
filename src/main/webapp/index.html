@@ -61,14 +61,21 @@
 					<li ng-show="!user">
 						<a data-toggle="popover" data-placement="bottom" data-target=".popover-target-login"><msg key="login"/></a>
 						<div class="popover-target popover-target-login">
-								<form name="loginForm" role="login" ng-submit="login()" novalidate show-validation>
+								<form name="form" role="login" ng-submit="login()" novalidate show-validation>
 									<div class="form-group">
-										<input type="text" placeholder="{{ getTranslation('email') }}" class="form-control" data-ng-model="username" required ng-disabled="loginClicked"/>
+										<input type="email" ng-blur="visitedEmail=true" placeholder="{{ getTranslation('email') }}" class="form-control" name="email" data-ng-model="username" required ng-disabled="loginClicked"/>
+										<div ng-show="form.email.$dirty && form.email.$invalid && visitedEmail">
+											<p class="help-block" ng-show="form.email.$error.required"><msg key="email.required"/></p>
+											<p class="help-block" ng-show="form.email.$error.email"><msg key="email.invalid"/></p>
+										</div>
 									</div>
 									<div class="form-group">
-										<input type="password" placeholder="{{ getTranslation('password') }}" class="form-control" data-ng-model="password" required ng-disabled="loginClicked"/>
+										<input type="password" placeholder="{{ getTranslation('password') }}" class="form-control" name="password" data-ng-model="password" required ng-disabled="loginClicked"/>
+										<div ng-show="form.password.$dirty && form.password.$invalid">
+											<p class="help-block" ng-show="form.password.$error.required"><msg key="password.required"/></p>
+										</div>
 									</div>
-									<button type="submit" class="btn btn-primary" ng-disabled="loginform.$invalid || loginClicked"><msg key="login" /> »</button>
+									<button type="submit" class="btn btn-primary" ng-disabled="form.$invalid || loginClicked"><msg key="login" /> »</button>
 									<a href="/#/forgot" class="forgot-password-link"><msg key="forgot.password"/></a>           
 								</form>
   						</div>                      
