@@ -1,6 +1,6 @@
 (function() {
 	var app = angular.module('crucem-elit');
-	app.controller('MainController', function($scope, $rootScope, i18n, $location, $http, $cookieStore, emailService, authService, toaster) {
+	app.controller('MainController', function($scope, $rootScope, i18n, $location, emailService, toaster) {
 		
 		$scope.availableLanguages = ["ee", "en"];
 		
@@ -18,31 +18,6 @@
 			return $location.url().indexOf(path) > -1;
 		};
 
-		$scope.login = function() {
-			authService.authenticate($.param({username: $scope.username, password: $scope.password}))
-			.then(function(result){
-				$rootScope.user = result.data;
-				$http.defaults.headers.common['X-Auth-Token'] = result.data.token;
-				$cookieStore.put('user', result.data);
-				
-				if($rootScope.redirectUrl != null) {
-					$location.url($rootScope.redirectUrl);
-				}
-				else {
-					$location.path("/user/main");
-				}
-				
-				$rootScope.redirectUrl = null;
-            	$rootScope.redirectStatus = null;
-			},
-			function(result) {
-				if($rootScope.redirectStatus == 401) {
-					$location.url($rootScope.redirectUrl);
-					toaster.pop('error', 'Authentication', result.data.message);
-				}
-			});
-		};
-		
 		$scope.forgot = function() {
 			emailService.sendNewPassword({email : $scope.email}).then(function() {
 				$scope.email = null;
@@ -51,6 +26,11 @@
 				toaster.pop('error', 'Forgot password', result.data.message);
 			});
 		};	
+		
+		$scope.login = function() {
+			$rootScope.login($scope.username, $scope.password);
+			$scope.password = null;
+		};
 	});
 	
 }());

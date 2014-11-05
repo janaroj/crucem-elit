@@ -4,7 +4,7 @@
 	app = angular.module('crucem-elit', [ 'ui.bootstrap','ngRoute', 'ngResource', 'ngTable', 'ngCookies','angularFileUpload', 'ngAnimate', 'toaster' ]);
 
 	//user operations
-	app.run(function ($rootScope, $http, $location, $cookieStore) {
+	app.run(function ($rootScope, $http, $location, $cookieStore, authService, toaster) {
 
 		$rootScope.hasRole = function (role) {
 
@@ -21,6 +21,31 @@
 
 		$rootScope.getTranslation = function(key) {
 			return $.i18n.prop(key);
+		};
+		
+		$rootScope.login = function(username, password) {
+			authService.authenticate($.param({username: username, password: password}))
+			.then(function(result){
+				$rootScope.user = result.data;
+				$http.defaults.headers.common['X-Auth-Token'] = result.data.token;
+				$cookieStore.put('user', result.data);
+				
+				if($rootScope.redirectUrl != null) {
+					$location.url($rootScope.redirectUrl);
+				}
+				else {
+					$location.path("/user/main");
+				}
+				
+				$rootScope.redirectUrl = null;
+            	$rootScope.redirectStatus = null;
+			},
+			function(result) {
+				if($rootScope.redirectStatus == 401) {
+					$location.url($rootScope.redirectUrl);
+					toaster.pop('error', 'Authentication', result.data.message);
+				}
+			});
 		};
 
 		$rootScope.logout = function () {
