@@ -1,59 +1,65 @@
 package com.crucemelit.model;
+
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 
-@RunWith(MockitoJUnitRunner.class)
 public class WorkoutTest {
-	
-	private final String WOD_EXERCISE = "WOD EXERCISE";
-	private final String EXERCISE1 = "EXERCISE 1";
-	private final String EXERCISE2 = "EXERCISE 2";
-	
-	@Mock
-	private Workout workout;
-	
-	@Before
-	public void setUp() {
-		when(workout.getExercises()).thenReturn(getExercises());
-	}
 
-	private List<Exercise> getExercises() {
-		List<Exercise> exercises = new ArrayList<>();
-		
-		exercises.add(createExercise(EXERCISE1, false));
-		exercises.add(createExercise(WOD_EXERCISE, true));
-		exercises.add(createExercise(EXERCISE2, false));
-		
-		return exercises;
-	}
+    private final String WOD_EXERCISE = "WOD EXERCISE";
+    private final String EXERCISE1 = "EXERCISE 1";
+    private final String EXERCISE2 = "EXERCISE 2";
+    private final Integer WOD_RESULT = 11;
+    private final Integer RESULT1 = 25;
+    private final Integer RESULT2 = null;
 
-	private Exercise createExercise(String name, boolean isWod) {
-		Exercise exercise = new Exercise();
-		exercise.setName(name);
-		exercise.setWod(isWod);
-		
-		Record record = new Record();
-		record.setResult(25);
-		exercise.setRecord(record);
-		return exercise;
-	}
+    private Workout workout;
 
-	@Test
-	public void getResultTest() {
-		
-	}
-	
-	@Test
-	public void getWodTest() {
-		assertEquals(WOD_EXERCISE, workout.getWod());
-	}
+    @Before
+    public void setUp() {
+        workout = new Workout();
+        workout.setExercises(createExercises());
+    }
+
+    private List<Exercise> createExercises() {
+        List<Exercise> exercises = new ArrayList<>();
+
+        exercises.add(createExercise(EXERCISE1, false, RESULT1));
+        exercises.add(createExercise(WOD_EXERCISE, true, WOD_RESULT));
+        exercises.add(createExercise(EXERCISE2, false, RESULT2));
+
+        return exercises;
+    }
+
+    private Exercise createExercise(String name, boolean isWod, Integer result) {
+        Exercise exercise = new Exercise();
+        exercise.setName(name);
+        exercise.setWod(isWod);
+
+        if (result != null) {
+            exercise.setRecord(createRecord(result));
+        }
+
+        return exercise;
+    }
+
+    private Record createRecord(Integer result) {
+        Record record = new Record();
+        record.setResult(result);
+        return record;
+    }
+
+    @Test
+    public void getResultTest() {
+        assertEquals(WOD_RESULT, workout.getResult());
+    }
+
+    @Test
+    public void getWodTest() {
+        assertEquals(WOD_EXERCISE, workout.getWod());
+    }
 }
