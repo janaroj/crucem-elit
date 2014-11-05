@@ -75,25 +75,40 @@
 			return $scope.user.id === $scope.contact.id;
 		};
 
-		$scope.changeProfile = function() {
-			$scope.isChangeInProgress = true;
-			$scope.isChangeable = false;
-		};
-
 		$scope.cancelProfile = function(){
-			$scope.isChangeInProgress = false;
-			$scope.isChangeable = true;
-			$scope.contact = $scope.user;
+			$scope.toggleProfileChange();
+			angular.copy($scope.user, $scope.contact);
+		};
+		
+		$scope.toggleProfileChange = function() {
+			$scope.isChangeInProgress = !$scope.isChangeInProgress;
+			$scope.isChangeable = !$scope.isChangeable;
 		};
 
 		$scope.updateProfile = function() {
-			userService.updateUser($scope.contact).then(function(result) {
-				toaster.pop('success', 'Contact' , result.data.message);
+			userService.updateUser(createUserDTO()).then(function(result) {
+				if (!/^\d{4}-\d{2}-\d{2}$/.test($scope.contact.dateOfBirth)) {
+					$scope.contact.dateOfBirth = $.datepicker.formatDate("yy-mm-dd", $scope.contact.dateOfBirth); //HACK to correct DOB
+				}
+				angular.copy($scope.contact, $scope.user);
+				$scope.toggleProfileChange();
+				toaster.pop('success', 'Contact' , 'Updated successfully');
 			}, 
 			function(result) {
 				toaster.pop('error', 'Contact' , result.data.message);
 			});
 
+		};
+		
+		var createUserDTO = function() {
+			return userDTO = {
+				firstName : $scope.contact.firstName,
+				lastName : $scope.contact.lastName,
+				weight : $scope.contact.weight,
+				length : $scope.contact.length,
+				dateOfBirth : $scope.contact.dateOfBirth,
+				gender : $scope.contact.gender,
+			};
 		};
 
 		$scope.open = function($event) {
@@ -103,13 +118,12 @@
 			$scope.opened = true;
 		};
 
-		$scope.format = 'yyyy-dd-MM';
+        $scope.format = 'yyyy-MM-dd';
 
 		$scope.toggleMax = function() {
 			$scope.maxDate = $scope.maxDate ? null : new Date();
 		};
 		$scope.toggleMax();
-
 
 		$scope.onFileSelect = function($files) {
 			userService.uploadProfilePicture($files[0]).then(function() {

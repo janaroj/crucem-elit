@@ -7,7 +7,7 @@
 </div>
 <div class="contactBar pre">
 	<div class=" pull-right" ng-hide="isMyProfile()">
-		<button class="btn btn-primary">Lisa sõbraks</button>
+		<button class="btn btn-primary"><msg key="add.friend"/></button>
 	</div>
 	<form id="form" class="form-horizontal" role="form" name="form"
 		ng-init="init()" ng-submit="updateProfile()" novalidate
@@ -19,7 +19,7 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="col-lg-3 control-label"><msg key="lastName" /></label>
+			<label class="col-lg-3 control-label"><msg key="firstName" /></label>
 			<div class="col-lg-5">
 				<input class="form-control" type="text" ng-show="isChangeInProgress"
 					ng-model="contact.firstName">
@@ -27,7 +27,7 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="col-lg-3 control-label"><msg key="firstName" /></label>
+			<label class="col-lg-3 control-label"><msg key="lastName" /></label>
 			<div class="col-lg-5">
 				<input class="form-control" type="text" ng-show="isChangeInProgress"
 					ng-model="contact.lastName">
@@ -39,10 +39,10 @@
 			<div class="col-lg-3">
 				<select class="form-control" ng-model="contact.gender"
 					ng-show="isChangeInProgress">
-					<option value="MALE">Mees</option>
-					<option value="FEMALE">Naine</option>
+					<option value="MALE" label="{{getTranslation('MALE')}}"/>
+					<option value="FEMALE" label="{{getTranslation('FEMALE')}}"/>
 				</select>
-				<p class="form-control-static" ng-hide="isChangeInProgress">{{contact.gender}}</p>
+				<p class="form-control-static" ng-hide="isChangeInProgress">{{getTranslation(contact.gender)}}</p>
 			</div>
 		</div>
 		<div class="form-group">
@@ -65,9 +65,8 @@
 			<label class="col-lg-3 control-label"><msg key="dateOfBirth" /></label>
 			<div class="col-lg-3">
 				<input type="text" class="form-control" ng-model="contact.dateOfBirth"
-					ng-show="isChangeInProgress" datepicker-popup="{{format}}"
-					is-open="opened" max-date="maxDate" close-text="Close" style:
-					display:inline;>
+					ng-show="isChangeInProgress" datepicker-popup="{{format}}" placeholder="{{format}}"
+					is-open="opened" max-date="maxDate" show-button-bar=false datepicker-append-to-body=true style:display:inline;>
 				<p class="form-control-static" ng-hide="isChangeInProgress">{{contact.dateOfBirth}}</p>
 			</div>
 			<button type="button" class="btn btn-default" ng-click="open($event)"
@@ -84,12 +83,12 @@
 		<div class="form-group" ng-show="isMyProfile() && isChangeInProgress">
 			<label class="col-md-3 control-label"></label>
 			<div class="col-md-8">
-				<input type="submit" class="btn btn-primary" value="Salvesta" ng-disabled="form.$invalid">
-				<a class="btn btn-default" ng-click="cancelProfile()">Cancel</a>
+				<button type="submit" class="btn btn-primary" ng-disabled="form.$invalid"><msg key="save"/></button>
+				<a class="btn btn-default" ng-click="cancelProfile()"><msg key="cancel"/></a>
 			</div>
 		</div>
 		<div class="pull-right" ng-show="isMyProfile() && isChangeable">
-			<a class="btn btn-success" ng-click="changeProfile()">Muuda</a>
+			<a class="btn btn-success" ng-click="toggleProfileChange()"><msg key="change"/></a>
 		</div>
 	</form>
 

@@ -178,4 +178,9 @@ public class UserServiceImpl implements UserService {
         }
         return workouts;
     }
+
+    @Override
+    public void updateUser(User user) {
+        userRepository.saveAndFlush(user);
+    }
 }

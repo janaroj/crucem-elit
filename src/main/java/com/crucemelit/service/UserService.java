@@ -34,4 +34,6 @@ public interface UserService extends UserDetailsService, SearchService, PictureS
 
     List<Workout> getUserWorkouts();
 
+    void updateUser(User user);
+
 }

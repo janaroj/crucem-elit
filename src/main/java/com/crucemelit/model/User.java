@@ -43,7 +43,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Table(name = "PERSON")
 @NoArgsConstructor
 // For debugging, remove later
-@ToString(exclude = { "gym", "friendOf", "friends", "picture", "token", "passwordHash" })
+@ToString(exclude = { "gym", "friendOf", "friends", "picture", "token", "passwordHash", "workouts" })
 @EqualsAndHashCode(callSuper = false)
 public @Data class User extends BaseEntity implements UserDetails, Suggestable {
 

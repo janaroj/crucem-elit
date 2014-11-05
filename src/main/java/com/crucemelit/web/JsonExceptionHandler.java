@@ -23,6 +23,7 @@ public class JsonExceptionHandler implements HandlerExceptionResolver {
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler,
             Exception ex) {
         try {
+            System.out.println("****" + ex.getMessage() + "****"); // FKING HEROKU, AJASIN SEDA ERROR MESSAGET 2H TAGA
             mapper.writeValue(response.getWriter(), new ResponseMessage(ResponseMessage.Type.error, ex.getMessage()));
         }
         catch (IOException e) {

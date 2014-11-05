@@ -34,6 +34,7 @@ import com.crucemelit.service.RecordService;
 import com.crucemelit.service.SearchService;
 import com.crucemelit.service.UserService;
 import com.crucemelit.util.Utility;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 @RequestMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -47,6 +48,9 @@ public class UserController {
 
     @Autowired
     private RecordService recordService;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @RequestMapping(value = "/gyms")
     @ResponseBody
@@ -165,6 +169,16 @@ public class UserController {
     @ResponseBody
     public String getGymPicture(@PathVariable long id) {
         return gymService.getPicture(id);
+    }
+
+    @RequestMapping(value = "/update/user", method = RequestMethod.PUT)
+    @ResponseBody
+    @SneakyThrows
+    public ResponseEntity<String> updateUser(HttpServletRequest req) {
+        User user = userService.getCurrentUser();
+        objectMapper.readerForUpdating(user).readValue(req.getReader());
+        userService.updateUser(user);
+        return new ResponseEntity<String>("Success", HttpStatus.OK);
     }
 
 }

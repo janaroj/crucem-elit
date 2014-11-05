@@ -94,7 +94,7 @@
 			return $http.get('/api/user/users/' + id);
 		};
 		this.updateUser = function(user){
-			return $http.put("/api/update/user", user);
+			return $http.put("/api/user/update/user", user);
 		};	
 		this.joinGym = function(id) {
 			return $http.post('api/user/gym/join/' + id);
