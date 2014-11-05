@@ -13,13 +13,13 @@
 		ng-init="init()" ng-submit="updateProfile()" novalidate
 		show-validation>
 		<div class="form-group" ng-hide="isChangeInProgress">
-			<label class="col-lg-3 control-label" >Email:</label>
+			<label class="col-lg-3 control-label" ><msg key="email" /></label>
 			<div class="col-lg-5">
 				<p class="form-control-static" >{{contact.email}}</p>
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="col-lg-3 control-label">Eesnimi:</label>
+			<label class="col-lg-3 control-label"><msg key="lastName" /></label>
 			<div class="col-lg-5">
 				<input class="form-control" type="text" ng-show="isChangeInProgress"
 					ng-model="contact.firstName">
@@ -27,7 +27,7 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="col-lg-3 control-label">Perenimi:</label>
+			<label class="col-lg-3 control-label"><msg key="firstName" /></label>
 			<div class="col-lg-5">
 				<input class="form-control" type="text" ng-show="isChangeInProgress"
 					ng-model="contact.lastName">
@@ -46,7 +46,7 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="col-lg-3 control-label">Pikkus:</label>
+			<label class="col-lg-3 control-label"><msg key="length" /></label>
 			<div class="col-lg-3">
 				<input class="form-control" type="text" ng-show="isChangeInProgress"
 					ng-model="contact.length">
@@ -54,7 +54,7 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="col-lg-3 control-label">Kaal:</label>
+			<label class="col-lg-3 control-label"><msg key="weight" /></label>
 			<div class="col-lg-3">
 				<input class="form-control" type="text" ng-show="isChangeInProgress"
 					ng-model="contact.weight">
@@ -62,7 +62,7 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="col-lg-3 control-label">Sünniaeg:</label>
+			<label class="col-lg-3 control-label"><msg key="dateOfBirth" /></label>
 			<div class="col-lg-3">
 				<input type="text" class="form-control" ng-model="contact.dateOfBirth"
 					ng-show="isChangeInProgress" datepicker-popup="{{format}}"
@@ -76,7 +76,7 @@
 			</button>
 		</div>
 		<div class="form-group" ng-hide="isChangeInProgress">
-			<label class="col-md-3 control-label">Boks:</label>
+			<label class="col-md-3 control-label"><msg key="gym" /></label>
 			<div class="col-md-8">
 				<p class="form-control-static">{{contact.gym.name}}</p>
 			</div>
