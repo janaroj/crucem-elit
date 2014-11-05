@@ -29,9 +29,6 @@
 					$rootScope.redirectUrl = $location.url();
 					$rootScope.redirectStatus = 401;
 					$rootScope.logout();
-					if ($location.url() !== "/register") {
-						$location.url('/');
-					}
 				}
 				return $q.reject(response);
 			}

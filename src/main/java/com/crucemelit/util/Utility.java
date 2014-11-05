@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
@@ -22,6 +23,7 @@ import org.apache.commons.fileupload.FileItemIterator;
 import org.apache.commons.fileupload.FileItemStream;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.IOUtils;
+import org.hibernate.Hibernate;
 import org.springframework.security.crypto.codec.Base64;
 import org.springframework.util.StringUtils;
 
@@ -135,6 +137,10 @@ public final class Utility {
             FileItemStream itemStream = iterator.next();
             service.setPicture(Utility.getBytesFromStream(itemStream.openStream()), id);
         }
+    }
+    
+    public static final boolean isCollectionInitialized(Collection<?> collection) {
+    	return Hibernate.isInitialized(collection);
     }
 
 }

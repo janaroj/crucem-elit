@@ -21,8 +21,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import org.hibernate.Hibernate;
-
+import com.crucemelit.util.Utility;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -52,7 +51,7 @@ public @Data class Workout extends BaseEntity {
     private List<Exercise> exercises;
 
     public Integer getResult() {
-        if (Hibernate.isInitialized(exercises)) {
+        if (Utility.isCollectionInitialized(exercises)) {
             for (Exercise exercise : getExercises()) {
                 if (exercise.isWod() && exercise.getRecord() != null) {
                     return exercise.getRecord().getResult();
@@ -63,7 +62,7 @@ public @Data class Workout extends BaseEntity {
     }
 
     public String getWod() {
-        if (Hibernate.isInitialized(exercises)) {
+        if (Utility.isCollectionInitialized(exercises)) {
             for (Exercise exercise : getExercises()) {
                 if (exercise.isWod()) {
                     return exercise.getName();
@@ -72,5 +71,5 @@ public @Data class Workout extends BaseEntity {
         }
         return null;
     }
-
+    
 }

@@ -202,3 +202,26 @@ body {
     background-color: white;
     opacity: 0.5;
 }
+
+.clear:after {
+	clear: both;
+}
+
+.clear:before, .clear:after {
+	content: "\0020";
+	display: block;
+	height: 0;
+	overflow: hidden;
+}
+
+.page-separator {
+	 border-top : 3px solid #dbdfe3;
+}
+
+.pad-down {
+	padding-bottom : 50px;
+}
+
+.pull-down {
+	margin-top: 25px;
+}

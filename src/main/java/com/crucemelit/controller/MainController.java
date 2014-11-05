@@ -18,12 +18,16 @@ public class MainController {
 
     @Autowired
     private UserService userService;
+    
+    @Autowired
+    private AuthController authController;
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<String> register(@RequestBody User user) {
+    public User register(@RequestBody User user) {
+    	String password = user.getPassword();
         userService.register(user);
-        return new ResponseEntity<String>("Success", HttpStatus.OK);
+        return authController.authenticate(user.getUsername(), password);
     }
 
     @RequestMapping(value = "/forgot/password", method = RequestMethod.POST)

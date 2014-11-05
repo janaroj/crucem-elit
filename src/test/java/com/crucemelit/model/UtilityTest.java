@@ -1,4 +1,4 @@
-package com.crucemelit.service;
+package com.crucemelit.model;
 
 import static org.junit.Assert.assertEquals;
 

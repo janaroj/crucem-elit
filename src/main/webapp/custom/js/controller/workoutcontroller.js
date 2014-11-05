@@ -26,7 +26,7 @@
 						$scope.newTableLoading = false;
 					}
 				});
-				
+
 				$scope.tableParams2 = new ngTableParams({
 					page: 1,            // show first page
 					count: 10,          // count per page
@@ -42,5 +42,10 @@
 				toaster.pop('error', 'Workouts' , result.data.message);
 			});
 		};
+
+		$scope.newWorkout = function() {
+			toaster.pop('error', 'Unimplemented', "This feature doesn't work yet");
+		};
+
 	});
 }());
