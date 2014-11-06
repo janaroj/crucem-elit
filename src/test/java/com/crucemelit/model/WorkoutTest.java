@@ -1,49 +1,63 @@
 package com.crucemelit.model;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
-//TODO REDO
+import org.junit.Test;
+
 public class WorkoutTest {
 
-    private final String WOD_EXERCISE = "WOD EXERCISE";
-    private final String EXERCISE1 = "EXERCISE 1";
-    private final String EXERCISE2 = "EXERCISE 2";
-    private final Integer WOD_RESULT = 11;
-    private final Integer RESULT1 = 25;
-    private final Integer RESULT2 = null;
+    private final String GROUP1 = "GROUP 1";
+    private final String GROUP2 = "GROUP 2";
+    private final String WOD_EXERCISE_GROUP = "WOD";
+    private final Double WOD_RESULT = 11d;
+    private final Double RESULT1 = 25d;
+    private final Double RESULT2 = null;
 
     private Workout workout;
 
     @Before
     public void setUp() {
         workout = new Workout();
+        workout.setExerciseGroups(createExerciseGroups());
+
     }
 
-    private List<Exercise> createExercises() {
-        List<Exercise> exercises = new ArrayList<>();
-
-        exercises.add(createExercise(EXERCISE1, false, RESULT1));
-        exercises.add(createExercise(WOD_EXERCISE, true, WOD_RESULT));
-        exercises.add(createExercise(EXERCISE2, false, RESULT2));
-
-        return exercises;
+    @Test
+    public void getResultTest() {
+        assertEquals(WOD_RESULT, workout.getResult().getRepeats());
     }
 
-    private Exercise createExercise(String name, boolean isWod, Integer result) {
-        Exercise exercise = new Exercise();
-        exercise.setName(name);
+    @Test
+    public void getWodTest() {
+        assertEquals(WOD_EXERCISE_GROUP, workout.getWod());
+    }
 
+    private List<ExerciseGroup> createExerciseGroups() {
+        List<ExerciseGroup> exerciseGroups = new ArrayList<>();
+        exerciseGroups.add(createExerciseGroup(GROUP1, false, RESULT1));
+        exerciseGroups.add(createExerciseGroup(WOD_EXERCISE_GROUP, true, WOD_RESULT));
+        exerciseGroups.add(createExerciseGroup(GROUP2, false, RESULT2));
+        return exerciseGroups;
+    }
+
+    private ExerciseGroup createExerciseGroup(String name, boolean isWod, Double result) {
+        ExerciseGroup exerciseGroup = new ExerciseGroup();
+        exerciseGroup.setName(name);
+        exerciseGroup.setWod(isWod);
         if (result != null) {
-            exercise.setRecord(createRecord(result));
+            exerciseGroup.setRecord(createRecord(result));
         }
 
-        return exercise;
+        return exerciseGroup;
     }
 
-    private Record createRecord(Integer result) {
+    private Record createRecord(Double result) {
         Record record = new Record();
+        record.setRepeats(result);
         return record;
     }
 
