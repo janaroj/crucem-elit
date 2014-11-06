@@ -14,8 +14,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
 @Table(name = "GYM")
 @NoArgsConstructor
@@ -37,10 +35,8 @@ public @Data class Gym extends BaseEntity implements Suggestable {
     private String contact;
 
     @OneToMany(mappedBy = "gym", fetch = FetchType.LAZY)
-    @JsonIgnore
     private List<User> users;
 
-    @JsonIgnore
     private byte[] picture;
 
     public String getFullAddress() {

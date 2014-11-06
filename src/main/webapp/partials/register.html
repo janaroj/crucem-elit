@@ -16,9 +16,9 @@
 				</div>
 				<div class="form-group">
 					<label><msg key="password"/></label> 
-					<input type="password" class="form-control" name="password" ng-model="registerAccount.password" ng-minlength=5
+					<input type="password" ng-blur="visitedPassword=true" class="form-control" name="password" ng-model="registerAccount.password" ng-minlength=5
 						ng-maxlength=50 required>
-					<div ng-show="form.password.$dirty && form.password.$invalid">
+					<div ng-show="form.password.$dirty && form.password.$invalid && visitedPassword">
 						<p class="help-block" ng-show="form.password.$error.required"><msg key="password.required"/></p>
 						<p class="help-block" ng-show="form.password.$error.minlength"><msg key="password.minlength"/></p>
 						<p class="help-block" ng-show="form.password.$error.maxlength"><msg key="password.maxlength"/></p>
@@ -26,9 +26,9 @@
 				</div>
 				<div class="form-group">
 					<label><msg key="password.confirmation"/></label> 
-					<input type="password" class="form-control" name="confirmPassword" ng-model="confirmPassword"
+					<input type="password" ng-blur="visitedConfirmation=true" class="form-control" name="confirmPassword" ng-model="confirmPassword"
 						ng-minlength=5 ng-maxlength=50 required>
-					<div ng-show="form.confirmPassword.$dirty && form.confirmPassword.$invalid">
+					<div ng-show="form.confirmPassword.$dirty && form.confirmPassword.$invalid && visitedConfirmation">
 						<p class="help-block" ng-show="form.confirmPassword.$error.required"><msg key="password.required"/></p>
 						<p class="help-block" ng-show="form.confirmPassword.$error.minlength"><msg key="password.minlength"/></p>
 						<p class="help-block" ng-show="form.confirmPassword.$error.maxlength"><msg key="password.maxlength"/></p>

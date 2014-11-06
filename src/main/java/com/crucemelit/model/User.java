@@ -26,7 +26,6 @@ import javax.persistence.Transient;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import org.hibernate.validator.constraints.Email;
 import org.springframework.security.core.GrantedAuthority;
@@ -42,8 +41,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Entity
 @Table(name = "PERSON")
 @NoArgsConstructor
-// For debugging, remove later
-@ToString(exclude = { "gym", "friendOf", "friends", "picture", "token", "passwordHash", "workouts" })
 @EqualsAndHashCode(callSuper = false)
 public @Data class User extends BaseEntity implements UserDetails, Suggestable {
 
@@ -77,30 +74,24 @@ public @Data class User extends BaseEntity implements UserDetails, Suggestable {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "connections", joinColumns = @JoinColumn(name = "personId"), inverseJoinColumns = @JoinColumn(name = "friendId"))
-    @JsonIgnore
     private List<User> friends;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "connections", joinColumns = @JoinColumn(name = "friendId"), inverseJoinColumns = @JoinColumn(name = "personId"))
-    @JsonIgnore
     private List<User> friendOf;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    @JsonIgnore
     private List<Workout> workouts;
 
-    @JsonIgnore
     private byte[] picture;
 
     @Column(name = "INVALID_LOGIN_COUNT")
-    @JsonIgnore
     private int invalidLoginCount;
 
     @Transient
     private String token;
 
     @Enumerated(EnumType.STRING)
-    @JsonIgnore
     private Role role;
 
     @Override
@@ -112,7 +103,6 @@ public @Data class User extends BaseEntity implements UserDetails, Suggestable {
     }
 
     @Override
-    @JsonIgnore
     public boolean isAccountNonLocked() {
         return getInvalidLoginCount() <= 5;
     }
@@ -139,25 +129,21 @@ public @Data class User extends BaseEntity implements UserDetails, Suggestable {
     }
 
     @Override
-    @JsonIgnore
     public boolean isAccountNonExpired() {
         return true;
     }
 
     @Override
-    @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
     @Override
-    @JsonIgnore
     public boolean isEnabled() {
         return true;
     }
 
     @SuppressWarnings("unchecked")
-    @JsonIgnore
     public List<User> getContactsFromGym() {
         if (gym != null) {
             return gym.getUsers();
@@ -177,12 +163,10 @@ public @Data class User extends BaseEntity implements UserDetails, Suggestable {
         return authorities;
     }
 
-    @JsonIgnore
     public void resetInvalidLoginCount() {
         this.invalidLoginCount = 0;
     }
 
-    @JsonIgnore
     public void increaseInvalidLoginCount() {
         this.invalidLoginCount++;
     }

@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.crucemelit.dto.UserDto;
 import com.crucemelit.model.User;
 import com.crucemelit.service.UserService;
+import com.crucemelit.transformer.UserTransformer;
 import com.crucemelit.util.TokenUtils;
 
 @Controller
@@ -28,15 +30,18 @@ public class AuthController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Autowired
+    private UserTransformer userTransformer;
+
     @ResponseBody
     @RequestMapping(value = "/check")
-    public User check() {
-        return userService.getCurrentUser();
+    public UserDto check() {
+        return userTransformer.transformToDtoWithAuthInfo(userService.getCurrentUser());
     }
 
     @ResponseBody
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST, produces = "application/json")
-    public User authenticate(@RequestParam("username") String username, @RequestParam("password") String password) {
+    public UserDto authenticate(@RequestParam("username") String username, @RequestParam("password") String password) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username,
                 password);
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
@@ -45,6 +50,6 @@ public class AuthController {
         User user = (User) userService.loadUserByUsername(username);
         user.setToken(tokenUtils.createToken(user));
 
-        return user;
+        return userTransformer.transformToDtoWithAuthInfo(user);
     }
 }

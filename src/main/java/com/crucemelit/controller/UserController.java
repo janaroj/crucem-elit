@@ -24,15 +24,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.crucemelit.domain.Gender;
 import com.crucemelit.dto.EmailDto;
+import com.crucemelit.dto.GymDto;
+import com.crucemelit.dto.RecordDto;
 import com.crucemelit.dto.Suggestion;
-import com.crucemelit.model.Gym;
-import com.crucemelit.model.Record;
+import com.crucemelit.dto.UserDto;
+import com.crucemelit.dto.WorkoutDto;
 import com.crucemelit.model.User;
-import com.crucemelit.model.Workout;
 import com.crucemelit.service.GymService;
 import com.crucemelit.service.RecordService;
 import com.crucemelit.service.SearchService;
 import com.crucemelit.service.UserService;
+import com.crucemelit.transformer.GymTransformer;
+import com.crucemelit.transformer.RecordTransformer;
+import com.crucemelit.transformer.UserTransformer;
+import com.crucemelit.transformer.WorkoutTransformer;
 import com.crucemelit.util.Utility;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -50,18 +55,30 @@ public class UserController {
     private RecordService recordService;
 
     @Autowired
+    private GymTransformer gymTransformer;
+
+    @Autowired
+    private UserTransformer userTransformer;
+
+    @Autowired
+    private WorkoutTransformer workoutTransformer;
+
+    @Autowired
+    private RecordTransformer recordTransformer;
+
+    @Autowired
     private ObjectMapper objectMapper;
 
     @RequestMapping(value = "/gyms")
     @ResponseBody
-    public List<Gym> getGyms() {
-        return gymService.getGyms();
+    public List<GymDto> getGyms() {
+        return gymTransformer.transformToDto(gymService.getGyms());
     }
 
     @RequestMapping(value = "/gyms/{id}")
     @ResponseBody
-    public Gym getGym(@PathVariable long id) {
-        return gymService.getGym(id);
+    public GymDto getGym(@PathVariable long id) {
+        return gymTransformer.transformToDto(gymService.getGym(id));
     }
 
     @RequestMapping(value = "/search/{term}")
@@ -106,20 +123,20 @@ public class UserController {
 
     @RequestMapping(value = "/contacts")
     @ResponseBody
-    public List<User> getContacts() {
-        return userService.getContacts();
+    public List<UserDto> getContacts() {
+        return userTransformer.transformToDto(userService.getContacts());
     }
 
     @RequestMapping(value = "/users/{id}")
     @ResponseBody
-    public User getContact(@PathVariable long id) {
-        return userService.getUser(id);
+    public UserDto getContact(@PathVariable long id) {
+        return userTransformer.transformToDto(userService.getUser(id));
     }
 
     @RequestMapping(value = "/profile")
     @ResponseBody
-    public User getProfile() {
-        return userService.getCurrentUser();
+    public UserDto getProfile() {
+        return userTransformer.transformToDto(userService.getCurrentUser());
     }
 
     @RequestMapping(value = "/profile/picture", method = RequestMethod.PUT)
@@ -142,14 +159,14 @@ public class UserController {
 
     @RequestMapping(value = "/workouts")
     @ResponseBody
-    public List<Workout> getWorkouts() {
-        return userService.getUserWorkouts();
+    public List<WorkoutDto> getWorkouts() {
+        return workoutTransformer.transformToDto(userService.getUserWorkouts());
     }
 
     @RequestMapping(value = "/records")
     @ResponseBody
-    public List<Record> getRecords() {
-        return recordService.getRecords();
+    public List<RecordDto> getRecords() {
+        return recordTransformer.transformToDto(recordService.getRecords());
     }
 
     @RequestMapping(value = "/genders")

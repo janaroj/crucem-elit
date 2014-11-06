@@ -18,33 +18,31 @@ import javax.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.ToString;
 
 @Entity
 @Table(name = "EXCERCISEGROUP")
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public @Data
-class ExerciseGroup extends BaseEntity {
+@ToString(of = { "id", "name", "wod" })
+public @Data class ExerciseGroup extends BaseEntity {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", unique = true, nullable = false)
-	private long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
+    private long id;
 
-	private String name;
+    private String name;
 
     @ManyToOne
     @JoinColumn(name = "workoutId")
-	private Workout workout;
+    private Workout workout;
 
-	@OneToMany(mappedBy = "exerciseGroup", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JsonIgnore
-	private List<Exercise> exercises;
-	
+    @OneToMany(mappedBy = "exerciseGroup", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Exercise> exercises;
+
     private boolean wod;
-    
+
     @OneToOne(mappedBy = "exerciseGroup")
     private Record record;
 
