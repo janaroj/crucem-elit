@@ -68,9 +68,12 @@ body {
 .contactBox {
 	margin-top: 10px;
 	width: 500px;
-    height: 100px;
+    height: 150px;
     border: 1px solid;
     border-color: #C8C8C8;
+    background-color: rgb(122, 239, 122);
+	border-radius: 9px;
+	padding: 25px;
 }
 
 .del-Btn {
