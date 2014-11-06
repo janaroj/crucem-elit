@@ -66,7 +66,7 @@ body {
 }
 
 .contactBox {
-	margin-top: 10px;
+	margin: 10px;
 	width: 500px;
     height: 150px;
     border: 1px solid;
@@ -144,14 +144,27 @@ body {
 	width: 70px;
 }
 
-.contactBar{
+.contactInfoBar{
     overflow: hidden;
-    float: right;
-    width: 60%;
+    float: left;
+    width: 500px;
     background: #d4d4d4;
     border: 50px solid #d4d4d4;
     margin-top: 100px;
     border-radius: 9px;
+}
+.contactBar{
+	width: 1120px;
+    overflow: hidden;
+    float: left;
+    background: #d4d4d4;
+    border: 50px solid #d4d4d4;
+    margin-top: 100px;
+    border-radius: 9px;
+}
+.contactRightSide{
+	margin-right: 75px;
+	float: right;
 }
 
 .contactText{
@@ -182,8 +195,7 @@ body {
 }
 
 .profile-img{
-    margin-top: 100px;
-    margin-left: 75px;
+	margin: 10px;
 }
 
 .loading-container {
@@ -231,4 +243,8 @@ body {
 
 .forgot-password-link {
 	margin-left: 25px;
+}
+
+.add-friend {
+	margin: 10px;
 }

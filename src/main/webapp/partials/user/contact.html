@@ -1,96 +1,100 @@
-<div class="pull-left profile-img" id="image">
-	<div class="form-group " ng-show="isMyProfile()">
-		<input type="file" class="col-lg-8 pull-right" name="picture"
-			ng-file-select="onFileSelect($files)" accept="image/*"
-			ng-show="isChangeInProgress" />
+<div class="contactBar" >
+	<div class="contactRightSide">
+		<div class=" profile-img" id="image">
+			<div class="form-group " ng-show="isMyProfile()">
+				<input type="file" class="col-lg-8 pull-right" name="picture"
+					ng-file-select="onFileSelect($files)" accept="image/*"
+					ng-show="isChangeInProgress" />
+			</div>
+		</div>
+	
+		<div class=" " ng-hide="isMyProfile()">
+				<button class="btn btn-primary"><msg key="add.friend"/></button>
+		</div>
 	</div>
-</div>
-<div class="contactBar pre">
-	<div class=" pull-right" ng-hide="isMyProfile()">
-		<button class="btn btn-primary"><msg key="add.friend"/></button>
-	</div>
-	<form id="form" class="form-horizontal" role="form" name="form"
-		ng-init="init()" ng-submit="updateProfile()" novalidate
-		show-validation>
-		<div class="form-group" ng-hide="isChangeInProgress">
-			<label class="col-lg-3 control-label" ><msg key="email" /></label>
-			<div class="col-lg-5">
-				<p class="form-control-static" >{{contact.email}}</p>
+	
+	<div class="contactInfoBar pre">
+		<form id="form" class="form-horizontal" role="form" name="form"
+			ng-init="init()" ng-submit="updateProfile()" novalidate
+			show-validation>
+			<div class="form-group" ng-hide="isChangeInProgress">
+				<label class="col-lg-3 control-label" ><msg key="email" /></label>
+				<div class="col-lg-5">
+					<p class="form-control-static" >{{contact.email}}</p>
+				</div>
 			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-lg-3 control-label"><msg key="firstName" /></label>
-			<div class="col-lg-5">
-				<input class="form-control" type="text" ng-show="isChangeInProgress"
-					ng-model="contact.firstName">
-				<p class="form-control-static" ng-hide="isChangeInProgress">{{contact.firstName}}</p>
+			<div class="form-group">
+				<label class="col-lg-3 control-label"><msg key="firstName" /></label>
+				<div class="col-lg-5">
+					<input class="form-control" type="text" ng-show="isChangeInProgress"
+						ng-model="contact.firstName">
+					<p class="form-control-static" ng-hide="isChangeInProgress">{{contact.firstName}}</p>
+				</div>
 			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-lg-3 control-label"><msg key="lastName" /></label>
-			<div class="col-lg-5">
-				<input class="form-control" type="text" ng-show="isChangeInProgress"
-					ng-model="contact.lastName">
-				<p class="form-control-static" ng-hide="isChangeInProgress">{{contact.lastName}}</p>
+			<div class="form-group">
+				<label class="col-lg-3 control-label"><msg key="lastName" /></label>
+				<div class="col-lg-5">
+					<input class="form-control" type="text" ng-show="isChangeInProgress"
+						ng-model="contact.lastName">
+					<p class="form-control-static" ng-hide="isChangeInProgress">{{contact.lastName}}</p>
+				</div>
 			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-lg-3 control-label"><msg key="gender" /></label>
-			<div class="col-lg-3">
-				<select class="form-control" ng-model="contact.gender"
+			<div class="form-group">
+				<label class="col-lg-3 control-label"><msg key="gender" /></label>
+				<div class="col-lg-3">
+					<select class="form-control" ng-model="contact.gender"
+						ng-show="isChangeInProgress">
+						<option value="MALE" label="{{getTranslation('MALE')}}"/>
+						<option value="FEMALE" label="{{getTranslation('FEMALE')}}"/>
+					</select>
+					<p class="form-control-static" ng-hide="isChangeInProgress">{{getTranslation(contact.gender)}}</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-lg-3 control-label"><msg key="length" /></label>
+				<div class="col-lg-3">
+					<input class="form-control" type="text" ng-show="isChangeInProgress"
+						ng-model="contact.length">
+					<p class="form-control-static" ng-hide="isChangeInProgress">{{contact.length}}</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-lg-3 control-label"><msg key="weight" /></label>
+				<div class="col-lg-3">
+					<input class="form-control" type="text" ng-show="isChangeInProgress"
+						ng-model="contact.weight">
+					<p class="form-control-static" ng-hide="isChangeInProgress">{{contact.weight}}</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-lg-3 control-label"><msg key="dateOfBirth" /></label>
+				<div class="col-lg-3">
+					<input type="text" class="form-control" ng-model="contact.dateOfBirth"
+						ng-show="isChangeInProgress" datepicker-popup="{{format}}" placeholder="{{format}}"
+						is-open="opened" max-date="maxDate" show-button-bar=false datepicker-append-to-body=true style:display:inline;>
+					<p class="form-control-static" ng-hide="isChangeInProgress">{{contact.dateOfBirth}}</p>
+				</div>
+				<button type="button" class="btn btn-default" ng-click="open($event)"
 					ng-show="isChangeInProgress">
-					<option value="MALE" label="{{getTranslation('MALE')}}"/>
-					<option value="FEMALE" label="{{getTranslation('FEMALE')}}"/>
-				</select>
-				<p class="form-control-static" ng-hide="isChangeInProgress">{{getTranslation(contact.gender)}}</p>
+					<i class="glyphicon glyphicon-calendar" ng-show="isChangeInProgress"></i>
+				</button>
 			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-lg-3 control-label"><msg key="length" /></label>
-			<div class="col-lg-3">
-				<input class="form-control" type="text" ng-show="isChangeInProgress"
-					ng-model="contact.length">
-				<p class="form-control-static" ng-hide="isChangeInProgress">{{contact.length}}</p>
+			<div class="form-group" ng-hide="isChangeInProgress">
+				<label class="col-md-3 control-label"><msg key="gym" /></label>
+				<div class="col-md-8">
+					<p class="form-control-static">{{contact.gym.name}}</p>
+				</div>
 			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-lg-3 control-label"><msg key="weight" /></label>
-			<div class="col-lg-3">
-				<input class="form-control" type="text" ng-show="isChangeInProgress"
-					ng-model="contact.weight">
-				<p class="form-control-static" ng-hide="isChangeInProgress">{{contact.weight}}</p>
+			<div class="form-group" ng-show="isMyProfile() && isChangeInProgress">
+				<label class="col-md-3 control-label"></label>
+				<div class="col-md-8">
+					<button type="submit" class="btn btn-primary" ng-disabled="form.$invalid"><msg key="save"/></button>
+					<a class="btn btn-default" ng-click="cancelProfile()"><msg key="cancel"/></a>
+				</div>
 			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-lg-3 control-label"><msg key="dateOfBirth" /></label>
-			<div class="col-lg-3">
-				<input type="text" class="form-control" ng-model="contact.dateOfBirth"
-					ng-show="isChangeInProgress" datepicker-popup="{{format}}" placeholder="{{format}}"
-					is-open="opened" max-date="maxDate" show-button-bar=false datepicker-append-to-body=true style:display:inline;>
-				<p class="form-control-static" ng-hide="isChangeInProgress">{{contact.dateOfBirth}}</p>
+			<div class="pull-right" ng-show="isMyProfile() && isChangeable">
+				<a class="btn btn-success" ng-click="toggleProfileChange()"><msg key="change"/></a>
 			</div>
-			<button type="button" class="btn btn-default" ng-click="open($event)"
-				ng-show="isChangeInProgress">
-				<i class="glyphicon glyphicon-calendar" ng-show="isChangeInProgress"></i>
-			</button>
-		</div>
-		<div class="form-group" ng-hide="isChangeInProgress">
-			<label class="col-md-3 control-label"><msg key="gym" /></label>
-			<div class="col-md-8">
-				<p class="form-control-static">{{contact.gym.name}}</p>
-			</div>
-		</div>
-		<div class="form-group" ng-show="isMyProfile() && isChangeInProgress">
-			<label class="col-md-3 control-label"></label>
-			<div class="col-md-8">
-				<button type="submit" class="btn btn-primary" ng-disabled="form.$invalid"><msg key="save"/></button>
-				<a class="btn btn-default" ng-click="cancelProfile()"><msg key="cancel"/></a>
-			</div>
-		</div>
-		<div class="pull-right" ng-show="isMyProfile() && isChangeable">
-			<a class="btn btn-success" ng-click="toggleProfileChange()"><msg key="change"/></a>
-		</div>
-	</form>
-
-
+		</form>
+	</div>
 </div>
