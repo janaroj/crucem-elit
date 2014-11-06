@@ -17,6 +17,7 @@
 				<td data-title="getTranslation('workout.table.workout')" sortable="'name'" filter="{ 'name': 'text' }">{{workout.name}}</td>
 				<td data-title="getTranslation('workout.table.wod')" sortable="'wod'" filter="{ 'wod': 'text'}">{{workout.wod}}</td>
 				<td data-title="getTranslation('workout.table.date')" sortable="'date'" filter="{ 'date': 'text' }">{{workout.date}}</td>
+				<td data-title="getTranslation('workout.table.comment')" sortable="'comment'" filter="{ 'comment': 'text'}">{{workout.comment}}</td>
 			</tr>
 		</tbody>
 	</table>
@@ -36,7 +37,11 @@
 			<tr ng-repeat="workout in $data">
 				<td data-title="getTranslation('workout.table.workout')" sortable="'name'" filter="{ 'name': 'text' }">{{workout.name}}</td>
 				<td data-title="getTranslation('workout.table.wod')" sortable="'wod'" filter="{ 'wod': 'text'}">{{workout.wod}}</td>
-				<td data-title="getTranslation('workout.table.result')" sortable="'result'" filter="{ 'result': 'text'}">{{workout.result}}</td>
+				<td data-title="getTranslation('workout.table.result.repeats')" sortable="'result.repeats'" filter="{ 'result.repeats': 'text'}">{{workout.result.repeats}}</td>
+				<td data-title="getTranslation('workout.table.result.time')" sortable="'result.time'" filter="{ 'result.time': 'text'}">{{workout.result.time}}</td>
+				<td data-title="getTranslation('workout.table.result.weight')" sortable="'result.weight'" filter="{ 'result.weight': 'text'}">{{workout.result.weight}}</td>
+				<td data-title="getTranslation('workout.table.result.comment')" sortable="'result.comment'" filter="{ 'result.comment': 'text'}">{{workout.result.comment}}</td>
+				<td data-title="getTranslation('workout.table.gym')" sortable="'gym'" filter="{ 'gym': 'text'}">{{workout.gym}}</td>
 				<td data-title="getTranslation('workout.table.date')" sortable="'date'" filter="{ 'date': 'text' }">{{workout.date}}</td>
 			</tr>
 		</tbody>

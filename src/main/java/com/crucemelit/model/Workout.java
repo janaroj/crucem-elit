@@ -21,7 +21,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.crucemelit.dto.Result;
+import com.crucemelit.util.Utility;
 
 @Entity
 @Table(name = "WORKOUT")
@@ -44,18 +45,19 @@ public @Data class Workout extends BaseEntity {
 
     @Column(nullable = false)
     private String name;
-    
+
     private String comment;
 
+    private String gymName;
+
     @OneToMany(mappedBy = "workout", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonIgnore
     private List<ExerciseGroup> exerciseGroups;
 
-/*    public Integer getResult() {
-        if (Utility.isCollectionInitialized(exercises)) {
-            for (Exercise exercise : getExercises()) {
-                if (exercise.isWod() && exercise.getRecord() != null) {
-                    return exercise.getRecord().getResult();
+    public Result getResult() {
+        if (Utility.isCollectionInitialized(exerciseGroups)) {
+            for (ExerciseGroup exerciseGroup : getExerciseGroups()) {
+                if (exerciseGroup.isWod() && exerciseGroup.getRecord() != null) {
+                    return exerciseGroup.getRecord().getResult();
                 }
             }
         }
@@ -63,15 +65,14 @@ public @Data class Workout extends BaseEntity {
     }
 
     public String getWod() {
-        if (Utility.isCollectionInitialized(exercises)) {
-            for (Exercise exercise : getExercises()) {
-                if (exercise.isWod()) {
-                    return exercise.getName();
+        if (Utility.isCollectionInitialized(exerciseGroups)) {
+            for (ExerciseGroup exerciseGroups : getExerciseGroups()) {
+                if (exerciseGroups.isWod()) {
+                    return exerciseGroups.getName();
                 }
             }
         }
         return null;
     }
-    */
-    
+
 }

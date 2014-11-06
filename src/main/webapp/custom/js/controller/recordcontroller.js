@@ -7,7 +7,7 @@
 			page: 1,            // show first page
 			count: 10,          // count per page
 			filter: {
-				'exercise.workout.user.name' : $scope.user.name
+				'user.name' : $scope.user.name
 			},
 			sorting: {
 				'exercise.name' : 'asc',

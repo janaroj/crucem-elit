@@ -14,8 +14,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 @Entity
 @Table(name = "EXCERCISE")
 @NoArgsConstructor
@@ -31,17 +29,16 @@ public @Data class Exercise extends BaseEntity {
     private String name;
 
     private ExerciseType exerciseType;
-    
+
     private Boolean countTime;
-    
+
     private Boolean countWeight;
-    
+
     private Boolean countRepeats;
-    
+
     private String comment;
 
     @OneToOne(mappedBy = "exercise")
-    @JsonBackReference
     private Record record;
 
     @ManyToOne
