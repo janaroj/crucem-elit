@@ -50,9 +50,8 @@
 						'title' : item
 					});
 				});
-
+				def.resolve(genders);
 			});
-			def.resolve(genders);
 			return def;
 		};
 

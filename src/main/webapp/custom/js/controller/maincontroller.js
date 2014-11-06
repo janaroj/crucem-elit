@@ -29,7 +29,6 @@
 		
 		$scope.login = function() {
 			$rootScope.login($scope.username, $scope.password);
-			$scope.password = null;
 		};
 	});
 	
