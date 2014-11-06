@@ -21,7 +21,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import com.crucemelit.util.Utility;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -45,12 +44,14 @@ public @Data class Workout extends BaseEntity {
 
     @Column(nullable = false)
     private String name;
+    
+    private String comment;
 
     @OneToMany(mappedBy = "workout", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore
-    private List<Exercise> exercises;
+    private List<ExerciseGroup> exerciseGroups;
 
-    public Integer getResult() {
+/*    public Integer getResult() {
         if (Utility.isCollectionInitialized(exercises)) {
             for (Exercise exercise : getExercises()) {
                 if (exercise.isWod() && exercise.getRecord() != null) {
@@ -71,5 +72,6 @@ public @Data class Workout extends BaseEntity {
         }
         return null;
     }
+    */
     
 }

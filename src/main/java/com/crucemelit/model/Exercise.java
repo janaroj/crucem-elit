@@ -30,16 +30,22 @@ public @Data class Exercise extends BaseEntity {
     @Column(nullable = false)
     private String name;
 
-    private String repetitionType;
-
-    private boolean wod;
+    private ExerciseType exerciseType;
+    
+    private Boolean countTime;
+    
+    private Boolean countWeight;
+    
+    private Boolean countRepeats;
+    
+    private String comment;
 
     @OneToOne(mappedBy = "exercise")
     @JsonBackReference
     private Record record;
 
     @ManyToOne
-    @JoinColumn(name = "workoutId", nullable = false)
-    private Workout workout;
+    @JoinColumn(name = "exerciseGroupId")
+    private ExerciseGroup exerciseGroup;
 
 }

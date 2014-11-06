@@ -174,7 +174,7 @@ public class UserServiceImpl implements UserService {
     public List<Workout> getUserWorkouts() {
         List<Workout> workouts = getCurrentUser().getWorkouts();
         for (Workout workout : workouts) {
-            Hibernate.initialize(workout.getExercises());
+            Hibernate.initialize(workout.getExerciseGroups());
         }
         return workouts;
     }

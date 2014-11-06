@@ -30,7 +30,18 @@ public @Data class Record extends BaseEntity {
     @PrimaryKeyJoinColumn
     @JsonManagedReference
     private Exercise exercise;
+    
+    @OneToOne
+    @PrimaryKeyJoinColumn
+    @JsonManagedReference
+    private ExerciseGroup exerciseGroup;
 
-    private Integer result;
+    private Double time;
 
+    private Double weight;
+    
+    private Double repeats;
+    
+    private String comment;
+    
 }
