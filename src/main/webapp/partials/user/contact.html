@@ -41,7 +41,7 @@
 			</div>
 			<div class="form-group">
 				<label class="col-lg-3 control-label"><msg key="gender" /></label>
-				<div class="col-lg-3">
+				<div class="col-lg-4">
 					<select class="form-control" ng-model="contact.gender"
 						ng-show="isChangeInProgress">
 						<option value="MALE" label="{{getTranslation('MALE')}}"/>
@@ -68,7 +68,7 @@
 			</div>
 			<div class="form-group">
 				<label class="col-lg-3 control-label"><msg key="dateOfBirth" /></label>
-				<div class="col-lg-3">
+				<div class="col-lg-4">
 					<input type="text" class="form-control" ng-model="contact.dateOfBirth"
 						ng-show="isChangeInProgress" datepicker-popup="{{format}}" placeholder="{{format}}"
 						is-open="opened" max-date="maxDate" show-button-bar=false datepicker-append-to-body=true style:display:inline;>

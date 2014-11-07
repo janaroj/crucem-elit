@@ -146,11 +146,10 @@ body {
 
 .contactInfoBar{
     overflow: hidden;
-    float: left;
-    width: 500px;
+    float: right;
+    width: 700px;
     background: #d4d4d4;
     border: 50px solid #d4d4d4;
-    margin-top: 100px;
     border-radius: 9px;
 }
 .contactBar{
@@ -163,8 +162,9 @@ body {
     border-radius: 9px;
 }
 .contactRightSide{
-	margin-right: 75px;
-	float: right;
+	margin-left: 75px;
+	margin-top: 40px;
+	float: left;
 }
 
 .contactText{
