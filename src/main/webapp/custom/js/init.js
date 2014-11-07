@@ -20,6 +20,9 @@
 		};
 
 		$rootScope.getTranslation = function(key) {
+			if (!key) {
+				return "";
+			}
 			return $.i18n.prop(key);
 		};
 		

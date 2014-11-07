@@ -1,13 +1,15 @@
 <div ng-init="init()"/>
 <ul>
 	<text ng-repeat="contact in contacts">
-	<div class="contactBox pull-left" ng-init="getPicture(contact.id,'#image' + contact.id, contact.gender)">
+	<div class="contactBox pull-left" ng-init="getPicture(contact.id, contact.gender)">
    		<a href="" ng-click="viewContact(contact.id)">
-   			<span id="image{{contact.id}}"/>
+   			<insert-image source="pictures[contact.id]" classes="'setImgSize img-rounded'"></insert-image>
    		</a>
    		<a href="" ng-click="viewContact(contact.id)">{{ contact.name }}</a>
    		{{ contact.gym.name }}
    		<a href="" ng-click="removeContact(contact.id)" class="btn btn-danger pull-right"><msg key="delete"/></a>
 	</div>
 </ul>
+<div>
 
+</div>

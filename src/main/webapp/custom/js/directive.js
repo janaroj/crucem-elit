@@ -33,10 +33,22 @@
 	    };
 	});
 	
+	app.directive("insertImage", function($compile) {
+		return {
+            restrict: 'E',
+            replace: true,
+            template:'<img class="{{ classes }}" ng-src="{{ source }}">',
+            scope: {
+                source: '=',
+                classes: '=',
+            }
+        };
+	});
+	
 	app.directive("autoComplete", ["$location", "autoCompleteService", function ($location, autoCompleteService) {
 	    return {
 	        restrict: "A",
-	        link: function (scope, elem, attr, ctrl) {
+	        link: function (scope, elem, attr) {
 	            elem.autocomplete({
 	                source: function (searchTerm, response) {
 	                    autoCompleteService.getSuggestions(searchTerm.term).then(function (autoCompleteResults) {

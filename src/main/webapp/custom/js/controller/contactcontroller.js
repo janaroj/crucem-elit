@@ -15,57 +15,70 @@
 		};
 
 		$scope.removeContact = function(id) {
-			toaster.pop('error', 'Unimplemented', "This feature doesn't work yet")
+			toaster.pop('error', 'Unimplemented', "This feature doesn't work yet");
 //			userService.removeContact(id).then(function(data) {
 //			toaster.pop('success', 'Contact', 'Contact removed successfully!');
 //			});
 		};
+		
+		$scope.pictures = {};
 
-		$scope.getPicture = function(id, location, gender) {
+		$scope.getPicture = function(id, gender) {
 			userService.getProfilePicture(id).then(function(result) {
-				ui.util.image.addImage(location, result.data, gender);
+				$scope.pictures[id] = (result.data.type === "error") ? getDefaultImageSrc(gender) : "data:image/png;base64," + result.data;
 			}, 
 			function(result) {
 				toaster.pop('error', 'Contact' , result.data.message);
 			});
 		};
 
+		var getDefaultImageSrc = function(gender) {
+			return (gender === 'FEMALE') ? '../../images/jane_doe_test.png' : '../../images/john_doe_test.png';
+		};
+		
 	});
 
 	app.controller('ContactController', function($scope, $routeParams, userService, toaster) {
 		$scope.isChangeable = false;
 		$scope.isChangeInProgress = false;
+		$scope.isProfileLoaded = false;
+
 		$scope.init = function() {
-			var userId;
 			if (isNaN($routeParams.id)) {
 				userId = $scope.user.id;
 				userService.getProfile().then(function(result) {
 					$scope.contact = result.data;
 					$scope.isChangeable = true;
-					userService.getProfilePicture(userId).then(function(result) {
-						ui.util.image.addImage("#image", result.data, $scope.contact.gender);
-					}, 
-					function(result) {
-						toaster.pop('error', 'Contact' , result.data.message);
-					});
+					getProfileImage();
+					$scope.isProfileLoaded = true;
 				}, function(result) {
 					toaster.pop('error', 'Contact' , result.data.message);
 				});
 			}
 			else {
-				var userId = $routeParams.id;
+				userId = $routeParams.id;
 				userService.getUserById($routeParams.id).then(function(result) {
 					$scope.contact = result.data;
-					userService.getProfilePicture(userId).then(function(result) {
-						ui.util.image.addImage("#image",result.data, $scope.contact.gender);
-					}, 
-					function(result) {
-						toaster.pop('error', 'Contact' , result.data.message);
-					});
+					getProfileImage();
+					$scope.isProfileLoaded = true;
 				}, function(result) {
 					toaster.pop('error', 'Contact' , result.data.message);
 				});
 			}
+
+		};
+	
+		var getProfileImage = function() {
+			userService.getProfilePicture($scope.contact.id).then(
+				function(result) {
+					$scope.imageSrc = (result.data.type === "error") ? getDefaultImageSrc() : "data:image/png;base64," + result.data;
+				},  
+				function(result) { toaster.pop('error', 'Contact' , result.data.message); }
+			);
+		};
+		
+		var getDefaultImageSrc = function() {
+			return ($scope.contact.gender === 'FEMALE') ? '../../images/jane_doe_test.png' : '../../images/john_doe_test.png';
 		};
 
 		$scope.isMyProfile = function() {
@@ -79,7 +92,7 @@
 			$scope.toggleProfileChange();
 			angular.copy($scope.user, $scope.contact);
 		};
-		
+
 		$scope.toggleProfileChange = function() {
 			$scope.isChangeInProgress = !$scope.isChangeInProgress;
 			$scope.isChangeable = !$scope.isChangeable;
@@ -99,15 +112,15 @@
 			});
 
 		};
-		
+
 		var createUserDTO = function() {
 			return userDTO = {
-				firstName : $scope.contact.firstName,
-				lastName : $scope.contact.lastName,
-				weight : $scope.contact.weight,
-				length : $scope.contact.length,
-				dateOfBirth : $scope.contact.dateOfBirth,
-				gender : $scope.contact.gender,
+					firstName : $scope.contact.firstName,
+					lastName : $scope.contact.lastName,
+					weight : $scope.contact.weight,
+					length : $scope.contact.length,
+					dateOfBirth : $scope.contact.dateOfBirth,
+					gender : $scope.contact.gender,
 			};
 		};
 
@@ -118,7 +131,7 @@
 			$scope.opened = true;
 		};
 
-        $scope.format = 'yyyy-MM-dd';
+		$scope.format = 'yyyy-MM-dd';
 
 		$scope.toggleMax = function() {
 			$scope.maxDate = $scope.maxDate ? null : new Date();
@@ -126,11 +139,15 @@
 		$scope.toggleMax();
 
 		$scope.onFileSelect = function($files) {
-			userService.uploadProfilePicture($files[0]).then(function() {
-				toaster.pop('success', 'Contact', 'File uploaded successfully!');
-			}, function(result) {
-				toaster.pop('error', 'Upload', 'Uploading file failed');
-			});
+			if ($files[0]) {
+				userService.uploadProfilePicture($files[0]).then(
+					function(result) {
+						$scope.imageSrc = "data:image/png;base64," + result.data;
+						toaster.pop('success', 'Contact', 'File uploaded successfully!');
+					}, 
+					function(result) {toaster.pop('error', 'Upload', 'Uploading file failed');}
+				);
+			}
 		};
 
 	});

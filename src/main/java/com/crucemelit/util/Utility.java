@@ -129,14 +129,17 @@ public final class Utility {
     }
 
     @SneakyThrows
-    public static final void uploadPicture(HttpServletRequest req, PictureService service, long... id) {
+    public static final String uploadPicture(HttpServletRequest req, PictureService service, long... id) {
         ServletFileUpload upload = new ServletFileUpload();
         FileItemIterator iterator = upload.getItemIterator(req);
+        byte[] bytes = null;
 
         if (iterator.hasNext()) {
             FileItemStream itemStream = iterator.next();
-            service.setPicture(Utility.getBytesFromStream(itemStream.openStream()), id);
+            bytes = Utility.getBytesFromStream(itemStream.openStream());
+            service.setPicture(bytes, id);
         }
+        return getImgSourceFromBytes(bytes);
     }
     
     public static final boolean isCollectionInitialized(Collection<?> collection) {

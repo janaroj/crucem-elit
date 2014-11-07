@@ -69,24 +69,8 @@ ui.util = {
 			$defer.resolve(data.slice((params.page() - 1) * params.count(),
 					params.page() * params.count()));
 		}
-	},
-	image : {
-		addImage : function(location, image, gender) {
-			$(location).append(ui.util.image.processImage(image, gender));
-		},
-		processImage : function(image, gender) {
-			if (image instanceof Object) { // Image missing, show default
-				var imgSrc = gender === "FEMALE" ? "jane_doe_test.png"
-						: "john_doe_test.png";
-				return '<img class="setImgSize img-rounded" src="../../images/' + imgSrc
-						+ '">';
-			} else {
-				return '<img class="setImgSize img-rounded" src="data:image/png;base64,'
-						+ image.replace(/\"/g, "") + '">'; // regex to remove quotes
-			}
-		}
 	}
-}
+};
 
 $(function(){ 
 	ui.init();

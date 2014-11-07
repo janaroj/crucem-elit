@@ -108,6 +108,10 @@ body {
     height:100px;
 }
 
+.setLargeImgSize{
+	width:600px;
+}
+
 .removeFriend {
 	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #fe1a00), color-stop(1, #ce0100) );
 	background:-moz-linear-gradient( center top, #fe1a00 5%, #ce0100 100% );
@@ -247,4 +251,8 @@ body {
 
 .add-friend {
 	margin: 10px;
+}
+
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important;
 }

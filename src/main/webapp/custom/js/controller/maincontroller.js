@@ -2,6 +2,8 @@
 	var app = angular.module('crucem-elit');
 	app.controller('MainController', function($scope, $rootScope, i18n, $location, emailService, toaster) {
 		
+		$scope.mainImgSrc = '../images/cf.jpg';
+		
 		$scope.availableLanguages = ["ee", "en"];
 		
 		$scope.language = function() {

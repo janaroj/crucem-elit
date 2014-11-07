@@ -141,8 +141,8 @@ public class UserController {
 
     @RequestMapping(value = "/profile/picture", method = RequestMethod.PUT)
     @ResponseBody
-    public void uploadProfilePicture(HttpServletRequest req) {
-        Utility.uploadPicture(req, userService);
+    public String uploadProfilePicture(HttpServletRequest req) {
+        return Utility.uploadPicture(req, userService);
     }
 
     @RequestMapping(value = "/profile/picture/{id}")
@@ -178,8 +178,8 @@ public class UserController {
     @RequestMapping(value = "/gym/{id}/picture", method = RequestMethod.PUT)
     @ResponseBody
     @SneakyThrows
-    public void uploadGymPicture(HttpServletRequest req, @PathVariable long id) {
-        Utility.uploadPicture(req, gymService, id);
+    public String uploadGymPicture(HttpServletRequest req, @PathVariable long id) {
+        return Utility.uploadPicture(req, gymService, id);
     }
 
     @RequestMapping(value = "/gym/picture/{id}")
