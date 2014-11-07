@@ -10,8 +10,8 @@
 				'user.name' : $scope.user.name
 			},
 			sorting: {
-				'exercise.name' : 'asc',
-				'result' : 'desc'
+				'workout.name' : 'asc',
+				'result.repeats' : 'desc'
 			}
 		}, {
 			total: 0,           // length of data
