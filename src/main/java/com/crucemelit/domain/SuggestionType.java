@@ -2,7 +2,7 @@ package com.crucemelit.domain;
 
 public enum SuggestionType {
 
-	USER("users"), GYM("gyms");
+	USER("contacts"), GYM("gyms");
 	
 	private String uriPart;
 	
