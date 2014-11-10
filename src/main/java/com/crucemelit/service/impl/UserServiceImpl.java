@@ -183,4 +183,27 @@ public class UserServiceImpl implements UserService {
     public void updateUser(User user) {
         userRepository.saveAndFlush(user);
     }
+
+    @Override
+    public List<User> getFriends() {
+        User user = getCurrentUser();
+        Hibernate.initialize(user.getFriends());
+        return user.getFriends();
+    }
+
+    @Override
+    public void removeFriend(long id) {
+        User user = getCurrentUser();
+        User friend = getUser(id);
+        user.removeFriend(friend);
+        userRepository.saveAndFlush(user);
+    }
+
+    @Override
+    public void addFriend(long id) {
+        User user = getCurrentUser();
+        User friend = getUser(id);
+        user.addFriend(friend);
+        userRepository.saveAndFlush(user);
+    }
 }

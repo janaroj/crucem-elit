@@ -127,6 +127,26 @@ public class UserController {
         return userTransformer.transformToDto(userService.getContacts());
     }
 
+    @RequestMapping(value = "/friends")
+    @ResponseBody
+    public List<UserDto> getFriends() {
+        return userTransformer.transformToDto(userService.getFriends());
+    }
+
+    @RequestMapping(value = "/friends/{id}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public ResponseEntity<String> removeFriend(@PathVariable long id) {
+        userService.removeFriend(id);
+        return new ResponseEntity<String>("Success", HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/friends/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<String> addFriend(@PathVariable long id) {
+        userService.addFriend(id);
+        return new ResponseEntity<String>("Success", HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/users/{id}")
     @ResponseBody
     public UserDto getContact(@PathVariable long id) {

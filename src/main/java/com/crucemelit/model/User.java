@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -26,6 +27,7 @@ import javax.persistence.Transient;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import org.hibernate.validator.constraints.Email;
 import org.springframework.security.core.GrantedAuthority;
@@ -41,6 +43,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Entity
 @Table(name = "PERSON")
 @NoArgsConstructor
+@ToString(of = { "id" })
 @EqualsAndHashCode(callSuper = false)
 public @Data class User extends BaseEntity implements UserDetails, Suggestable {
 
@@ -72,12 +75,11 @@ public @Data class User extends BaseEntity implements UserDetails, Suggestable {
     @JoinColumn(name = "gym")
     private Gym gym;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "connections", joinColumns = @JoinColumn(name = "personId"), inverseJoinColumns = @JoinColumn(name = "friendId"))
     private List<User> friends;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "connections", joinColumns = @JoinColumn(name = "friendId"), inverseJoinColumns = @JoinColumn(name = "personId"))
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "friends")
     private List<User> friendOf;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
@@ -151,10 +153,6 @@ public @Data class User extends BaseEntity implements UserDetails, Suggestable {
         return (List<User>) Utility.EMPTY_LIST;
     }
 
-    public void addFriend(User user) {
-        friends.add(user);
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + this.role);
@@ -171,4 +169,13 @@ public @Data class User extends BaseEntity implements UserDetails, Suggestable {
         this.invalidLoginCount++;
     }
 
+    public void addFriend(User friend) {
+        this.getFriends().add(friend);
+        friend.getFriendOf().add(this);
+    }
+
+    public void removeFriend(User friend) {
+        this.getFriends().remove(friend);
+        friend.getFriendOf().remove(this);
+    }
 }

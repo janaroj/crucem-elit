@@ -71,9 +71,16 @@ body {
     height: 150px;
     border: 1px solid;
     border-color: #C8C8C8;
-    background-color: rgb(122, 239, 122);
 	border-radius: 9px;
 	padding: 25px;
+}
+
+.friendBox {
+	background-color: rgb(122, 239, 122);
+}
+
+.gymContactBox {
+	background-color: rgb(0, 200, 255);
 }
 
 .del-Btn {

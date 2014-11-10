@@ -87,8 +87,11 @@
 		this.getGenders = function() {
 			return $http.get('/api/user/genders');
 		};
-		this.removeContact = function(id) {
-			return id;
+		this.addFriend = function(id) {
+			return $http.post('/api/user/friends/' + id);
+		};
+		this.removeFriend = function(id) {
+			return $http.delete('/api/user/friends/' + id);
 		};
 		this.getUserById = function(id) {
 			return $http.get('/api/user/users/' + id);
@@ -96,6 +99,9 @@
 		this.updateUser = function(user){
 			return $http.put("/api/user/update/user", user);
 		};	
+		this.fetchFriends = function() {
+			return $http.get("/api/user/friends");
+		};
 		this.joinGym = function(id) {
 			return $http.post('api/user/gym/join/' + id);
 		}

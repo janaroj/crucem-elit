@@ -1,7 +1,7 @@
 (function() {
 	var app = angular.module('crucem-elit');
 
-	app.controller('ContactsController', function($scope, $location, userService, toaster) {
+	app.controller('ContactsController', function($scope, $rootScope, $location, userService, toaster) {
 		$scope.init = function() {
 			userService.getContacts().then(function(result) {
 				$scope.contacts = result.data;
@@ -13,14 +13,22 @@
 		$scope.viewContact = function(id) {
 			$location.path('/user/contacts/' + id);
 		};
-
-		$scope.removeContact = function(id) {
-			toaster.pop('error', 'Unimplemented', "This feature doesn't work yet");
-//			userService.removeContact(id).then(function(data) {
-//			toaster.pop('success', 'Contact', 'Contact removed successfully!');
-//			});
-		};
 		
+		$scope.removeFriend = function(friend) {
+			userService.removeFriend(friend.id).then(
+				function(data) {
+					$rootScope.removeFriend(friend.id);
+					if (!angular.equals(friend.gym, $scope.user.gym)) {
+						$scope.contacts.splice( $scope.contacts.indexOf(friend), 1 );
+					}
+					toaster.pop('success', 'Friend', 'Friend removed successfully!');
+				},
+				function(data) {
+					toaster.pop('error', 'Friend', data.result.message);
+				}
+			);
+		};
+
 		$scope.pictures = {};
 
 		$scope.getPicture = function(id, gender) {
@@ -35,7 +43,7 @@
 		var getDefaultImageSrc = function(gender) {
 			return (gender === 'FEMALE') ? '../../images/jane_doe_test.png' : '../../images/john_doe_test.png';
 		};
-		
+
 	});
 
 	app.controller('ContactController', function($scope, $routeParams, userService, toaster) {
@@ -67,20 +75,20 @@
 			}
 
 		};
-	
+
 		var getProfileImage = function() {
 			userService.getProfilePicture($scope.contact.id).then(
-				function(result) {
-					$scope.imageSrc = (result.data.type === "error") ? getDefaultImageSrc() : "data:image/png;base64," + result.data;
-				},  
-				function(result) { toaster.pop('error', 'Contact' , result.data.message); }
+					function(result) {
+						$scope.imageSrc = (result.data.type === "error") ? getDefaultImageSrc() : "data:image/png;base64," + result.data;
+					},  
+					function(result) { toaster.pop('error', 'Contact' , result.data.message); }
 			);
 		};
-		
+
 		var getDefaultImageSrc = function() {
 			return ($scope.contact.gender === 'FEMALE') ? '../../images/jane_doe_test.png' : '../../images/john_doe_test.png';
 		};
-
+		
 		$scope.isMyProfile = function() {
 			if (!$scope.contact || !$scope.user) {
 				return false;
@@ -141,11 +149,11 @@
 		$scope.onFileSelect = function($files) {
 			if ($files[0]) {
 				userService.uploadProfilePicture($files[0]).then(
-					function(result) {
-						$scope.imageSrc = "data:image/png;base64," + result.data;
-						toaster.pop('success', 'Contact', 'File uploaded successfully!');
-					}, 
-					function(result) {toaster.pop('error', 'Upload', 'Uploading file failed');}
+						function(result) {
+							$scope.imageSrc = "data:image/png;base64," + result.data;
+							toaster.pop('success', 'Contact', 'File uploaded successfully!');
+						}, 
+						function(result) {toaster.pop('error', 'Upload', 'Uploading file failed');}
 				);
 			}
 		};

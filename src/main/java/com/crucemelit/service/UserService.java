@@ -36,4 +36,10 @@ public interface UserService extends UserDetailsService, SearchService, PictureS
 
     void updateUser(User user);
 
+    List<User> getFriends();
+
+    void removeFriend(long id);
+
+    void addFriend(long id);
+
 }
