@@ -7,8 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -29,11 +29,11 @@ public @Data class Record extends BaseEntity {
     private long id;
 
     @OneToOne
-    @PrimaryKeyJoinColumn
+    @JoinColumn(name="exercise_id")
     private Exercise exercise;
 
     @OneToOne
-    @PrimaryKeyJoinColumn
+    @JoinColumn(name="exercisegroup_id")
     private ExerciseGroup exerciseGroup;
 
     private Double time;

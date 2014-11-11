@@ -14,6 +14,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import com.crucemelit.util.Utility;
+
 @Entity
 @Table(name = "GYM")
 @NoArgsConstructor
@@ -40,7 +42,7 @@ public @Data class Gym extends BaseEntity implements Suggestable {
     private byte[] picture;
 
     public String getFullAddress() {
-        return String.format("%s, %s", getCity(), getAddress());
+    	 return Utility.formatStrings(getCity(), getAddress());
     }
 
 }
