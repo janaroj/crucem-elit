@@ -24,6 +24,8 @@ public @Data class WorkoutDto {
 
     private Result result;
 
+    private UserDto user;
+
     public WorkoutDto(Workout workout) {
         if (workout != null) {
             this.id = workout.getId();
@@ -33,6 +35,7 @@ public @Data class WorkoutDto {
             this.gym = workout.getGymName();
             this.wod = workout.getWod();
             this.result = workout.getResult();
+            this.user = new UserDto(workout.getUser());
         }
     }
 

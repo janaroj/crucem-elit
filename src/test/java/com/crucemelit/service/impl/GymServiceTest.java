@@ -1,4 +1,4 @@
-package com.crucemelit.service;
+package com.crucemelit.service.impl;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
@@ -17,7 +17,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import com.crucemelit.exception.EntityNotFoundException;
 import com.crucemelit.model.Gym;
 import com.crucemelit.repository.GymRepository;
-import com.crucemelit.service.impl.GymServiceImpl;
 
 @RunWith(MockitoJUnitRunner.class)
 public class GymServiceTest {
@@ -47,7 +46,7 @@ public class GymServiceTest {
 
     @Test
     public void getGymsTest() {
-        assertEquals(mockGyms, gymService.getGyms());
+        assertEquals(mockGyms, gymService.getAllGyms());
     }
 
     @Test

@@ -33,7 +33,7 @@
 
 		$scope.getPicture = function(id, gender) {
 			userService.getProfilePicture(id).then(function(result) {
-				$scope.pictures[id] = (result.data.type === "error") ? getDefaultImageSrc(gender) : "data:image/png;base64," + result.data;
+				$scope.pictures[id] = (!result.data) ? getDefaultImageSrc(gender) : "data:image/png;base64," + result.data;
 			}, 
 			function(result) {
 				toaster.pop('error', 'Contact' , result.data.message);
@@ -46,7 +46,7 @@
 
 	});
 
-	app.controller('ContactController', function($scope, $routeParams, userService, toaster) {
+	app.controller('ContactController', function($scope, $routeParams, $location, userService, toaster) {
 		$scope.isChangeable = false;
 		$scope.isChangeInProgress = false;
 		$scope.isProfileLoaded = false;
@@ -79,7 +79,7 @@
 		var getProfileImage = function() {
 			userService.getProfilePicture($scope.contact.id).then(
 					function(result) {
-						$scope.imageSrc = (result.data.type === "error") ? getDefaultImageSrc() : "data:image/png;base64," + result.data;
+						$scope.imageSrc = (!result.data) ? getDefaultImageSrc() : "data:image/png;base64," + result.data;
 					},  
 					function(result) { toaster.pop('error', 'Contact' , result.data.message); }
 			);
@@ -156,6 +156,10 @@
 						function(result) {toaster.pop('error', 'Upload', 'Uploading file failed');}
 				);
 			}
+		};
+		
+		$scope.viewGym = function(id) {
+			$location.path('/user/gyms/' + id);
 		};
 
 	});

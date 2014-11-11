@@ -1,7 +1,6 @@
 package com.crucemelit.model;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -92,8 +91,4 @@ public class UtilityTest {
         assertEquals("", Utility.formatStrings("", null));
     }
 
-    @Test
-    public void isCollectionInitializedTest() {
-        assertTrue(Utility.isCollectionInitialized(Utility.EMPTY_LIST));
-    }
 }

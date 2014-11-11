@@ -32,11 +32,11 @@ public class MainController {
         userService.forgotPassword(emailDto.getEmail());
         return new ResponseEntity<String>("Success", HttpStatus.OK);
     }
-    
+
     @RequestMapping(value = "/ping")
     @ResponseBody
     public ResponseEntity<String> ping() {
-    	//userService.getUser(0); //Checks connection to database
+        userService.getUserDto(1); // Checks connection to database
         return new ResponseEntity<String>("UP", HttpStatus.OK);
     }
 

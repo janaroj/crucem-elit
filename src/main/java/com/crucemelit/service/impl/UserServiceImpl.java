@@ -4,8 +4,9 @@ import java.util.List;
 
 import lombok.SneakyThrows;
 
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,14 +18,18 @@ import org.springframework.transaction.annotation.Transactional;
 import com.crucemelit.domain.Gender;
 import com.crucemelit.domain.SuggestionType;
 import com.crucemelit.dto.Suggestion;
+import com.crucemelit.dto.UserDto;
+import com.crucemelit.dto.WorkoutDto;
 import com.crucemelit.exception.CredentialsExpiredException;
 import com.crucemelit.exception.EntityNotFoundException;
 import com.crucemelit.exception.UserAlreadyExistsException;
 import com.crucemelit.model.Gym;
 import com.crucemelit.model.User;
-import com.crucemelit.model.Workout;
 import com.crucemelit.repository.UserRepository;
 import com.crucemelit.service.UserService;
+import com.crucemelit.transformer.UserTransformer;
+import com.crucemelit.transformer.WorkoutTransformer;
+import com.crucemelit.util.TokenUtils;
 import com.crucemelit.util.Utility;
 import com.crucemelit.web.Role;
 
@@ -38,19 +43,17 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private BCryptPasswordEncoder encoder;
 
-    @Override
-    public List<User> getUsers() {
-        return userRepository.findAll();
-    }
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
-    @Override
-    public User getUser(long id) {
-        User user = userRepository.findOne(id);
-        if (user == null) {
-            throw new EntityNotFoundException();
-        }
-        return user;
-    }
+    @Autowired
+    private TokenUtils tokenUtils;
+
+    @Autowired
+    private UserTransformer userTransformer;
+
+    @Autowired
+    private WorkoutTransformer workoutTransformer;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -97,11 +100,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getContacts() {
+    public List<UserDto> getContactsDto() {
         User user = getCurrentUser();
         List<User> contacts = Utility.getUniqueList(user.getFriends(), user.getContactsFromGym());
         contacts.remove(user);
-        return contacts;
+        return userTransformer.transformToDto(contacts);
     }
 
     @Override
@@ -138,7 +141,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String getPicture(long id) {
-        return Utility.getImgSourceFromBytes(getUser(id).getPicture());
+        byte[] pictureBytes = getUser(id).getPicture();
+        if (pictureBytes == null) {
+            return "";
+        }
+        return Utility.getImgSourceFromBytes(pictureBytes);
     }
 
     @Override
@@ -171,12 +178,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Workout> getUserWorkouts() {
-        List<Workout> workouts = getCurrentUser().getWorkouts();
-        for (Workout workout : workouts) {
-            Hibernate.initialize(workout.getExerciseGroups());
-        }
-        return workouts;
+    public List<WorkoutDto> getUserWorkoutsDto() {
+        return workoutTransformer.transformToDto(getCurrentUser().getWorkouts());
     }
 
     @Override
@@ -185,10 +188,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getFriends() {
-        User user = getCurrentUser();
-        Hibernate.initialize(user.getFriends());
-        return user.getFriends();
+    public List<UserDto> getFriendsDto() {
+        return userTransformer.transformToDto(getCurrentUser().getFriends());
     }
 
     @Override
@@ -205,5 +206,40 @@ public class UserServiceImpl implements UserService {
         User friend = getUser(id);
         user.addFriend(friend);
         userRepository.saveAndFlush(user);
+    }
+
+    @Override
+    public UserDto authenticate(String username, String password) {
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username,
+                password);
+        Authentication authentication = authenticationManager.authenticate(authenticationToken);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        User user = (User) loadUserByUsername(username);
+        user.setToken(tokenUtils.createToken(user));
+        return userTransformer.transformToDtoWithAuthInfo(user);
+    }
+
+    @Override
+    public UserDto getCurrentUserWithAuthInfo() {
+        return userTransformer.transformToDtoWithAuthInfo(getCurrentUser());
+    }
+
+    @Override
+    public UserDto getCurrentUserDto() {
+        return userTransformer.transformToDto(getCurrentUser());
+    }
+
+    @Override
+    public UserDto getUserDto(long id) {
+        return userTransformer.transformToDto(getUser(id));
+    }
+
+    User getUser(long id) {
+        User user = userRepository.findOne(id);
+        if (user == null) {
+            throw new EntityNotFoundException();
+        }
+        return user;
     }
 }

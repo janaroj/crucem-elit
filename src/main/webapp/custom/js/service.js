@@ -146,12 +146,6 @@
 		};
 	});
 	
-	app.service('recordService', function($http) {
-		this.getRecords = function() {
-			return $http.get('/api/user/records');
-		};
-	});
-	
 	app.service('emailService', function($http) {
 		this.sendInviteEmail = function(email) {
 			return $http.post('/api/user/invite', email);
@@ -162,7 +156,9 @@
 	});
 	
 	app.service('workoutService', function($http) {
-		
+		this.getWorkouts = function() {
+			return $http.get('/api/user/workouts/results');
+		};
 	});
 
 	app.service('base64', function() {

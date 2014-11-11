@@ -34,7 +34,7 @@ public @Data class ExerciseGroup extends BaseEntity {
 
     private String name;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "workoutId")
     private Workout workout;
 
@@ -43,7 +43,7 @@ public @Data class ExerciseGroup extends BaseEntity {
 
     private boolean wod;
 
-    @OneToOne(mappedBy = "exerciseGroup")
+    @OneToOne(mappedBy = "exerciseGroup", fetch = FetchType.LAZY)
     private Record record;
 
 }

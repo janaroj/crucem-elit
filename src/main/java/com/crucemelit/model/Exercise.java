@@ -2,6 +2,7 @@ package com.crucemelit.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,6 +29,8 @@ public @Data class Exercise extends BaseEntity {
     @Column(nullable = false)
     private String name;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "exerciseTypeId")
     private ExerciseType exerciseType;
 
     private Boolean countTime;
@@ -38,10 +41,10 @@ public @Data class Exercise extends BaseEntity {
 
     private String comment;
 
-    @OneToOne(mappedBy = "exercise")
+    @OneToOne(mappedBy = "exercise", fetch = FetchType.LAZY)
     private Record record;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "exerciseGroupId")
     private ExerciseGroup exerciseGroup;
 

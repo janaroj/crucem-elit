@@ -1,7 +1,7 @@
 (function() {
 	var app = angular.module('crucem-elit');
 
-	app.controller('RecordController', function($scope, $q, $location, $filter, userService, recordService, ngTableParams, toaster) {
+	app.controller('RecordController', function($scope, $q, $location, $filter, userService, workoutService, ngTableParams, toaster) {
 		var recordData = null;
 		$scope.tableParams = new ngTableParams({
 			page: 1,            // show first page
@@ -10,14 +10,15 @@
 				'user.name' : $scope.user.name
 			},
 			sorting: {
-				'workout.name' : 'asc',
+				'wod' : 'asc',
 				'result.repeats' : 'desc'
 			}
 		}, {
 			total: 0,           // length of data
 			getData: function($defer, params) {
 				if (recordData===null) {
-					recordService.getRecords($scope.tableParams, $defer).then(function(result) {
+					
+					workoutService.getWorkouts().then(function(result) {
 						recordData = result.data;
 						ui.util.table.prepareData($defer, $filter, params, recordData);
 					}, function(result) {

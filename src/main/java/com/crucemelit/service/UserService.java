@@ -4,13 +4,12 @@ import java.util.List;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import com.crucemelit.dto.UserDto;
+import com.crucemelit.dto.WorkoutDto;
 import com.crucemelit.model.Gym;
 import com.crucemelit.model.User;
-import com.crucemelit.model.Workout;
 
 public interface UserService extends UserDetailsService, SearchService, PictureService {
-
-    List<User> getUsers();
 
     void addLoginFailure(String email);
 
@@ -18,11 +17,13 @@ public interface UserService extends UserDetailsService, SearchService, PictureS
 
     void register(User user);
 
-    User getUser(long id);
+    UserDto getUserDto(long id);
 
-    List<User> getContacts();
+    List<UserDto> getContactsDto();
 
     void leaveGym();
+
+    UserDto getCurrentUserDto();
 
     User getCurrentUser();
 
@@ -32,14 +33,18 @@ public interface UserService extends UserDetailsService, SearchService, PictureS
 
     void forgotPassword(String email);
 
-    List<Workout> getUserWorkouts();
+    List<WorkoutDto> getUserWorkoutsDto();
 
     void updateUser(User user);
 
-    List<User> getFriends();
+    List<UserDto> getFriendsDto();
 
     void removeFriend(long id);
 
     void addFriend(long id);
+
+    UserDto authenticate(String username, String password);
+
+    UserDto getCurrentUserWithAuthInfo();
 
 }

@@ -1,9 +1,8 @@
 package com.crucemelit.model;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,12 +27,12 @@ public @Data class Record extends BaseEntity {
     @Column(name = "id", unique = true, nullable = false)
     private long id;
 
-    @OneToOne
-    @JoinColumn(name="exercise_id")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "exercise_id")
     private Exercise exercise;
 
-    @OneToOne
-    @JoinColumn(name="exercisegroup_id")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "exercisegroup_id")
     private ExerciseGroup exerciseGroup;
 
     private Double time;
@@ -47,17 +46,4 @@ public @Data class Record extends BaseEntity {
     public Result getResult() {
         return new Result(repeats, time, weight, comment);
     }
-
-    public User getUser() {
-        return getExercise().getExerciseGroup().getWorkout().getUser();
-    }
-
-    public Workout getWorkout() {
-        return getExercise().getExerciseGroup().getWorkout();
-    }
-
-    public Date getDate() {
-        return getExercise().getExerciseGroup().getWorkout().getDate();
-    }
-
 }

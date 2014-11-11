@@ -71,7 +71,7 @@ public @Data class User extends BaseEntity implements UserDetails, Suggestable {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "gym")
     private Gym gym;
 
@@ -79,7 +79,7 @@ public @Data class User extends BaseEntity implements UserDetails, Suggestable {
     @JoinTable(name = "connections", joinColumns = @JoinColumn(name = "personId"), inverseJoinColumns = @JoinColumn(name = "friendId"))
     private List<User> friends;
 
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "friends")
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "friends", fetch = FetchType.LAZY)
     private List<User> friendOf;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)

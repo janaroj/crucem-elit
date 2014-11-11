@@ -3,7 +3,6 @@ package com.crucemelit.model;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -22,7 +21,6 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import com.crucemelit.dto.Result;
-import com.crucemelit.util.Utility;
 
 @Entity
 @Table(name = "WORKOUT")
@@ -35,7 +33,7 @@ public @Data class Workout extends BaseEntity {
     @Column(name = "id", unique = true, nullable = false)
     private long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "person", nullable = false)
     private User user;
 
@@ -50,26 +48,22 @@ public @Data class Workout extends BaseEntity {
 
     private String gymName;
 
-    @OneToMany(mappedBy = "workout", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "workout", fetch = FetchType.LAZY)
     private List<ExerciseGroup> exerciseGroups;
 
     public Result getResult() {
-        if (Utility.isCollectionInitialized(exerciseGroups)) {
-            for (ExerciseGroup exerciseGroup : getExerciseGroups()) {
-                if (exerciseGroup.isWod() && exerciseGroup.getRecord() != null) {
-                    return exerciseGroup.getRecord().getResult();
-                }
+        for (ExerciseGroup exerciseGroup : getExerciseGroups()) {
+            if (exerciseGroup.isWod() && exerciseGroup.getRecord() != null) {
+                return exerciseGroup.getRecord().getResult();
             }
         }
         return null;
     }
 
     public String getWod() {
-        if (Utility.isCollectionInitialized(exerciseGroups)) {
-            for (ExerciseGroup exerciseGroups : getExerciseGroups()) {
-                if (exerciseGroups.isWod()) {
-                    return exerciseGroups.getName();
-                }
+        for (ExerciseGroup exerciseGroups : getExerciseGroups()) {
+            if (exerciseGroups.isWod()) {
+                return exerciseGroups.getName();
             }
         }
         return null;

@@ -74,7 +74,7 @@
 			});
 			
 			gymService.getGymPicture($routeParams.id).then(function(result) {
-				$scope.imageSrc = (result.data.type === "error") ? getDefaultImageSrc() : "data:image/png;base64," + result.data;
+				$scope.imageSrc = (!result.data) ? getDefaultImageSrc() : "data:image/png;base64," + result.data;
 			});
 		};
 		

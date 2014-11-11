@@ -7,11 +7,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.crucemelit.domain.SuggestionType;
+import com.crucemelit.dto.GymDto;
 import com.crucemelit.dto.Suggestion;
 import com.crucemelit.exception.EntityNotFoundException;
 import com.crucemelit.model.Gym;
 import com.crucemelit.repository.GymRepository;
 import com.crucemelit.service.GymService;
+import com.crucemelit.transformer.GymTransformer;
 import com.crucemelit.util.Utility;
 
 @Service
@@ -21,18 +23,32 @@ public class GymServiceImpl implements GymService {
     @Autowired
     private GymRepository gymRepository;
 
-    @Override
-    public List<Gym> getGyms() {
+    @Autowired
+    private GymTransformer gymTransformer;
+
+    List<Gym> getAllGyms() {
         return gymRepository.findAll();
+    }
+
+    @Override
+    public List<GymDto> getGymsDto() {
+        return gymTransformer.transformToDto(getAllGyms());
     }
 
     @Override
     public Gym getGym(long id) {
         Gym gym = gymRepository.findOne(id);
+
         if (gym == null) {
             throw new EntityNotFoundException();
         }
+
         return gym;
+    }
+
+    @Override
+    public GymDto getGymDto(long id) {
+        return gymTransformer.transformToDto(getGym(id));
     }
 
     @Override
@@ -49,7 +65,11 @@ public class GymServiceImpl implements GymService {
 
     @Override
     public String getPicture(long id) {
-        return Utility.getImgSourceFromBytes(getGym(id).getPicture());
+        byte[] pictureBytes = getGym(id).getPicture();
+        if (pictureBytes == null) {
+            return "";
+        }
+        return Utility.getImgSourceFromBytes(pictureBytes);
     }
 
 }

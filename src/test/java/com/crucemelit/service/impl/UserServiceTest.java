@@ -1,4 +1,4 @@
-package com.crucemelit.service;
+package com.crucemelit.service.impl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -18,11 +18,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import com.crucemelit.dto.UserDto;
 import com.crucemelit.exception.EntityNotFoundException;
 import com.crucemelit.exception.UserAlreadyExistsException;
 import com.crucemelit.model.User;
 import com.crucemelit.repository.UserRepository;
-import com.crucemelit.service.impl.UserServiceImpl;
+import com.crucemelit.transformer.UserTransformer;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceTest {
@@ -40,6 +41,9 @@ public class UserServiceTest {
     private UserServiceImpl userService;
 
     private List<User> mockUsers;
+
+    @Spy
+    private UserTransformer userTransformer;
 
     @Mock
     private User mockUser;
@@ -64,11 +68,6 @@ public class UserServiceTest {
         when(userRepository.findAll()).thenReturn(mockUsers);
         when(userRepository.findByEmailIgnoreCase(EXISTING_EMAIL)).thenReturn(mockUser);
         when(userRepository.findOne(EXISTING_USER_ID)).thenReturn(mockUser);
-    }
-
-    @Test
-    public void getUsersTest() {
-        assertEquals(mockUsers, userService.getUsers());
     }
 
     @Test
@@ -110,8 +109,8 @@ public class UserServiceTest {
         when(mockUser.getContactsFromGym()).thenReturn(gymContacts);
         when(mockUser.getFriends()).thenReturn(friends);
         List<User> expectedContacts = Arrays.asList(mockGymContact, mockFriendTwo, mockFriendOne);
-        List<User> actualContacts = userService.getContacts();
-        assertTrue(listsAreEqual(expectedContacts, actualContacts));
+        List<UserDto> actualContacts = userService.getContactsDto();
+        assertTrue(listsAreEqual(userTransformer.transformToDto(expectedContacts), actualContacts));
     }
 
     private void mockAuthentication() {
@@ -120,7 +119,7 @@ public class UserServiceTest {
         when(((User) authentication.getPrincipal()).getId()).thenReturn(EXISTING_USER_ID);
     }
 
-    private boolean listsAreEqual(List<User> expectedContacts, List<User> actualContacts) {
+    private boolean listsAreEqual(List<UserDto> expectedContacts, List<UserDto> actualContacts) {
         return actualContacts.size() == expectedContacts.size() && expectedContacts.containsAll(actualContacts)
                 && actualContacts.containsAll(expectedContacts);
     }
