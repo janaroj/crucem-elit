@@ -40,15 +40,22 @@
 		$scope.viewUser = function(id) {
 			$location.path('/user/contacts/' + id);
 		};
+		
+		$scope.$watch('language()', function(newLang, oldLang) {
+			if (oldLang !== newLang) {
+				angular.forEach(genders,function(val,key) {val.title = $scope.getTranslation(val.id);})
+			}
+		});
+		
+		var genders = [];
 
 		$scope.genders = function(column) {
 			var def = $q.defer();
-			var genders = [];
 			userService.getGenders().then(function(result) {
 				angular.forEach(result.data, function(item) {
 					genders.push({
 						'id' : item,
-						'title' : item
+						'title' : $scope.getTranslation(item)
 					});
 				});
 				def.resolve(genders);

@@ -61,7 +61,7 @@
 					<li ng-cloak ng-show="!user">
 						<a data-toggle="popover" data-placement="bottom" data-target=".popover-target-login"><msg key="login"/></a>
 						<div class="popover-target popover-target-login">
-								<form name="form" role="login" ng-submit="login()" novalidate show-validation>
+								<form name="form" role="login" ng-submit="login(username, password)" novalidate show-validation>
 									<div class="form-group">
 										<input type="email" ng-blur="visitedEmail=true" placeholder="{{ getTranslation('email') }}" class="form-control" name="email" data-ng-model="username" required ng-disabled="loginClicked"/>
 										<div ng-cloak ng-show="form.email.$dirty && form.email.$invalid && visitedEmail">

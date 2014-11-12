@@ -1,6 +1,6 @@
 (function() {
 	var app = angular.module('crucem-elit');
-	app.controller('MainController', function($scope, $rootScope, i18n, $location, emailService, toaster) {
+	app.controller('MainController', function($scope, i18n, $location, emailService, toaster) {
 		
 		$scope.mainImgSrc = '../images/cf.jpg';
 		
@@ -29,9 +29,6 @@
 			});
 		};	
 		
-		$scope.login = function() {
-			$rootScope.login($scope.username, $scope.password);
-		};
 	});
 	
 }());
