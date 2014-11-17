@@ -178,6 +178,15 @@ body {
 	float: left;
 }
 
+.contactsInfo{
+    padding-left: 130px!important;
+    padding-top: 30px;
+}
+.contactsLink{
+    color: black;
+    font-weight: bold;
+}
+
 .contactText{
     font-size: 25px;
     line-height: 30px;
@@ -263,3 +272,4 @@ body {
 [ng\:cloak], [ng-cloak], .ng-cloak {
   display: none !important;
 }
+
