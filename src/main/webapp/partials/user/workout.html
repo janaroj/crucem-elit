@@ -1,0 +1,78 @@
+<div id="workoutdiv">
+	<form id="form" class="form-horizontal" role="form" name="form" ng-submit="createWorkout()" novalidate show-validation>
+		<div class="form-group">
+			<label class="col-lg-3 control-label"><msg key="workout.add.name" /></label>
+			<div class="col-lg-5">
+				<input class="form-control" type="text" ng-model="workout.name">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-lg-3 control-label"><msg key="workout.add.date" /></label>
+			<div class="col-lg-4">
+				<input type="text" class="form-control" ng-model="workout.date" datepicker-popup="{{format}}" placeholder="{{format}}" is-open="opened"
+					show-button-bar=false datepicker-append-to-body=true style:display:inline=true;>
+			</div>
+			<button type="button" class="btn btn-default" ng-click="open($event)">
+				<i class="glyphicon glyphicon-calendar"></i>
+			</button>
+		</div>
+
+		<hr>
+
+		<div class="page-header">
+			<nav class="clear">
+				<h2 class="pull-left">
+					<msg key="workout.groups" />
+				</h2>
+				<button class="btn btn-add btn-success pull-right pull-down" ng-click="newExerciseGroup()">
+					<i class="glyphicon-plus-sign glyphicon"></i>
+					<msg key="workout.add.group">
+				</button>
+			</nav>
+		</div>
+
+		<div ng-repeat="group in workoutgroups">
+			<div class="form-group">
+				<label class="col-lg-3 control-label"><msg key="workout.add.exercisegroup.name" /></label>
+				<div class="col-lg-5">
+					<input class="form-control" type="text" ng-model="group.name">
+				</div>
+				<button class="btn btn-add btn-success pull-right pull-down" ng-click="newExercise()">
+					<i class="glyphicon-plus-sign glyphicon"></i>
+					<msg key="workout.add.exercise">
+				</button>
+				<a href="" class="btn btn-danger pull-left" ng-click="removeExerciseGroup(group)"><i class="glyphicon glyphicon-trash"></i></a>
+			</div>
+			<div class="form-group">
+				<label class="col-lg-3 control-label"><msg key="workout.add.exercisegroup.isWod" /></label>
+				<div class="col-lg-5">
+					<input class="form-control" type="checkbox" ng-model="group.isWod">
+				</div>
+			</div>
+			<div ng-repeat="exercise in exercises">
+			<div>
+				<a href="#exerciseModal">{{exercise.name}}</a>
+			</div>
+				
+			</div>
+			<hr>
+		</div>
+
+		<div class="form-group">
+			<label class="col-md-3 control-label"></label>
+			<div class="col-md-8">
+				<button type="submit" class="btn btn-primary" ng-disabled="form.$invalid">
+					<msg key="save" />
+				</button>
+			</div>
+		</div>
+	</form>
+
+	<div id="exerciseModal" class="modalDialog">
+		<div>
+			<a href="#close" title="Close" class="close">X</a>
+			<h2>Modal Box</h2>
+			<p>This is a sample modal box that can be created using the powers of CSS3.</p>
+			<p>You could do a lot of things here like have a pop-up ad that shows when your website loads, or create a login/register form for users.</p>
+		</div>
+	</div>

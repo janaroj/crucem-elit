@@ -53,8 +53,13 @@
 			templateUrl: 'partials/forgot.html'
 		})
 		.when('/user/workouts', {
-			controller: 'WorkoutController',
+			controller: 'WorkoutsController',
 			templateUrl: 'partials/user/workouts.html',
+			resolve: {authentication : function(CheckAuthentication) {return CheckAuthentication();}}
+		})
+		.when('/user/workout/add', {
+			controller: 'WorkoutController',
+			templateUrl: 'partials/user/workout.html',
 			resolve: {authentication : function(CheckAuthentication) {return CheckAuthentication();}}
 		})
 		.otherwise({ redirectTo : "/"});
