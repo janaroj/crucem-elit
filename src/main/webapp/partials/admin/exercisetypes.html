@@ -1,0 +1,21 @@
+<div class="page-header">
+	<nav id="subnav" class="clear">
+		<h2 class="pull-left"><msg key="exercise.types"/></h2>
+		<button class="btn btn-success pull-right" ng-click="newExerciseType()"><i class="glyphicon glyphicon-plus-sign"></i> <msg key="create"/></a>
+	</nav>
+</div>
+
+<div loading-container="tableParams.settings().$loading">
+	<table ng-table="tableParams" show-filter="true" class="table">
+		<tbody>
+			<tr ng-repeat="exerciseType in $data">
+				<td data-title="getTranslation('exercise.type.name')" sortable="'name'" filter="{ 'name': 'text' }">
+					<a href="" ng-click="viewExerciseType(exerciseType.id)">{{exerciseType.name}}</a>
+				</td>
+				<td>
+					<button class="btn btn-danger btn-sm pull-right" ng-click="deleteExerciseType(exerciseType)"><i class="glyphicon glyphicon-trash"></i> <msg key="delete"/></button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

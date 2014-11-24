@@ -57,6 +57,26 @@
 			templateUrl: 'partials/user/workouts.html',
 			resolve: {authentication : function(CheckAuthentication) {return CheckAuthentication();}}
 		})
+		.when('/admin/gym', {
+			controller: 'AdminGymController',
+			templateUrl: 'partials/admin/gym.html',
+			resolve: {authentication : function(CheckAuthentication) {return CheckAuthentication();}}
+		})
+		.when('/admin/exercise', {
+			controller: 'AdminExerciseController',
+			templateUrl: 'partials/admin/exercise.html',
+			resolve: {authentication : function(CheckAuthentication) {return CheckAuthentication();}}
+		})
+		.when('/admin/exercisetypes', {
+			controller: 'AdminExerciseTypesController',
+			templateUrl: 'partials/admin/exercisetypes.html',
+			resolve: {authentication : function(CheckAuthentication) {return CheckAuthentication();}}
+		})
+		.when('/admin/exercisetype', {
+			controller: 'AdminExerciseTypeController',
+			templateUrl: 'partials/admin/exercisetype.html',
+			resolve: {authentication : function(CheckAuthentication) {return CheckAuthentication();}}
+		})
 		.otherwise({ redirectTo : "/"});
 		
 	    $httpProvider.interceptors.push('interceptor');

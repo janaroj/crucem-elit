@@ -72,4 +72,9 @@ public class GymServiceImpl implements GymService {
         return Utility.getImgSourceFromBytes(pictureBytes);
     }
 
+    @Override
+    public void createGym(Gym gym) {
+        gymRepository.saveAndFlush(gym);
+    }
+
 }

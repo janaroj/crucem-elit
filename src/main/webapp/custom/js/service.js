@@ -133,7 +133,9 @@
 		this.getGymById = function(id) {
 			return $http.get('/api/user/gyms/' + id);
 		};
-		
+		this.createGym = function(gym) {
+			return $http.post('/api/admin/gyms/', gym);
+		};
 		this.getGymPicture = function(id) {
 			return $http.get('/api/user/gym/picture/' + id);
 		};
@@ -158,6 +160,24 @@
 	app.service('workoutService', function($http) {
 		this.getWorkouts = function() {
 			return $http.get('/api/user/workouts/results');
+		};
+	});
+	
+	app.service('exerciseService', function($http) {
+		this.createExercise = function(exercise) {
+			return $http.post('/api/admin/exercises', exercise);
+		};
+	});
+	
+	app.service('exerciseTypeService', function($http) {
+		this.getExerciseTypes = function() {
+			return $http.get('/api/admin/exercisetypes');
+		};
+		this.createExerciseType = function(exerciseType) {
+			return $http.post('/api/admin/exercisetypes', exerciseType);
+		};
+		this.deleteExerciseType = function(id) {
+			return $http.delete('/api/admin/exercisetypes/' + id);
 		};
 	});
 

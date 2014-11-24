@@ -10,7 +10,7 @@
 
 		$rootScope.hasRole = function (role) {
 
-			if ($rootScope.user === undefined || $rootScope.user.authorities) {
+			if ($rootScope.user === undefined || !$rootScope.user.authorities) {
 				return false;
 			}
 
