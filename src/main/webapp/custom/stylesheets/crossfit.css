@@ -279,3 +279,7 @@ body {
   overflow: hidden;
   background-color: #e5e5e5;
 }
+
+.buttons button {
+	margin-left: 7px;
+}

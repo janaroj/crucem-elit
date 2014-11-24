@@ -36,6 +36,7 @@
 		$scope.deleteExerciseType = function(exerciseType) {
 			if (confirm("Are you sure you wish to delete " + exerciseType.name )) {
 				exerciseTypeService.deleteExerciseType(exerciseType.id).then(function() {
+					exerciseTypeData.splice( exerciseTypeData.indexOf(exerciseType), 1 );
 					$scope.tableParams.reload();
 					toaster.pop('success', 'Exercise Type' , 'Exercisetype deleted successfully');
 				}, 
@@ -43,6 +44,23 @@
 					toaster.pop('error', 'Exercise Type', result.data.message);
 				});
 			}
+		};
+		
+		$scope.updateExerciseType = function(exerciseType) {
+			var oldName = exerciseType.name;
+			exerciseType.name = exerciseType.newName;
+			exerciseType.$edit = false; 
+			exerciseTypeService.updateExerciseType(exerciseType.id, exerciseType).then(function(){
+				toaster.pop('success', 'Exercise Type' , 'Exercisetype updated successfully');
+			}, function(result) {
+				exerciseType.name = oldName;
+				toaster.pop('error', 'Exercise Type', result.data.message);
+			});
+		};
+		
+		$scope.editExerciseType = function(exerciseType) {
+			exerciseType.newName = exerciseType.name;
+			exerciseType.$edit = true;
 		};
 
 	});

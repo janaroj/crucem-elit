@@ -14,4 +14,6 @@ public interface ExerciseTypeService {
 
     void deleteExerciseType(long id);
 
+    void updateExerciseType(ExerciseType exerciseType);
+
 }

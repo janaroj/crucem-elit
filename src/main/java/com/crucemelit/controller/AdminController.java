@@ -2,6 +2,10 @@ package com.crucemelit.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import lombok.SneakyThrows;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,6 +22,7 @@ import com.crucemelit.model.Gym;
 import com.crucemelit.service.ExerciseService;
 import com.crucemelit.service.ExerciseTypeService;
 import com.crucemelit.service.GymService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 @RequestMapping(value = "/admin", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -31,6 +36,9 @@ public class AdminController {
 
     @Autowired
     private ExerciseTypeService exerciseTypeService;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @RequestMapping(value = "/gyms", method = RequestMethod.POST)
     public ResponseEntity<String> createGym(@RequestBody Gym gym) {
@@ -58,6 +66,15 @@ public class AdminController {
     @RequestMapping(value = "/exercisetypes/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<String> deleteExerciseType(@PathVariable long id) {
         exerciseTypeService.deleteExerciseType(id);
+        return new ResponseEntity<String>("Success", HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/exercisetypes/{id}", method = RequestMethod.PUT)
+    @SneakyThrows
+    public ResponseEntity<String> updateUser(@PathVariable long id, HttpServletRequest req) {
+        ExerciseType exerciseType = exerciseTypeService.getExerciseType(id);
+        objectMapper.readerForUpdating(exerciseType).readValue(req.getReader());
+        exerciseTypeService.updateExerciseType(exerciseType);
         return new ResponseEntity<String>("Success", HttpStatus.OK);
     }
 

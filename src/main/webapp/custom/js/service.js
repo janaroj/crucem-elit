@@ -179,6 +179,9 @@
 		this.deleteExerciseType = function(id) {
 			return $http.delete('/api/admin/exercisetypes/' + id);
 		};
+		this.updateExerciseType = function(id, exerciseType){
+			return $http.put("/api/admin/exercisetypes/" + id, exerciseType);
+		};	
 	});
 
 	app.service('base64', function() {

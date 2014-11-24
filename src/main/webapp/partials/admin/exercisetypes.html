@@ -10,10 +10,14 @@
 		<tbody>
 			<tr ng-repeat="exerciseType in $data">
 				<td data-title="getTranslation('exercise.type.name')" sortable="'name'" filter="{ 'name': 'text' }">
-					<a href="" ng-click="viewExerciseType(exerciseType.id)">{{exerciseType.name}}</a>
+					<span ng-if="!exerciseType.$edit">{{exerciseType.name}}</span>
+					<div ng-if="exerciseType.$edit"><input class="form-control" type="text" ng-model="exerciseType.newName" /></div>
 				</td>
-				<td>
+				<td class="buttons">
 					<button class="btn btn-danger btn-sm pull-right" ng-click="deleteExerciseType(exerciseType)"><i class="glyphicon glyphicon-trash"></i> <msg key="delete"/></button>
+					<button ng-show="exerciseType.$edit" class="btn btn-warning btn-sm pull-right" ng-click="exerciseType.$edit = false;"><msg key="cancel"/></button>
+					<button ng-show="exerciseType.$edit" class="btn btn-primary btn-sm pull-right" ng-click="updateExerciseType(exerciseType)"><span class="glyphicon glyphicon-edit"></span> <msg key="save"/></button>
+					<button ng-hide="exerciseType.$edit" class="btn btn-default btn-sm pull-right" ng-click="editExerciseType(exerciseType)"><span class="glyphicon glyphicon-edit"></span> <msg key="edit"/></button>
 				</td>
 			</tr>
 		</tbody>
