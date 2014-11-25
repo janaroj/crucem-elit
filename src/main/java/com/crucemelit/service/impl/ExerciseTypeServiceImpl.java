@@ -37,4 +37,9 @@ public class ExerciseTypeServiceImpl implements ExerciseTypeService {
         exerciseTypeRepository.delete(id);
     }
 
+    @Override
+    public void updateExerciseType(ExerciseType exerciseType) {
+        exerciseTypeRepository.saveAndFlush(exerciseType);
+    }
+
 }

@@ -77,4 +77,14 @@ public class GymServiceImpl implements GymService {
         gymRepository.saveAndFlush(gym);
     }
 
+    @Override
+    public void deleteGym(long id) {
+        gymRepository.delete(id);
+    }
+
+    @Override
+    public void updateGym(Gym gym) {
+        gymRepository.saveAndFlush(gym);
+    }
+
 }

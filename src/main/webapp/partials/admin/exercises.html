@@ -1,0 +1,25 @@
+<div class="page-header">
+	<nav id="subnav" class="clear">
+		<h2 class="pull-left"><msg key="exercises"/></h2>
+		<button class="btn btn-success pull-right" ng-click="newExercise()"><i class="glyphicon glyphicon-plus-sign"></i> <msg key="create"/></button>
+	</nav>
+</div>
+
+<div loading-container="tableParams.settings().$loading">
+	<table ng-table="tableParams" show-filter="true" class="table">
+		<tbody>
+			<tr ng-repeat="exercise in $data">
+				<td data-title="getTranslation('exercise.name')" sortable="'name'" filter="{ 'name': 'text' }">
+					<span ng-if="!exercise.$edit">{{exercise.name}}</span>
+					<div ng-if="exercise.$edit"><input class="form-control" type="text" ng-model="exerciseDto.name" /></div>
+				</td>
+				<td class="buttons">
+					<button class="btn btn-danger btn-sm pull-right" ng-click="deleteExercise(exercise)"><i class="glyphicon glyphicon-trash"></i> <msg key="delete"/></button>
+					<button ng-show="exercise.$edit" class="btn btn-warning btn-sm pull-right" ng-click="exercise.$edit = false;"><msg key="cancel"/></button>
+					<button ng-show="exercise.$edit" class="btn btn-primary btn-sm pull-right" ng-click="updateExercise(exerciseDto, exercise)"><span class="glyphicon glyphicon-edit"></span> <msg key="save"/></button>
+					<button ng-hide="exercise.$edit" class="btn btn-default btn-sm pull-right" ng-click="editExercise(exercise)"><span class="glyphicon glyphicon-edit"></span> <msg key="edit"/></button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

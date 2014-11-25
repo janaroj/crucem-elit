@@ -31,7 +31,7 @@
 		$rootScope.isFriend = function(contact) {
 			var friends = $rootScope.getFriends();
 			for (var i = 0; i < friends.length; i++) {
-				if (angular.equals(friends[i], contact)) {
+				if (friends[i].id === contact.id) {
 					return true;
 				}
 			}

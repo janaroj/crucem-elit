@@ -18,7 +18,7 @@
 			userService.removeFriend(friend.id).then(
 				function(data) {
 					$rootScope.removeFriend(friend.id);
-					if (!angular.equals(friend.gym, $scope.user.gym)) {
+					if (friend.gym.id !== $scope.user.gym.id) {
 						$scope.contacts.splice( $scope.contacts.indexOf(friend), 1 );
 					}
 					toaster.pop('success', 'Friend', 'Friend removed successfully!');
