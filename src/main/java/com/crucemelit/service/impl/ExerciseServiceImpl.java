@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.crucemelit.dto.ExerciseDto;
 import com.crucemelit.model.Exercise;
 import com.crucemelit.repository.ExerciseRepository;
 import com.crucemelit.service.ExerciseService;
+import com.crucemelit.transformer.ExerciseTransformer;
 
 @Service
 @Transactional
@@ -17,14 +19,17 @@ public class ExerciseServiceImpl implements ExerciseService {
     @Autowired
     private ExerciseRepository exerciseRepository;
 
+    @Autowired
+    private ExerciseTransformer exerciseTransformer;
+
     @Override
     public void createExercise(Exercise exercise) {
         exerciseRepository.saveAndFlush(exercise);
     }
 
     @Override
-    public List<Exercise> getExercises() {
-        return exerciseRepository.findAll();
+    public List<ExerciseDto> getExercises() {
+        return exerciseTransformer.transformToDto(exerciseRepository.findAll());
     }
 
     @Override

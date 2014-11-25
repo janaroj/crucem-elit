@@ -23,11 +23,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.crucemelit.domain.Gender;
 import com.crucemelit.dto.EmailDto;
+import com.crucemelit.dto.ExerciseDto;
 import com.crucemelit.dto.GymDto;
 import com.crucemelit.dto.Suggestion;
 import com.crucemelit.dto.UserDto;
 import com.crucemelit.dto.WorkoutDto;
-import com.crucemelit.model.Exercise;
 import com.crucemelit.model.User;
 import com.crucemelit.service.ExerciseService;
 import com.crucemelit.service.GymService;
@@ -57,7 +57,7 @@ public class UserController {
     private ExerciseService exerciseService;
 
     @RequestMapping(value = "/exercises")
-    public List<Exercise> getExercises() {
+    public List<ExerciseDto> getExercises() {
         return exerciseService.getExercises();
     }
 
