@@ -82,5 +82,22 @@
 		};
 
 	});
+	app.controller('ExerciseController', function($scope, exerciseService, exerciseTypeService, toaster, $modalInstance) {
+		$scope.ok = function () {
+			$modalInstance.close();
+		};
+
+		$scope.cancel = function () {
+			$modalInstance.dismiss('cancel');
+		};
+
+		$scope.exercises = [{name:"Jooks",countTime:false,countWeight:false,countRepeats:false,comment:"Best exercise EU",clicked:false},
+		                    {name:"Kükk",countTime:false,countWeight:true,countRepeats:true,comment:"Best exercise RU", clicked:false}];
+		$scope.showExerciseDetails = function (exercise) {
+			exercise.clicked = !exercise.clicked;
+		}
+		
+		
+	});
 
 }());

@@ -174,7 +174,7 @@
 			return $http.post('/api/admin/exercises', exercise);
 		};
 		this.getExercises = function() {
-			return $http.get('/api/admin/exercises');
+			return $http.get('/api/user/exercises');
 		};
 		this.deleteExercise = function(id) {
 			return $http.delete('/api/admin/exercises/' + id);

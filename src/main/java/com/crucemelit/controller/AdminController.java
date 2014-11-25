@@ -40,11 +40,6 @@ public class AdminController {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @RequestMapping(value = "/exercises")
-    public List<Exercise> getExercises() {
-        return exerciseService.getExercises();
-    }
-
     @RequestMapping(value = "/exercises", method = RequestMethod.POST)
     public ResponseEntity<String> createExercise(@RequestBody Exercise exercise) {
         exerciseService.createExercise(exercise);
