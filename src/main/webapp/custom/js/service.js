@@ -167,6 +167,9 @@
 		this.createExercise = function(exercise) {
 			return $http.post('/api/admin/exercises', exercise);
 		};
+		this.getExercises = function() {
+			return $http.get('/api/exercise/exercises');
+		}
 	});
 	
 	app.service('exerciseTypeService', function($http) {
