@@ -48,9 +48,9 @@
 		};
 
 	});
-	
-	app.controller('WorkoutController', function($scope, $location, $timeout, userService, toaster) {
-		$scope.showModal = false;
+
+	app.controller('WorkoutController', function($scope, $modal, $location, $timeout, userService, toaster) {
+
 		$scope.open = function($event) {
 			$event.preventDefault();
 			$event.stopPropagation();
@@ -58,9 +58,9 @@
 		};
 
 		$scope.format = 'yyyy-MM-dd';
-		
+
 		$scope.init = function() {
-			
+
 		};
 		$scope.workoutgroups = [];
 		$scope.newExerciseGroup = function(){
@@ -69,18 +69,35 @@
 		$scope.removeExerciseGroup = function(group) {
 			$scope.workoutgroups.splice($scope.workoutgroups.indexOf(group),1);
 		};
-		
+
 		$scope.exercises = [{name:"test1"}];
 		$scope.newExercise = function(){
 			$scope.exercises.push({name:""});
 		};
-		
+
 		$scope.removeExercise = function(exercise){
 			$scope.exercises.splice($scope.exercises.indexOf(exercise),1);
 		};
-		
-		
+
+		$scope.openModal = function () {
+
+			var modalInstance = $modal.open({
+				templateUrl: 'partials/user/addExerciseModal.html',
+				controller: 'ExerciseController',
+				resolve: {
+					exercises: function () {
+						return $scope.exercises;
+					}
+				}
+			});
+
+			modalInstance.result.then(function (selectedItem) {
+			}, function () {
+			});
+		};
+
+
 	});
-	
-	
+
+
 }());

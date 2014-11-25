@@ -1,0 +1,30 @@
+
+<div class="modal-header">
+	<h3 class="modal-title">
+		<msg key="exercise.add.modal.title" />
+	</h3>
+</div>
+<div class="modal-body">
+	<div ng-repeat="exercise in exercises">
+		<p>
+			<a href="" ng-click="showExerciseDetails(exercise)">{{exercise.name}}</a>
+		</p>
+		<div ng-if="exercise.clicked">
+			<p>Measures time: {{exercise.countTime}}</p>
+			<p>Measures weight: {{exercise.countWeight}}</p>
+			<p>Measures repeats:{{exercise.countRepeats}}</p>
+			<p>Comment: {{exercise.comment}}</p>
+			<button class="btn btn-add btn-success pull-right pull-down" ng-click="">
+				<i class="glyphicon-plus-sign glyphicon"></i>
+				<msg key="workout.add.exercise">
+			</button>
+		</div>
+	</div>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-primary" ng-click="ok()">OK</button>
+	<button class="btn btn-warning" ng-click="cancel()">
+		<msg key="cancel" />
+	</button>
+</div>
+

@@ -13,4 +13,6 @@ public interface GymService extends SearchService, PictureService {
 
     Gym getGym(long id);
 
+    void createGym(Gym gym);
+
 }

@@ -15,6 +15,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import com.crucemelit.util.ExerciseTypeDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
 @Entity
 @Table(name = "EXCERCISE")
 @NoArgsConstructor
@@ -29,8 +32,9 @@ public @Data class Exercise extends BaseEntity {
     @Column(nullable = false)
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "exerciseTypeId")
+    @JsonDeserialize(using = ExerciseTypeDeserializer.class)
     private ExerciseType exerciseType;
 
     private Boolean countTime;

@@ -14,6 +14,8 @@
 <script src="js/toaster.js"></script>
 <script src="custom/js/init.js"></script>
 <script src="custom/js/controller/contactcontroller.js"></script>
+<script src="custom/js/controller/exercisecontroller.js"></script>
+<script src="custom/js/controller/exercisetypecontroller.js"></script>
 <script src="custom/js/controller/gymcontroller.js"></script>
 <script src="custom/js/controller/invitecontroller.js"></script>
 <script src="custom/js/controller/maincontroller.js"></script>
@@ -88,6 +90,10 @@
                     			<li><a href="/#/user/contacts/profile" class="dropdown-option"><msg key="profile"/></a></li>
                     			<li><a href="/#/user/invite" class="dropdown-option"><msg key="invite"/></a></li>
                     			<li class="divider" />
+                    			<li ng-show="hasRole('ROLE_ADMIN')"><a href="/#/admin/gym" class="dropdown-option"><msg key="new.gym"/></a></li>
+                    			<li ng-show="hasRole('ROLE_ADMIN')"><a href="/#/admin/exercisetypes" class="dropdown-option"><msg key="admin.exercisetypes"/></a></li>
+                    			<li ng-show="hasRole('ROLE_ADMIN')"><a href="/#/admin/exercise" class="dropdown-option"><msg key="new.exercise"/></a></li>
+                    			<li class="divider" ng-show="hasRole('ROLE_ADMIN')"/>
                     			<li><a ng-click="logout()" class="dropdown-option"><msg key="logout"/></a></li>
       						</ul>       
   						</div>    

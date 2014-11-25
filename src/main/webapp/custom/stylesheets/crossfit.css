@@ -243,6 +243,15 @@ hr {
 	float: left;
 }
 
+.contactsInfo{
+    padding-left: 130px!important;
+    padding-top: 30px;
+}
+.contactsLink{
+    color: black;
+    font-weight: bold;
+}
+
 .contactText{
     font-size: 25px;
     line-height: 30px;
@@ -327,4 +336,11 @@ hr {
 
 [ng\:cloak], [ng-cloak], .ng-cloak {
   display: none !important;
+}
+
+.dropdown .divider {
+  height: 1px;
+  margin: 9px 0;
+  overflow: hidden;
+  background-color: #e5e5e5;
 }
