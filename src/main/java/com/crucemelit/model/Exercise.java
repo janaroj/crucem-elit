@@ -15,9 +15,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import com.crucemelit.util.ExerciseTypeDeserializer;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-
 @Entity
 @Table(name = "EXCERCISE")
 @NoArgsConstructor
@@ -34,14 +31,13 @@ public @Data class Exercise extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "exerciseTypeId")
-    @JsonDeserialize(using = ExerciseTypeDeserializer.class)
     private ExerciseType exerciseType;
 
-    private Boolean countTime;
+    private boolean countTime = false;
 
-    private Boolean countWeight;
+    private boolean countWeight = false;
 
-    private Boolean countRepeats;
+    private boolean countRepeats = false;
 
     private String comment;
 

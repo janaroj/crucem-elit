@@ -1,7 +1,7 @@
 (function() {
 	var app = angular.module('crucem-elit');
 	
-	app.controller('AdminExercisesController', function($scope, $filter, $location, exerciseService, ngTableParams, toaster) {
+	app.controller('AdminExercisesController', function($scope, $q, $filter, $location, exerciseService, exerciseTypeService, ngTableParams, toaster) {
 
 		var exerciseData = null;
 		$scope.tableParams = new ngTableParams({
@@ -56,6 +56,51 @@
 		$scope.editExercise = function(exercise) {
 			$scope.exerciseDto = angular.copy(exercise);
 			exercise.$edit = true;
+		};
+		
+		var countWeightBooleans = [{'id' : 'true','title' : $scope.getTranslation('true')},{'id' : 'false','title' : $scope.getTranslation('false')}];
+		$scope.countWeightBooleans = function(column) {
+			var def = $q.defer();
+			def.resolve(countWeightBooleans);
+			return def;
+		};
+		
+		var countTimeBooleans = [{'id' : 'true','title' : $scope.getTranslation('true')},{'id' : 'false','title' : $scope.getTranslation('false')}];
+		$scope.countTimeBooleans = function(column) {
+			var def = $q.defer();
+			def.resolve(countTimeBooleans);
+			return def;
+		};
+		
+		var countRepeatsBooleans = [{'id' : 'true','title' : $scope.getTranslation('true')},{'id' : 'false','title' : $scope.getTranslation('false')}];
+		$scope.countRepeatsBooleans = function(column) {
+			var def = $q.defer();
+			def.resolve(countRepeatsBooleans);
+			return def;
+		};
+		
+		$scope.$watch('language()', function(newLang, oldLang) {
+			if (oldLang !== newLang) {
+				angular.forEach(countWeightBooleans,function(val,key) {val.title = $scope.getTranslation(val.id);})
+				angular.forEach(countTimeBooleans,function(val,key) {val.title = $scope.getTranslation(val.id);})
+				angular.forEach(countRepeatsBooleans,function(val,key) {val.title = $scope.getTranslation(val.id);})
+			}
+		});
+		
+		$scope.exerciseTypeOptions = function(column) {
+			var def = $q.defer();
+			var typeOptions = [];
+			exerciseTypeService.getExerciseTypes().then(function(result) {
+				$scope.exerciseTypes = result.data;
+				angular.forEach(result.data, function(item) {
+					typeOptions.push({
+						'id' : item.id,
+						'title' : item.name
+					});
+				});
+				def.resolve(typeOptions);
+			});
+			return def;
 		};
 
 	});
