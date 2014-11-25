@@ -27,7 +27,9 @@ import com.crucemelit.dto.GymDto;
 import com.crucemelit.dto.Suggestion;
 import com.crucemelit.dto.UserDto;
 import com.crucemelit.dto.WorkoutDto;
+import com.crucemelit.model.Exercise;
 import com.crucemelit.model.User;
+import com.crucemelit.service.ExerciseService;
 import com.crucemelit.service.GymService;
 import com.crucemelit.service.SearchService;
 import com.crucemelit.service.UserService;
@@ -50,6 +52,14 @@ public class UserController {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @Autowired
+    private ExerciseService exerciseService;
+
+    @RequestMapping(value = "/exercises")
+    public List<Exercise> getExercises() {
+        return exerciseService.getExercises();
+    }
 
     @RequestMapping(value = "/gyms")
     public List<GymDto> getGyms() {
