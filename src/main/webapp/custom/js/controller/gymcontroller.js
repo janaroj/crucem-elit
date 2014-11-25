@@ -31,7 +31,7 @@
 			if (!$scope.user || !$scope.user.gym) {
 				return false;
 			}
-			return angular.equals($scope.user.gym, gym);
+			return $scope.user.gym.id === gym.id;
 		};
 
 		$scope.joinGym = function(gym) {
@@ -58,6 +58,38 @@
 
 		$scope.viewGym = function(id) {
 			$location.path('/user/gyms/' + id);
+		};
+		
+		$scope.newGym = function() {
+			$location.path('/admin/gym');
+		};
+
+		$scope.deleteGym = function(gym) {
+			if (confirm("Are you sure you wish to delete " + gym.name )) {
+				gymService.deleteGym(gym.id).then(function() {
+					gymData.splice( gymData.indexOf(gym), 1 );
+					$scope.tableParams.reload();
+					toaster.pop('success', 'Gym' , 'Gym deleted successfully');
+				}, 
+				function(result) {
+					toaster.pop('error', 'Gym', result.data.message);
+				});
+			}
+		};
+		
+		$scope.updateGym = function(gymDto, gym) {
+			gymService.updateGym(gymDto.id, gymDto).then(function(){
+				toaster.pop('success', 'Gym' , 'Gym updated successfully');
+				angular.copy(gymDto, gym);
+			}, function(result) {
+				toaster.pop('error', 'Gym', result.data.message);
+			});
+			gym.$edit = false;
+		};
+		
+		$scope.editGym = function(gym) {
+			$scope.gymDto = angular.copy(gym);
+			gym.$edit = true;
 		};
 
 	});
@@ -91,10 +123,11 @@
 		};
 	});
 
-	app.controller('AdminGymController', function($scope, gymService, toaster) {
+	app.controller('AdminGymController', function($scope, $location, gymService, toaster) {
 
 		$scope.createGym = function() {
 			gymService.createGym($scope.gym).then(function(result) {
+				$location.path('/user/gyms');
 				toaster.pop('success', 'Gym' , 'Gym created successfully');
 			}, 
 			function(result) {

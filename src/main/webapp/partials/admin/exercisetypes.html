@@ -1,7 +1,7 @@
 <div class="page-header">
 	<nav id="subnav" class="clear">
 		<h2 class="pull-left"><msg key="exercise.types"/></h2>
-		<button class="btn btn-success pull-right" ng-click="newExerciseType()"><i class="glyphicon glyphicon-plus-sign"></i> <msg key="create"/></a>
+		<button class="btn btn-success pull-right" ng-click="newExerciseType()"><i class="glyphicon glyphicon-plus-sign"></i> <msg key="create"/></button>
 	</nav>
 </div>
 
@@ -11,12 +11,12 @@
 			<tr ng-repeat="exerciseType in $data">
 				<td data-title="getTranslation('exercise.type.name')" sortable="'name'" filter="{ 'name': 'text' }">
 					<span ng-if="!exerciseType.$edit">{{exerciseType.name}}</span>
-					<div ng-if="exerciseType.$edit"><input class="form-control" type="text" ng-model="exerciseType.newName" /></div>
+					<div ng-if="exerciseType.$edit"><input class="form-control" type="text" ng-model="exerciseTypeDto.name" /></div>
 				</td>
 				<td class="buttons">
 					<button class="btn btn-danger btn-sm pull-right" ng-click="deleteExerciseType(exerciseType)"><i class="glyphicon glyphicon-trash"></i> <msg key="delete"/></button>
 					<button ng-show="exerciseType.$edit" class="btn btn-warning btn-sm pull-right" ng-click="exerciseType.$edit = false;"><msg key="cancel"/></button>
-					<button ng-show="exerciseType.$edit" class="btn btn-primary btn-sm pull-right" ng-click="updateExerciseType(exerciseType)"><span class="glyphicon glyphicon-edit"></span> <msg key="save"/></button>
+					<button ng-show="exerciseType.$edit" class="btn btn-primary btn-sm pull-right" ng-click="updateExerciseType(exerciseTypeDto, exerciseType)"><span class="glyphicon glyphicon-edit"></span> <msg key="save"/></button>
 					<button ng-hide="exerciseType.$edit" class="btn btn-default btn-sm pull-right" ng-click="editExerciseType(exerciseType)"><span class="glyphicon glyphicon-edit"></span> <msg key="edit"/></button>
 				</td>
 			</tr>

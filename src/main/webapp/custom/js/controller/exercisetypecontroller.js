@@ -46,20 +46,18 @@
 			}
 		};
 		
-		$scope.updateExerciseType = function(exerciseType) {
-			var oldName = exerciseType.name;
-			exerciseType.name = exerciseType.newName;
-			exerciseType.$edit = false; 
-			exerciseTypeService.updateExerciseType(exerciseType.id, exerciseType).then(function(){
+		$scope.updateExerciseType = function(exerciseTypeDto, exerciseType) {
+			exerciseTypeService.updateExerciseType(exerciseTypeDto.id, exerciseTypeDto).then(function(){
 				toaster.pop('success', 'Exercise Type' , 'Exercisetype updated successfully');
+				angular.copy(exerciseTypeDto, exerciseType);
 			}, function(result) {
-				exerciseType.name = oldName;
 				toaster.pop('error', 'Exercise Type', result.data.message);
 			});
+			exerciseType.$edit = false; 
 		};
 		
 		$scope.editExerciseType = function(exerciseType) {
-			exerciseType.newName = exerciseType.name;
+			$scope.exerciseTypeDto = angular.copy(exerciseType);
 			exerciseType.$edit = true;
 		};
 

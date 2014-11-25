@@ -62,6 +62,11 @@
 			templateUrl: 'partials/admin/gym.html',
 			resolve: {authentication : function(CheckAuthentication) {return CheckAuthentication();}}
 		})
+		.when('/admin/exercises', {
+			controller: 'AdminExercisesController',
+			templateUrl: 'partials/admin/exercises.html',
+			resolve: {authentication : function(CheckAuthentication) {return CheckAuthentication();}}
+		})
 		.when('/admin/exercise', {
 			controller: 'AdminExerciseController',
 			templateUrl: 'partials/admin/exercise.html',

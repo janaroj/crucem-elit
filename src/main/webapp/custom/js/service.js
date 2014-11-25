@@ -139,6 +139,12 @@
 		this.getGymPicture = function(id) {
 			return $http.get('/api/user/gym/picture/' + id);
 		};
+		this.deleteGym = function(id) {
+			return $http.delete('/api/admin/gyms/' + id);
+		};
+		this.updateGym = function(id, gym){
+			return $http.put("/api/admin/gyms/" + id, gym);
+		};
 		this.uploadGymPicture = function(image, id) {
 			return  $upload.upload({
 		        url: 'api/user/gym/'+id+'/picture', 
@@ -167,6 +173,15 @@
 		this.createExercise = function(exercise) {
 			return $http.post('/api/admin/exercises', exercise);
 		};
+		this.getExercises = function() {
+			return $http.get('/api/admin/exercises');
+		};
+		this.deleteExercise = function(id) {
+			return $http.delete('/api/admin/exercises/' + id);
+		};
+		this.updateExercise = function(id, exercise){
+			return $http.put("/api/admin/exercises/" + id, exercise);
+		};	
 	});
 	
 	app.service('exerciseTypeService', function($http) {
