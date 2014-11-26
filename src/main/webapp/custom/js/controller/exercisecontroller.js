@@ -60,6 +60,9 @@
 
 	});
 
+	
+	
+	
 	app.controller('AdminExerciseController', function($scope, $location, exerciseService, exerciseTypeService, toaster) {
 
 		$scope.init = function() {
@@ -82,20 +85,51 @@
 		};
 
 	});
-	app.controller('ExerciseController', function($scope, exerciseService, exerciseTypeService, toaster, $modalInstance) {
+	
+	
+	
+	app.controller('ExerciseController', function($scope, exerciseService, $filter, exerciseTypeService, toaster, ngTableParams, $modalInstance) {
+		
+		var exercises = [];
+		
 		$scope.ok = function () {
-			$modalInstance.close();
+			$modalInstance.close(exercises);
+		};
+		
+		$scope.addExercise = function(exercise) {
+			exercises.push(exercise);
+			
 		};
 
 		$scope.cancel = function () {
 			$modalInstance.dismiss('cancel');
 		};
 
-		$scope.exercises = [{name:"Jooks",countTime:false,countWeight:false,countRepeats:false,comment:"Best exercise EU",clicked:false},
-		                    {name:"Kükk",countTime:false,countWeight:true,countRepeats:true,comment:"Best exercise RU", clicked:false}];
-		$scope.showExerciseDetails = function (exercise) {
-			exercise.clicked = !exercise.clicked;
-		}
+		
+		var exerciseData = null;
+		$scope.tableParams = new ngTableParams({
+			page: 1,            // show first page
+			count: 10,          // count per page
+		}, {
+			total: 0,           // length of data
+			getData: function($defer, params) {
+				if (exerciseData===null) {
+					exerciseService.getExercises().then(function(result) {
+						exerciseData = result.data;
+						ui.util.table.prepareData($defer, $filter, params, exerciseData);
+					}, function(result) {
+						toaster.pop('error', 'Exercises' , result.data.message);
+					});
+				}
+				else {
+					ui.util.table.prepareData($defer, $filter, params, exerciseData);
+				}
+			}
+		});
+		
+		$scope.tableParams.settings().$loading = true;
+		
+		
 		
 		
 	});

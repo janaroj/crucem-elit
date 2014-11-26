@@ -1,24 +1,24 @@
 <div id="workoutdiv">
+	<h1 class=workout-header>
+		<msg key="workout.add.header" />
+	</h1>
 	<form id="form" class="form-horizontal" role="form" name="form" ng-submit="createWorkout()" novalidate show-validation>
 		<div class="form-group">
-			<label class="col-lg-3 control-label"><msg key="workout.add.name" /></label>
-			<div class="col-lg-5">
-				<input class="form-control" type="text" ng-model="workout.name">
+			<label class="col-lg-2"><msg key="workout.add.name" /></label>
+			<div>
+				<input type="text" ng-model="workout.name" class="text-name">
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="col-lg-3 control-label"><msg key="workout.add.date" /></label>
-			<div class="col-lg-4">
-				<input type="text" class="form-control" ng-model="workout.date" datepicker-popup="{{format}}" placeholder="{{format}}" is-open="opened"
+			<label class="col-lg-2"><msg key="workout.add.date" /></label>
+			<div class="pull-left">
+				<input type="text" ng-model="workout.date" datepicker-popup="{{format}}" class="text-calendar" placeholder="{{format}}" is-open="opened"
 					show-button-bar=false datepicker-append-to-body=true style:display:inline=true;>
 			</div>
-			<button type="button" class="btn btn-default" ng-click="open($event)">
+			<button type="button" class="btn btn-default btn-xs next-to-input-btn" ng-click="open($event)">
 				<i class="glyphicon glyphicon-calendar"></i>
 			</button>
 		</div>
-
-		<hr>
-
 		<div class="page-header">
 			<nav class="clear">
 				<h2 class="pull-left">
@@ -33,29 +33,85 @@
 
 		<div ng-repeat="group in workoutgroups">
 			<div class="form-group">
-				<label class="col-lg-3 control-label pull-left"><msg key="workout.add.exercisegroup.name" /></label>
-				<div class="col-lg-5">
-					<input class="form-control" type="text" ng-model="group.name">
+				<label class="pull-left col-lg-2"><msg key="workout.add.exercisegroup.name" /></label>
+				<div class="pull-left">
+					<input type="text" ng-model="group.name" class="text-name">
 				</div>
-				<a href="" class="btn btn-danger pull-left" ng-click="removeExerciseGroup(group)"><i class="glyphicon glyphicon-trash"></i></a>
+				<a href="" class="btn btn-danger pull-right del-workout-btn next-to-input-btn" ng-click="removeExerciseGroup(group)"><i
+					class="glyphicon glyphicon-trash"></i> <msg key="workout.add.exercisegroup.remove"></a>
 			</div>
 			<div class="form-group">
-				<label class="col-lg-3 control-label pull-left"><msg key="workout.add.exercisegroup.isWod" /></label>
-				<div class="col-lg-5">
-					<input class="form-control" type="checkbox" ng-model="group.isWod">
-				</div>
-			</div>
-			<button class="btn btn-add btn-success pull-left" ng-click="openModal()">
-				<i class="glyphicon-plus-sign glyphicon"></i>
-				<msg key="workout.add.exercise">
-			</button>
-			<div ng-repeat="exercise in exercises">
+				<label class="col-lg-2 pull-left"><msg key="workout.add.exercisegroup.isWod" /></label>
 				<div>
-					<button class="btn btn-default" ng-click="openModal()">{{exercise.name}}</button>
+					<input type="checkbox" ng-model="group.isWod">
 				</div>
-
 			</div>
-			<hr>
+			<h3 class="pull-left">
+				<msg key="workout.add.added.exercises" />
+			</h3>
+			<button class="btn btn-add btn-success pull-left btn-xs add-exercise-btn" ng-click="openModal(group)">
+				<span class="glyphicon-plus-sign glyphicon"></span>
+				<msg key="workout.add.exercises">
+			</button>
+			<br> <br> <br>
+			<ul>
+				<div ng-repeat="exercise in group.exercises track by $index">
+					<div>
+						<li class="pull-left">{{exercise.name}}</li> <a class="col-lg-1" href="" ng-click="showExerciseDetails(exercise)"><msg
+								key="workout.add.exercise.details"></a>
+						<button class="btn btn-danger pull-left btn-xs" ng-click="removeExercise(group,exercise)">
+							<span class="glyphicon glyphicon-remove"></span>
+							<msg key="workout.add.exercise.remove">
+						</button>
+						<br> <br>
+						<div ng-if="exercise.clicked">
+							<div ng-switch="exercise.countTime">
+								<div ng-switch-when="true">
+									<i class="glyphicon glyphicon-ok"></i>
+									<msg key="workout.add.exercise.measure.time">
+								</div>
+								<div ng-switch-when="false">
+									<i class="glyphicon glyphicon-remove"></i>
+									<msg key="workout.add.exercise.measure.time">
+								</div>
+							</div>
+
+
+							<div ng-switch="exercise.countWeight">
+								<div ng-switch-when="true">
+									<i class="glyphicon glyphicon-ok"></i>
+									<msg key="workout.add.exercise.measure.weight">
+								</div>
+
+
+								<div ng-switch-when="false">
+									<i class="glyphicon glyphicon-remove"></i>
+									<msg key="workout.add.exercise.measure.weight">
+								</div>
+							</div>
+
+
+							<div ng-switch="exercise.countRepeats">
+								<div ng-switch-when="true">
+									<i class="glyphicon glyphicon-ok"></i>
+									<msg key="workout.add.exercise.measure.repeats">
+								</div>
+								<div ng-switch-when="false">
+									<i class="glyphicon glyphicon-remove"></i>
+									<msg key="workout.add.exercise.measure.repeats">
+								</div>
+							</div>
+							<div>
+								<label class="underlined"><msg key="workout.add.exercise.comment"></label>
+								<p class="commentary">{{exercise.comment}}</p>
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+			</ul>
+			<hr class="padding-hr">
 		</div>
 
 		<div class="form-group">

@@ -5,22 +5,21 @@
 	</h3>
 </div>
 <div class="modal-body">
-	<div ng-repeat="exercise in exercises">
-		<p>
-			<a href="" ng-click="showExerciseDetails(exercise)">{{exercise.name}}</a>
-		</p>
-		<div ng-if="exercise.clicked">
-			<p>Measures time: {{exercise.countTime}}</p>
-			<p>Measures weight: {{exercise.countWeight}}</p>
-			<p>Measures repeats:{{exercise.countRepeats}}</p>
-			<p>Comment: {{exercise.comment}}</p>
-			<button class="btn btn-add btn-success" ng-click="">
-				<i class="glyphicon-plus-sign glyphicon"></i>
-				<msg key="workout.add.exercise">
-			</button>
-			<hr>
-		</div>
-	</div>
+	
+	<div loading-container="tableParams.settings().$loading">
+	<table ng-table="tableParams" show-filter="true" class="table">
+		<tbody>
+			<tr ng-repeat="exercise in $data">
+				<td data-title="getTranslation('exercise.name')" sortable="'name'" filter="{ 'name': 'text' }">
+					<span>{{exercise.name}}</span>
+				</td>
+				<td class="buttons">
+					<button class="btn btn-add btn-success" ng-click="addExercise(exercise)"><i class="glyphicon-plus-sign glyphicon"></i><msg key="workout.add.exercise"></button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
 </div>
 <div class="modal-footer">
 	<button class="btn btn-primary" ng-click="ok()">OK</button>
