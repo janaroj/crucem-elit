@@ -58,28 +58,29 @@
 		};
 
 		$scope.format = 'yyyy-MM-dd';
+		
+        $scope.showExerciseDetails = function (exercise) {
+        	exercise.clicked = exercise.clicked ? !exercise.clicked : true;
+        }
+
 
 		$scope.init = function() {
 
 		};
 		$scope.workoutgroups = [];
 		$scope.newExerciseGroup = function(){
-			$scope.workoutgroups.push({name:"", isWod:false});
+			$scope.workoutgroups.push({name:"", isWod:false, exercises:[]});
 		};
 		$scope.removeExerciseGroup = function(group) {
 			$scope.workoutgroups.splice($scope.workoutgroups.indexOf(group),1);
 		};
 
-		$scope.exercises = [{name:"test1"}];
-		$scope.newExercise = function(){
-			$scope.exercises.push({name:""});
+
+		$scope.removeExercise = function(group,exercise){
+			group.exercises.splice(group.exercises.indexOf(exercise),1);
 		};
 
-		$scope.removeExercise = function(exercise){
-			$scope.exercises.splice($scope.exercises.indexOf(exercise),1);
-		};
-
-		$scope.openModal = function () {
+		$scope.openModal = function (exerciseGroup) {
 
 			var modalInstance = $modal.open({
 				templateUrl: 'partials/user/addExerciseModal.html',
@@ -91,8 +92,9 @@
 				}
 			});
 
-			modalInstance.result.then(function (selectedItem) {
-			}, function () {
+			modalInstance.result.then(
+			function (exercises) {
+				exerciseGroup.exercises.push.apply(exerciseGroup.exercises, exercises);
 			});
 		};
 
