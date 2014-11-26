@@ -15,11 +15,11 @@ public @Data class ExerciseDto {
 
     private ExerciseType exerciseType;
 
-    private Boolean countTime;
+    private boolean countTime;
 
-    private Boolean countWeight;
+    private boolean countWeight;
 
-    private Boolean countRepeats;
+    private boolean countRepeats;
 
     private String comment;
 
@@ -28,9 +28,9 @@ public @Data class ExerciseDto {
             this.id = exercise.getId();
             this.name = exercise.getName();
             this.exerciseType = exercise.getExerciseType();
-            this.countTime = exercise.getCountTime();
-            this.countWeight = exercise.getCountWeight();
-            this.countRepeats = exercise.getCountRepeats();
+            this.countTime = exercise.isCountTime();
+            this.countWeight = exercise.isCountWeight();
+            this.countRepeats = exercise.isCountRepeats();
             this.comment = exercise.getComment();
         }
     }
