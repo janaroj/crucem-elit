@@ -7,7 +7,7 @@ set "CURRENT_DIR=%cd%"
 set "JAVA_OPTS= -Xmx384m -Xss512k"
 set "MAVEN_OPTS=-Xmx384m -Xss512k"
 
-set "DATABASE_URL=postgres://vvkzfbhgijnfop:xeX1a_YN7yfVmUrxZ9oP0cssMc@ec2-54-228-195-52.eu-west-1.compute.amazonaws.com:5432/d2ai3r0vflsvog "
+set "DATABASE_URL=postgres://vvkzfbhgijnfop:xeX1a_YN7yfVmUrxZ9oP0cssMc@ec2-54-228-195-52.eu-west-1.compute.amazonaws.com:5432/d2ai3r0vflsvog"
 
 :: ----- Set Commands -----
 
