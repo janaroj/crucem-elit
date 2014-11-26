@@ -142,8 +142,8 @@
 		this.deleteGym = function(id) {
 			return $http.delete('/api/admin/gyms/' + id);
 		};
-		this.updateGym = function(id, gym){
-			return $http.put("/api/admin/gyms/" + id, gym);
+		this.updateGym = function(gym){
+			return $http.put("/api/admin/gyms/" + gym.id, gym);
 		};
 		this.uploadGymPicture = function(image, id) {
 			return  $upload.upload({
@@ -179,8 +179,8 @@
 		this.deleteExercise = function(id) {
 			return $http.delete('/api/admin/exercises/' + id);
 		};
-		this.updateExercise = function(id, exercise){
-			return $http.put("/api/admin/exercises/" + id, exercise);
+		this.updateExercise = function(exercise){
+			return $http.put("/api/admin/exercises/" + exercise.id, exercise);
 		};	
 	});
 	
@@ -194,8 +194,8 @@
 		this.deleteExerciseType = function(id) {
 			return $http.delete('/api/admin/exercisetypes/' + id);
 		};
-		this.updateExerciseType = function(id, exerciseType){
-			return $http.put("/api/admin/exercisetypes/" + id, exerciseType);
+		this.updateExerciseType = function(exerciseType){
+			return $http.put("/api/admin/exercisetypes/" + exerciseType.id, exerciseType);
 		};	
 	});
 

@@ -11,24 +11,24 @@
 			<tr ng-repeat="gym in $data">
 				<td data-title="getTranslation('gym.name')" sortable="'name'" filter="{ 'name': 'text' }">
 					<a ng-if="!gym.$edit" href="" ng-click="viewGym(gym.id)">{{gym.name}}</a>
-					<div ng-if="gym.$edit"><input class="form-control" type="text" ng-model="gymDto.name" /></div>
+					<div ng-if="gym.$edit"><input class="form-control" type="text" ng-model="gym.name" /></div>
 				</td>
 				<td data-title="getTranslation('gym.city')" sortable="'city'" filter="{ 'city': 'text'}">
 					<span ng-if="!gym.$edit">{{gym.city}}</span>
-					<div ng-if="gym.$edit"><input class="form-control" type="text" ng-model="gymDto.city" /></div>
+					<div ng-if="gym.$edit"><input class="form-control" type="text" ng-model="gym.city" /></div>
 					
 				</td>
 				<td data-title="getTranslation('gym.address')" sortable="'address'" filter="{ 'address': 'text' }">
 					<span ng-if="!gym.$edit">{{gym.address}}</span>
-					<div ng-if="gym.$edit"><input class="form-control" type="text" ng-model="gymDto.address" /></div>
+					<div ng-if="gym.$edit"><input class="form-control" type="text" ng-model="gym.address" /></div>
 				</td>
 				<td data-title="getTranslation('gym.trainers')" sortable="'trainers'" filter="{ 'trainers': 'text' }">
 					<span ng-if="!gym.$edit">{{gym.trainers}}</span>
-					<div ng-if="gym.$edit"><input class="form-control" type="text" ng-model="gymDto.trainers" /></div>
+					<div ng-if="gym.$edit"><input class="form-control" type="text" ng-model="gym.trainers" /></div>
 				</td>
 				<td data-title="getTranslation('gym.contact')" sortable="'contact'" filter="{ 'contact': 'text' }">
 					<span ng-if="!gym.$edit">{{gym.contact}}</span>
-					<div ng-if="gym.$edit"><input class="form-control" type="text" ng-model="gymDto.contact" /></div>
+					<div ng-if="gym.$edit"><input class="form-control" type="text" ng-model="gym.contact" /></div>
 				</td>
 				<td>
 					<button class="btn btn-gym btn-success" ng-click="joinGym(gym)" ng-cloak ng-hide="inGym(gym)"><msg key="join"/></button>
@@ -36,9 +36,9 @@
 				</td>
 				<td ng-if="hasRole('ROLE_ADMIN')" class="buttons" width="250">
 					<button class="btn btn-danger btn-sm pull-right" ng-click="deleteGym(gym)"><i class="glyphicon glyphicon-trash"></i> <msg key="delete"/></button>
-					<button ng-show="gym.$edit" class="btn btn-warning btn-xs pull-right" ng-click="gym.$edit = false;"><msg key="cancel"/></button>
-					<button ng-show="gym.$edit" class="btn btn-primary btn-xs pull-right" ng-click="updateGym(gymDto, gym)"><span class="glyphicon glyphicon-edit"></span> <msg key="save"/></button>
-					<button ng-hide="gym.$edit" class="btn btn-default btn-sm pull-right" ng-click="editGym(gym)"><span class="glyphicon glyphicon-edit"></span> <msg key="edit"/></button>
+					<button ng-show="gym.$edit" class="btn btn-warning btn-xs pull-right" ng-click="cancelEdit(gym)"><msg key="cancel"/></button>
+					<button ng-show="gym.$edit" class="btn btn-primary btn-xs pull-right" ng-click="updateGym(gym)"><span class="glyphicon glyphicon-edit"></span> <msg key="save"/></button>
+					<button ng-hide="gym.$edit" class="btn btn-default btn-sm pull-right" ng-click="gym.$edit = true"><span class="glyphicon glyphicon-edit"></span> <msg key="edit"/></button>
 				</td>
 			</tr>
 		</tbody>

@@ -4,6 +4,7 @@
 	app.controller('AdminExercisesController', function($scope, $q, $filter, $location, exerciseService, exerciseTypeService, ngTableParams, toaster) {
 
 		var exerciseData = null;
+		var tempData = null;
 		$scope.tableParams = new ngTableParams({
 			page: 1,            // show first page
 			count: 10,          // count per page
@@ -13,6 +14,7 @@
 				if (exerciseData===null) {
 					exerciseService.getExercises().then(function(result) {
 						exerciseData = result.data;
+						tempData = angular.copy(exerciseData);
 						ui.util.table.prepareData($defer, $filter, params, exerciseData);
 					}, function(result) {
 						toaster.pop('error', 'Exercises' , result.data.message);
@@ -43,19 +45,22 @@
 			}
 		};
 		
-		$scope.updateExercise = function(exerciseDto, exercise) {
-			exerciseService.updateExercise(exerciseDto.id, exerciseDto).then(function(){
+		$scope.updateExercise = function(exercise) {
+			exerciseService.updateExercise(exercise).then(function(){
 				toaster.pop('success', 'Exercise' , 'Exercise updated successfully');
-				angular.copy(exerciseDto, exercise);
+				tempData[tempData.indexOf($filter("filter")(tempData, {id : exercise.id}, true)[0])] = angular.copy(exercise);
+				exercise.$edit = false; 
 			}, function(result) {
 				toaster.pop('error', 'Exercise', result.data.message);
+				$scope.cancelEdit(exercise);
 			});
-			exercise.$edit = false; 
 		};
 		
-		$scope.editExercise = function(exercise) {
-			$scope.exerciseDto = angular.copy(exercise);
-			exercise.$edit = true;
+		$scope.cancelEdit = function(exercise) {
+			var temp = $filter("filter")(tempData, {id : exercise.id}, true)[0];
+			temp.$edit = false;
+			exerciseData[exerciseData.indexOf($filter("filter")(exerciseData, {id : exercise.id}, true)[0])] = angular.copy(temp); //Temporary hack, do not try this at home
+			$scope.tableParams.reload();
 		};
 		
 		var countWeightBooleans = [{'id' : 'true','title' : $scope.getTranslation('true')},{'id' : 'false','title' : $scope.getTranslation('false')}];

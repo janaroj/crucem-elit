@@ -4,6 +4,7 @@
 	app.controller('AdminExerciseTypesController', function($scope, $filter, $location, exerciseTypeService, ngTableParams, toaster) {
 
 		var exerciseTypeData = null;
+		var tempData = null;
 		$scope.tableParams = new ngTableParams({
 			page: 1,            // show first page
 			count: 10,          // count per page
@@ -16,6 +17,7 @@
 				if (exerciseTypeData===null) {
 					exerciseTypeService.getExerciseTypes().then(function(result) {
 						exerciseTypeData = result.data;
+						tempData = angular.copy(exerciseTypeData);
 						ui.util.table.prepareData($defer, $filter, params, exerciseTypeData);
 					}, function(result) {
 						toaster.pop('error', 'Exercise Types' , result.data.message);
@@ -46,19 +48,22 @@
 			}
 		};
 		
-		$scope.updateExerciseType = function(exerciseTypeDto, exerciseType) {
-			exerciseTypeService.updateExerciseType(exerciseTypeDto.id, exerciseTypeDto).then(function(){
+		$scope.updateExerciseType = function(exerciseType) {
+			exerciseTypeService.updateExerciseType(exerciseType).then(function(){
 				toaster.pop('success', 'Exercise Type' , 'Exercisetype updated successfully');
-				angular.copy(exerciseTypeDto, exerciseType);
+				tempData[tempData.indexOf($filter("filter")(tempData, {id : exerciseType.id}, true)[0])] = angular.copy(exerciseType);
+				exerciseType.$edit = false; 
 			}, function(result) {
 				toaster.pop('error', 'Exercise Type', result.data.message);
+				$scope.cancelEdit(exerciseType);
 			});
-			exerciseType.$edit = false; 
 		};
 		
-		$scope.editExerciseType = function(exerciseType) {
-			$scope.exerciseTypeDto = angular.copy(exerciseType);
-			exerciseType.$edit = true;
+		$scope.cancelEdit = function(exerciseType) {
+			var temp = $filter("filter")(tempData, {id : exerciseType.id}, true)[0];
+			temp.$edit = false;
+			exerciseTypeData[exerciseTypeData.indexOf($filter("filter")(exerciseTypeData, {id : exerciseType.id}, true)[0])] = angular.copy(temp); //Temporary hack, do not try this at home
+			$scope.tableParams.reload();
 		};
 
 	});

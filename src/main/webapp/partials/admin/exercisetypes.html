@@ -11,13 +11,13 @@
 			<tr ng-repeat="exerciseType in $data">
 				<td data-title="getTranslation('exercise.type.name')" sortable="'name'" filter="{ 'name': 'text' }">
 					<span ng-if="!exerciseType.$edit">{{exerciseType.name}}</span>
-					<div ng-if="exerciseType.$edit"><input class="form-control" type="text" ng-model="exerciseTypeDto.name" /></div>
+					<div ng-if="exerciseType.$edit"><input class="form-control" type="text" ng-model="exerciseType.name" /></div>
 				</td>
 				<td class="buttons">
 					<button class="btn btn-danger btn-sm pull-right" ng-click="deleteExerciseType(exerciseType)"><i class="glyphicon glyphicon-trash"></i> <msg key="delete"/></button>
-					<button ng-show="exerciseType.$edit" class="btn btn-warning btn-sm pull-right" ng-click="exerciseType.$edit = false;"><msg key="cancel"/></button>
-					<button ng-show="exerciseType.$edit" class="btn btn-primary btn-sm pull-right" ng-click="updateExerciseType(exerciseTypeDto, exerciseType)"><span class="glyphicon glyphicon-edit"></span> <msg key="save"/></button>
-					<button ng-hide="exerciseType.$edit" class="btn btn-default btn-sm pull-right" ng-click="editExerciseType(exerciseType)"><span class="glyphicon glyphicon-edit"></span> <msg key="edit"/></button>
+					<button ng-show="exerciseType.$edit" class="btn btn-warning btn-sm pull-right" ng-click="cancelEdit(exerciseType)"><msg key="cancel"/></button>
+					<button ng-show="exerciseType.$edit" class="btn btn-primary btn-sm pull-right" ng-click="updateExerciseType(exerciseType)"><span class="glyphicon glyphicon-edit"></span> <msg key="save"/></button>
+					<button ng-hide="exerciseType.$edit" class="btn btn-default btn-sm pull-right" ng-click="exerciseType.$edit = true"><span class="glyphicon glyphicon-edit"></span> <msg key="edit"/></button>
 				</td>
 			</tr>
 		</tbody>

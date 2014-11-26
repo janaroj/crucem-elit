@@ -11,33 +11,33 @@
 			<tr ng-repeat="exercise in $data">
 				<td data-title="getTranslation('exercise.name')" sortable="'name'" filter="{ 'name': 'text' }">
 					<span ng-if="!exercise.$edit">{{exercise.name}}</span>
-					<div ng-if="exercise.$edit"><input class="form-control" type="text" ng-model="exerciseDto.name" /></div>
+					<div ng-if="exercise.$edit"><input class="form-control" type="text" ng-model="exercise.name" /></div>
 				</td>
 				<td data-title="getTranslation('exercise.type')" sortable="'exerciseType.name'" filter="{ 'exerciseType': 'select' }" filter-data="exerciseTypeOptions($column)">
 					<span ng-if="!exercise.$edit">{{exercise.exerciseType.name}}</span>
-					<div ng-if="exercise.$edit"><select class="form-control" ng-model="exerciseDto.exerciseType" ng-options="exerciseType.name for exerciseType in exerciseTypes track by exerciseType.name"/></div>
+					<div ng-if="exercise.$edit"><select class="form-control" ng-model="exercise.exerciseType" ng-options="exerciseType.name for exerciseType in exerciseTypes track by exerciseType.name"/></div>
 				</td>
 				<td data-title="getTranslation('exercise.count.repeats')" sortable="'countRepeats'" filter="{ 'countRepeats': 'select' }" filter-data="countRepeatsBooleans($column)">
 					<span ng-if="!exercise.$edit"><msg key="{{exercise.countRepeats}}"/></span>
-					<div ng-if="exercise.$edit"><input class="form-control" type="checkbox" ng-model="exerciseDto.countRepeats" /></div>
+					<div ng-if="exercise.$edit"><input class="form-control" type="checkbox" ng-model="exercise.countRepeats" /></div>
 				</td>
 				<td data-title="getTranslation('exercise.count.time')" sortable="'countTime'" filter="{ 'countTime': 'select' }" filter-data="countTimeBooleans($column)">
 					<span ng-if="!exercise.$edit"><msg key="{{exercise.countTime}}"/></span>
-					<div ng-if="exercise.$edit"><input class="form-control" type="checkbox" ng-model="exerciseDto.countTime" /></div>
+					<div ng-if="exercise.$edit"><input class="form-control" type="checkbox" ng-model="exercise.countTime" /></div>
 				</td>
 				<td data-title="getTranslation('exercise.count.weight')" sortable="'countWeight'" filter="{ 'countWeight': 'select' }" filter-data="countWeightBooleans($column)">
 					<span ng-if="!exercise.$edit"><msg key="{{exercise.countWeight}}"/></span>
-					<div ng-if="exercise.$edit"><input class="form-control" type="checkbox" ng-model="exerciseDto.countWeight" /></div>
+					<div ng-if="exercise.$edit"><input class="form-control" type="checkbox" ng-model="exercise.countWeight" /></div>
 				</td>
 				<td data-title="getTranslation('exercise.comment')" sortable="'comment'" filter="{ 'comment': 'text' }">
 					<span ng-if="!exercise.$edit">{{exercise.comment}}</span>
-					<div ng-if="exercise.$edit"><input class="form-control" type="text" ng-model="exerciseDto.comment" /></div>
+					<div ng-if="exercise.$edit"><input class="form-control" type="text" ng-model="exercise.comment" /></div>
 				</td>
 				<td class="buttons" width="250">
 					<button class="btn btn-danger btn-sm pull-right" ng-click="deleteExercise(exercise)"><i class="glyphicon glyphicon-trash"></i> <msg key="delete"/></button>
-					<button ng-show="exercise.$edit" class="btn btn-warning btn-xs pull-right" ng-click="exercise.$edit = false;"><msg key="cancel"/></button>
-					<button ng-show="exercise.$edit" class="btn btn-primary btn-xs pull-right" ng-click="updateExercise(exerciseDto, exercise)"><span class="glyphicon glyphicon-edit"></span> <msg key="save"/></button>
-					<button ng-hide="exercise.$edit" class="btn btn-default btn-sm pull-right" ng-click="editExercise(exercise)"><span class="glyphicon glyphicon-edit"></span> <msg key="edit"/></button>
+					<button ng-show="exercise.$edit" class="btn btn-warning btn-xs pull-right" ng-click="cancelEdit(exercise)"><msg key="cancel"/></button>
+					<button ng-show="exercise.$edit" class="btn btn-primary btn-xs pull-right" ng-click="updateExercise(exercise)"><span class="glyphicon glyphicon-edit"></span> <msg key="save"/></button>
+					<button ng-hide="exercise.$edit" class="btn btn-default btn-sm pull-right" ng-click="exercise.$edit = true"><span class="glyphicon glyphicon-edit"></span> <msg key="edit"/></button>
 				</td>
 			</tr>
 		</tbody>

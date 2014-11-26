@@ -3,6 +3,7 @@
 
 	app.controller('GymsController', function($scope, $location, $filter, gymService, userService, ngTableParams, toaster) {
 		var gymData = null;
+		var tempData = null;
 		$scope.tableParams = new ngTableParams({
 			page: 1,            // show first page
 			count: 10,          // count per page
@@ -14,6 +15,7 @@
 				if (gymData===null) {
 					gymService.getGyms().then(function(result) {
 						gymData = result.data;
+						tempData = angular.copy(gymData);
 						ui.util.table.prepareData($defer, $filter, params, gymData);
 					}, function(result) {
 						toaster.pop('error', 'Gyms' , result.data.message);
@@ -77,19 +79,22 @@
 			}
 		};
 		
-		$scope.updateGym = function(gymDto, gym) {
-			gymService.updateGym(gymDto.id, gymDto).then(function(){
+		$scope.updateGym = function(gym) {
+			gymService.updateGym(gym).then(function(){
 				toaster.pop('success', 'Gym' , 'Gym updated successfully');
-				angular.copy(gymDto, gym);
+				tempData[tempData.indexOf($filter("filter")(tempData, {id : gym.id}, true)[0])] = angular.copy(gym);
+				gym.$edit = false;
 			}, function(result) {
 				toaster.pop('error', 'Gym', result.data.message);
+				$scope.cancelEdit(gym);
 			});
-			gym.$edit = false;
 		};
 		
-		$scope.editGym = function(gym) {
-			$scope.gymDto = angular.copy(gym);
-			gym.$edit = true;
+		$scope.cancelEdit = function(gym) {
+			var temp = $filter("filter")(tempData, {id : gym.id}, true)[0];
+			temp.$edit = false;
+			gymData[gymData.indexOf($filter("filter")(gymData, {id : gym.id}, true)[0])] = angular.copy(temp); //Temporary hack, do not try this at home
+			$scope.tableParams.reload();
 		};
 
 	});
