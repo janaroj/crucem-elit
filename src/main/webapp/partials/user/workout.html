@@ -19,6 +19,12 @@
 				<i class="glyphicon glyphicon-calendar"></i>
 			</a>
 		</div>
+		<div class="form-group">
+			<label class="col-lg-2"><msg key="workout.add.comment" /></label>
+			<div>
+				<textarea ng-model="workout.comment" class="text-name"/>
+			</div>
+		</div>
 		<div class="page-header">
 			<nav class="clear">
 				<h2 class="pull-left">
@@ -43,7 +49,7 @@
 			<div class="form-group">
 				<label class="col-lg-2 pull-left"><msg key="workout.add.exercisegroup.isWod" /></label>
 				<div>
-					<input type="checkbox" ng-model="group.isWod">
+					<input type="checkbox" ng-model="group.wod">
 				</div>
 			</div>
 			<h3 class="pull-left">

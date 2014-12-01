@@ -18,7 +18,7 @@
 				$scope.tableParams1 = new ngTableParams({
 					page: 1,            // show first page
 					count: 10,          // count per page
-					sorting: {'date' : 'desc'}
+					sorting: {'date' : 'asc'}
 				}, {
 					total: 0,           // length of data
 					getData: function($defer, params) {

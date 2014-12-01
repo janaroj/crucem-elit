@@ -33,7 +33,7 @@ public @Data class WorkoutDto {
             this.name = workout.getName();
             this.comment = workout.getComment();
             this.gym = workout.getGymName();
-            this.wod = workout.getWod();
+            this.wod = workout.getWod().getName();
             this.result = workout.getResult();
             this.user = new UserDto(workout.getUser());
         }

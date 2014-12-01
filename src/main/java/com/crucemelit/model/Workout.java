@@ -52,19 +52,25 @@ public @Data class Workout extends BaseEntity {
     @OneToMany(mappedBy = "workout", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ExerciseGroup> exerciseGroups;
 
+    public void setExerciseGroups(List<ExerciseGroup> groups) {
+        for (ExerciseGroup group : groups) {
+            group.setWorkout(this);
+        }
+        this.exerciseGroups = groups;
+    }
+
     public Result getResult() {
-        for (ExerciseGroup exerciseGroup : getExerciseGroups()) {
-            if (exerciseGroup.isWod() && exerciseGroup.getRecord() != null) {
-                return exerciseGroup.getRecord().getResult();
-            }
+        Record record = getWod().getRecord();
+        if (record != null) {
+            return record.getResult();
         }
         return null;
     }
 
-    public String getWod() {
-        for (ExerciseGroup exerciseGroups : getExerciseGroups()) {
-            if (exerciseGroups.isWod()) {
-                return exerciseGroups.getName();
+    public ExerciseGroup getWod() {
+        for (ExerciseGroup exerciseGroup : getExerciseGroups()) {
+            if (exerciseGroup.isWod()) {
+                return exerciseGroup;
             }
         }
         return null;

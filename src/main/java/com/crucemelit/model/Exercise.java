@@ -35,19 +35,15 @@ public @Data class Exercise extends BaseEntity {
     @JoinColumn(name = "exerciseTypeId")
     private ExerciseType exerciseType;
 
-    private boolean countTime = false;
+    private boolean countTime;
 
-    private boolean countWeight = false;
+    private boolean countWeight;
 
-    private boolean countRepeats = false;
+    private boolean countRepeats;
 
     private String comment;
 
     @OneToMany(mappedBy = "exercise", fetch = FetchType.LAZY)
     private List<Record> records;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "exerciseGroupId")
-    private ExerciseGroup exerciseGroup;
 
 }
