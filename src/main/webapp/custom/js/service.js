@@ -124,6 +124,9 @@
 		this.getWorkouts = function() {
 			return $http.get('/api/user/workouts');
 		};
+		this.addWorkout = function(workout) {
+			return $http.post("/api/user/workouts/", workout);
+		};
 	});
 
 	app.service('gymService', function($http, $upload) {

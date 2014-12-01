@@ -8,6 +8,7 @@ import com.crucemelit.dto.UserDto;
 import com.crucemelit.dto.WorkoutDto;
 import com.crucemelit.model.Gym;
 import com.crucemelit.model.User;
+import com.crucemelit.model.Workout;
 
 public interface UserService extends UserDetailsService, SearchService, PictureService {
 
@@ -46,5 +47,7 @@ public interface UserService extends UserDetailsService, SearchService, PictureS
     UserDto authenticate(String username, String password);
 
     UserDto getCurrentUserWithAuthInfo();
+
+    void createWorkout(Workout workout);
 
 }

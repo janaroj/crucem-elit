@@ -13,25 +13,25 @@
 			<label class="col-lg-2"><msg key="workout.add.date" /></label>
 			<div class="pull-left">
 				<input type="text" ng-model="workout.date" datepicker-popup="{{format}}" class="text-calendar" placeholder="{{format}}" is-open="opened"
-					show-button-bar=false datepicker-append-to-body=true style:display:inline=true;>
+					show-button-bar=false datepicker-append-to-body=true style:display:inline;>
 			</div>
-			<button type="button" class="btn btn-default btn-xs next-to-input-btn" ng-click="open($event)">
+			<a href="" class="btn btn-default btn-xs next-to-input-btn" ng-click="open($event)">
 				<i class="glyphicon glyphicon-calendar"></i>
-			</button>
+			</a>
 		</div>
 		<div class="page-header">
 			<nav class="clear">
 				<h2 class="pull-left">
 					<msg key="workout.groups" />
 				</h2>
-				<button class="btn btn-add btn-success pull-right pull-down" ng-click="newExerciseGroup()">
+				<a href="" class="btn btn-add btn-success pull-right pull-down" ng-click="newExerciseGroup()">
 					<i class="glyphicon-plus-sign glyphicon"></i>
 					<msg key="workout.add.group">
-				</button>
+				</a>
 			</nav>
 		</div>
 
-		<div ng-repeat="group in workoutgroups">
+		<div ng-repeat="group in workout.exerciseGroups">
 			<div class="form-group">
 				<label class="pull-left col-lg-2"><msg key="workout.add.exercisegroup.name" /></label>
 				<div class="pull-left">
@@ -49,58 +49,37 @@
 			<h3 class="pull-left">
 				<msg key="workout.add.added.exercises" />
 			</h3>
-			<button class="btn btn-add btn-success pull-left btn-xs add-exercise-btn" ng-click="openModal(group)">
+			<a href="" class="btn btn-add btn-success pull-left btn-xs add-exercise-btn" ng-click="openModal(group)">
 				<span class="glyphicon-plus-sign glyphicon"></span>
 				<msg key="workout.add.exercises">
-			</button>
+			</a>
 			<br> <br> <br>
 			<ul>
 				<div ng-repeat="exercise in group.exercises track by $index">
 					<div>
 						<li class="pull-left">{{exercise.name}}</li> <a class="col-lg-1" href="" ng-click="showExerciseDetails(exercise)"><msg
 								key="workout.add.exercise.details"></a>
-						<button class="btn btn-danger pull-left btn-xs" ng-click="removeExercise(group,exercise)">
+						<a href="" class="btn btn-danger pull-left btn-xs" ng-click="removeExercise(group,exercise)">
 							<span class="glyphicon glyphicon-remove"></span>
 							<msg key="workout.add.exercise.remove">
-						</button>
+						</a>
 						<br> <br>
 						<div ng-if="exercise.clicked">
-							<div ng-switch="exercise.countTime">
-								<div ng-switch-when="true">
-									<i class="glyphicon glyphicon-ok"></i>
-									<msg key="workout.add.exercise.measure.time">
-								</div>
-								<div ng-switch-when="false">
-									<i class="glyphicon glyphicon-remove"></i>
-									<msg key="workout.add.exercise.measure.time">
-								</div>
+							<div>
+								<i class="glyphicon" ng-class="(exercise.countTime) ? 'glyphicon-ok' : 'glyphicon-remove'"></i>
+								<msg key="workout.add.exercise.measure.time">
 							</div>
 
-
-							<div ng-switch="exercise.countWeight">
-								<div ng-switch-when="true">
-									<i class="glyphicon glyphicon-ok"></i>
-									<msg key="workout.add.exercise.measure.weight">
-								</div>
-
-
-								<div ng-switch-when="false">
-									<i class="glyphicon glyphicon-remove"></i>
-									<msg key="workout.add.exercise.measure.weight">
-								</div>
+							<div>
+								<i class="glyphicon" ng-class="(exercise.countWeight) ? 'glyphicon-ok' : 'glyphicon-remove'"></i>
+								<msg key="workout.add.exercise.measure.weight">
 							</div>
 
-
-							<div ng-switch="exercise.countRepeats">
-								<div ng-switch-when="true">
-									<i class="glyphicon glyphicon-ok"></i>
-									<msg key="workout.add.exercise.measure.repeats">
-								</div>
-								<div ng-switch-when="false">
-									<i class="glyphicon glyphicon-remove"></i>
-									<msg key="workout.add.exercise.measure.repeats">
-								</div>
+							<div>
+								<i class="glyphicon" ng-class="(exercise.countRepeats) ? 'glyphicon-ok' : 'glyphicon-remove'"></i>
+								<msg key="workout.add.exercise.measure.repeats">
 							</div>
+							
 							<div>
 								<label class="underlined"><msg key="workout.add.exercise.comment"></label>
 								<p class="commentary">{{exercise.comment}}</p>

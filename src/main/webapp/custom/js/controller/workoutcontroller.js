@@ -60,24 +60,32 @@
 		$scope.format = 'yyyy-MM-dd';
 		
         $scope.showExerciseDetails = function (exercise) {
-        	exercise.clicked = exercise.clicked ? !exercise.clicked : true;
+        	exercise.clicked = !exercise.clicked;
+        }
+        
+        $scope.createWorkout = function() {
+        	userService.addWorkout($scope.workout).then(
+        	  function(result) {
+        		  toaster.pop('success', 'Workout' , 'Workout added successfully');
+        	  },
+        	  function(result) {
+        		  toaster.pop('error', 'Workout' , result.data.message);
+        	  }
+        	);
         }
 
-
-		$scope.init = function() {
-
-		};
-		$scope.workoutgroups = [];
+        $scope.workout = {};
+		$scope.workout.exerciseGroups = [];
 		$scope.newExerciseGroup = function(){
-			$scope.workoutgroups.push({name:"", isWod:false, exercises:[]});
+			$scope.workout.exerciseGroups.push({name:"", isWod:false, exercises:[]});
 		};
 		$scope.removeExerciseGroup = function(group) {
-			$scope.workoutgroups.splice($scope.workoutgroups.indexOf(group),1);
+			$scope.workout.exerciseGroups.splice($scope.workout.exerciseGroups.indexOf(group), 1);
 		};
 
 
 		$scope.removeExercise = function(group,exercise){
-			group.exercises.splice(group.exercises.indexOf(exercise),1);
+			group.exercises.splice(group.exercises.indexOf(exercise), 1);
 		};
 
 		$scope.openModal = function (exerciseGroup) {

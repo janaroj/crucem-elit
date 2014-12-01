@@ -3,6 +3,7 @@ package com.crucemelit.model;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -48,7 +49,7 @@ public @Data class Workout extends BaseEntity {
 
     private String gymName;
 
-    @OneToMany(mappedBy = "workout", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "workout", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ExerciseGroup> exerciseGroups;
 
     public Result getResult() {

@@ -25,6 +25,7 @@ import com.crucemelit.exception.EntityNotFoundException;
 import com.crucemelit.exception.UserAlreadyExistsException;
 import com.crucemelit.model.Gym;
 import com.crucemelit.model.User;
+import com.crucemelit.model.Workout;
 import com.crucemelit.repository.UserRepository;
 import com.crucemelit.service.UserService;
 import com.crucemelit.transformer.UserTransformer;
@@ -241,5 +242,13 @@ public class UserServiceImpl implements UserService {
             throw new EntityNotFoundException();
         }
         return user;
+    }
+
+    @Override
+    public void createWorkout(Workout workout) {
+        User user = getCurrentUser();
+        workout.setGymName(user.getGym().getName());
+        user.addWorkout(workout);
+        userRepository.saveAndFlush(user);
     }
 }

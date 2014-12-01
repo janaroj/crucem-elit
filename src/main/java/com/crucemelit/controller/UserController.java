@@ -29,6 +29,7 @@ import com.crucemelit.dto.Suggestion;
 import com.crucemelit.dto.UserDto;
 import com.crucemelit.dto.WorkoutDto;
 import com.crucemelit.model.User;
+import com.crucemelit.model.Workout;
 import com.crucemelit.service.ExerciseService;
 import com.crucemelit.service.GymService;
 import com.crucemelit.service.SearchService;
@@ -158,6 +159,12 @@ public class UserController {
     @RequestMapping(value = "/workouts")
     public List<WorkoutDto> getUserWorkouts() {
         return userService.getUserWorkoutsDto();
+    }
+
+    @RequestMapping(value = "/workouts", method = RequestMethod.POST)
+    public ResponseEntity<String> createWorkout(@RequestBody Workout workout) {
+        userService.createWorkout(workout);
+        return new ResponseEntity<String>("Success", HttpStatus.OK);
     }
 
     @RequestMapping(value = "/workouts/results")
