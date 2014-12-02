@@ -6,13 +6,13 @@
 		<div class="form-group">
 			<label class="col-lg-2"><msg key="workout.add.name" /></label>
 			<div>
-				<input type="text" ng-model="workout.name" class="text-name">
+				<input type="text" ng-model="workout.name" class="text-name" required>
 			</div>
 		</div>
 		<div class="form-group">
 			<label class="col-lg-2"><msg key="workout.add.date" /></label>
 			<div class="pull-left">
-				<input type="text" ng-model="workout.date" datepicker-popup="{{format}}" class="text-calendar" placeholder="{{format}}" is-open="opened"
+				<input type="text" ng-model="workout.date" datepicker-popup="{{format}}" class="text-calendar" placeholder="{{format}}" is-open="opened" required
 					show-button-bar=false datepicker-append-to-body=true style:display:inline;>
 			</div>
 			<a href="" class="btn btn-default btn-xs next-to-input-btn" ng-click="open($event)">
@@ -41,7 +41,7 @@
 			<div class="form-group">
 				<label class="pull-left col-lg-2"><msg key="workout.add.exercisegroup.name" /></label>
 				<div class="pull-left">
-					<input type="text" ng-model="group.name" class="text-name">
+					<input type="text" ng-model="group.name" class="text-name" required>
 				</div>
 				<a href="" class="btn btn-danger pull-right del-workout-btn next-to-input-btn" ng-click="removeExerciseGroup(group)"><i
 					class="glyphicon glyphicon-trash"></i> <msg key="workout.add.exercisegroup.remove"></a>
@@ -102,7 +102,7 @@
 		<div class="form-group">
 			<label class="col-md-3 control-label"></label>
 			<div class="col-md-8">
-				<button type="submit" class="btn btn-primary" ng-disabled="form.$invalid">
+				<button type="submit" class="btn btn-primary" ng-disabled="form.$invalid || !isWodSelected() || isMissingExercises()">
 					<msg key="save" />
 				</button>
 			</div>

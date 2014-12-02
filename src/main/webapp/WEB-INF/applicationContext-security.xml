@@ -10,8 +10,8 @@
 		authentication-manager-ref="authenticationManager">
 		<custom-filter ref="authenticationTokenProcessingFilter" position="FORM_LOGIN_FILTER" />
 		<intercept-url pattern="/api/auth/**" access="permitAll" />
-		<intercept-url pattern="/api/admin/**" access="hasRole('ROLE_ADMIN')" />
-		<intercept-url pattern="/api/user/**" access="hasAnyRole('ROLE_ADMIN','ROLE_USER')" />
+		<intercept-url pattern="/api/admin/**" access="hasRole('ADMIN')" />
+		<intercept-url pattern="/api/user/**" access="hasAnyRole('ADMIN','USER')" />
 	</http>
 
 	<beans:bean id="passwordEncoder"

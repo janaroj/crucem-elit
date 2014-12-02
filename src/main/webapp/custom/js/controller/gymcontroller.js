@@ -37,7 +37,7 @@
 		};
 
 		$scope.joinGym = function(gym) {
-			if (confirm("Are you sure you wish to join " + gym.name )) {
+			if (confirm("Are you sure you wish to join " + gym.name + "? This will remove you from your current gym")) {
 				userService.joinGym(gym.id).then(function() {
 					$scope.user.gym = gym;
 					toaster.pop('success', 'Gym', 'Joined gym successfully!');

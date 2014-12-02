@@ -10,15 +10,11 @@
 
 		$rootScope.hasRole = function (role) {
 
-			if ($rootScope.user === undefined || !$rootScope.user.authorities) {
+			if ($rootScope.user === undefined || !$rootScope.user.role || $rootScope.user.role !== role) {
 				return false;
 			}
 
-			for (var i = 0; i < $rootScope.user.authorities.length; i++) {
-				if ($rootScope.user.authorities[i].authority == role)
-					return true;
-			}
-			return false;
+			return true;
 		};
 		
 		$rootScope.getFriends = function() {
@@ -59,6 +55,10 @@
 		};
 
 		$rootScope.getTranslation = function(key) {
+			if (key === "") {
+				return "-";
+			}
+			
 			if (!key) {
 				return "";
 			}
