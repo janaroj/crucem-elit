@@ -16,12 +16,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.crucemelit.domain.Role;
+import com.crucemelit.dto.UserDto;
 import com.crucemelit.model.Exercise;
 import com.crucemelit.model.ExerciseType;
 import com.crucemelit.model.Gym;
 import com.crucemelit.service.ExerciseService;
 import com.crucemelit.service.ExerciseTypeService;
 import com.crucemelit.service.GymService;
+import com.crucemelit.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
@@ -36,6 +39,9 @@ public class AdminController {
 
     @Autowired
     private ExerciseTypeService exerciseTypeService;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -106,6 +112,28 @@ public class AdminController {
         objectMapper.readerForUpdating(gym).readValue(req.getReader());
         gymService.updateGym(gym);
         return new ResponseEntity<String>("Success", HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/users")
+    public List<UserDto> getUsers() {
+        return userService.getUsersWithAuthInfo();
+    }
+
+    @RequestMapping(value = "/users/role/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<String> changeUserRole(@PathVariable long id) {
+        userService.changeUserRole(id);
+        return new ResponseEntity<String>("Success", HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/users/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<String> deleteUser(@PathVariable long id) {
+        userService.deleteUser(id);
+        return new ResponseEntity<String>("Success", HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/roles")
+    public Role[] getRoles() {
+        return Role.values();
     }
 
 }

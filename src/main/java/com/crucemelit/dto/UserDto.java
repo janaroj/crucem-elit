@@ -1,14 +1,12 @@
 package com.crucemelit.dto;
 
-import java.util.Collection;
 import java.util.Date;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import org.springframework.security.core.GrantedAuthority;
-
 import com.crucemelit.domain.Gender;
+import com.crucemelit.domain.Role;
 import com.crucemelit.model.User;
 
 @NoArgsConstructor
@@ -36,7 +34,7 @@ public @Data class UserDto {
 
     private String token;
 
-    private Collection<? extends GrantedAuthority> authorities;
+    private Role role;
 
     public UserDto(User user) {
         if (user != null) {

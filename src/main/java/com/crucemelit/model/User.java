@@ -35,8 +35,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.crucemelit.domain.Gender;
+import com.crucemelit.domain.Role;
 import com.crucemelit.util.Utility;
-import com.crucemelit.web.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -75,11 +75,11 @@ public @Data class User extends BaseEntity implements UserDetails, Suggestable {
     @JoinColumn(name = "gym")
     private Gym gym;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "connections", joinColumns = @JoinColumn(name = "personId"), inverseJoinColumns = @JoinColumn(name = "friendId"))
     private List<User> friends;
 
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "friends", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "friends", fetch = FetchType.LAZY)
     private List<User> friendOf;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
@@ -155,10 +155,14 @@ public @Data class User extends BaseEntity implements UserDetails, Suggestable {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + this.role);
+        GrantedAuthority authority = new SimpleGrantedAuthority(this.role.name());
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
         authorities.add(authority);
         return authorities;
+    }
+
+    public void changeRole() {
+        this.role = role == Role.USER ? Role.ADMIN : Role.USER;
     }
 
     public void resetInvalidLoginCount() {

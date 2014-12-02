@@ -87,18 +87,30 @@
 		this.getGenders = function() {
 			return $http.get('/api/user/genders');
 		};
+		this.getRoles = function() {
+			return $http.get('/api/admin/roles');
+		};
 		this.addFriend = function(id) {
 			return $http.post('/api/user/friends/' + id);
 		};
 		this.removeFriend = function(id) {
 			return $http.delete('/api/user/friends/' + id);
 		};
+		this.getUsers = function() {
+			return $http.get('/api/admin/users');
+		};
 		this.getUserById = function(id) {
 			return $http.get('/api/user/users/' + id);
+		};
+		this.changeRole = function(id) {
+			return $http.put('/api/admin/users/role/' + id);
 		};
 		this.updateUser = function(user){
 			return $http.put("/api/user/update/user", user);
 		};	
+		this.deleteUser = function(id) {
+			return $http.delete('/api/admin/users/' + id);
+		};
 		this.fetchFriends = function() {
 			return $http.get("/api/user/friends");
 		};

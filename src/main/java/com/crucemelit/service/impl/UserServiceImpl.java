@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.crucemelit.domain.Gender;
+import com.crucemelit.domain.Role;
 import com.crucemelit.domain.SuggestionType;
 import com.crucemelit.dto.Suggestion;
 import com.crucemelit.dto.UserDto;
@@ -33,7 +34,6 @@ import com.crucemelit.transformer.UserTransformer;
 import com.crucemelit.transformer.WorkoutTransformer;
 import com.crucemelit.util.TokenUtils;
 import com.crucemelit.util.Utility;
-import com.crucemelit.web.Role;
 
 @Service("userService")
 @Transactional
@@ -260,9 +260,7 @@ public class UserServiceImpl implements UserService {
     public void deleteWorkout(long id) {
         User user = getCurrentUser();
         Workout workout = getWorkout(id);
-        System.out.println("************************DEBUG" + user.getWorkouts().size());
         user.removeWorkout(workout);
-        System.out.println("************************DEBUG AFTER" + user.getWorkouts().size());
         userRepository.saveAndFlush(user);
     }
 
@@ -274,4 +272,20 @@ public class UserServiceImpl implements UserService {
         return workout;
     }
 
+    @Override
+    public List<UserDto> getUsersWithAuthInfo() {
+        return userTransformer.transformToDtoWithAuthInfo(userRepository.findAll());
+    }
+
+    @Override
+    public void changeUserRole(long id) {
+        User user = getUser(id);
+        user.changeRole();
+        userRepository.saveAndFlush(user);
+    }
+
+    @Override
+    public void deleteUser(long id) {
+        userRepository.delete(id);
+    }
 }

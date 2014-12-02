@@ -1,7 +1,7 @@
 <div class="page-header">
 	<nav id="subnav" class="clear">
 		<h2 class="pull-left"><msg key="gyms"/></h2>
-		<button ng-if="hasRole('ROLE_ADMIN')" class="btn btn-success pull-right" ng-click="newGym()"><i class="glyphicon glyphicon-plus-sign"></i> <msg key="create"/></button>
+		<button ng-if="hasRole('ADMIN')" class="btn btn-success pull-right" ng-click="newGym()"><i class="glyphicon glyphicon-plus-sign"></i> <msg key="create"/></button>
 	</nav>
 </div>
 
@@ -34,7 +34,7 @@
 					<button class="btn btn-gym btn-success" ng-click="joinGym(gym)" ng-cloak ng-hide="inGym(gym)"><msg key="join"/></button>
 					<button class="btn btn-gym btn-danger" ng-click="leaveGym(gym)" ng-cloak ng-show="inGym(gym)"><msg key="leave"/></button>
 				</td>
-				<td ng-if="hasRole('ROLE_ADMIN')" class="buttons" width="250">
+				<td ng-if="hasRole('ADMIN')" class="buttons" width="250">
 					<button class="btn btn-danger btn-sm pull-right" ng-click="deleteGym(gym)"><i class="glyphicon glyphicon-trash"></i> <msg key="delete"/></button>
 					<button ng-show="gym.$edit" class="btn btn-warning btn-xs pull-right" ng-click="cancelEdit(gym)"><msg key="cancel"/></button>
 					<button ng-show="gym.$edit" class="btn btn-primary btn-xs pull-right" ng-click="updateGym(gym)"><span class="glyphicon glyphicon-edit"></span> <msg key="save"/></button>

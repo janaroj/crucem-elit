@@ -1,0 +1,33 @@
+<div class="page-header">
+	<nav id="subnav" class="clear">
+		<h2 class="pull-left"><msg key="users"/></h2>
+	</nav>
+</div>
+
+<div loading-container="tableParams.settings().$loading">
+	<table ng-table="tableParams" show-filter="true" class="table">
+		<tbody>
+			<tr ng-repeat="user in $data">
+				<td data-title="getTranslation('user.email')" sortable="'email'" filter="{ 'email': 'text' }">
+					{{user.email}}
+				</td>
+				<td data-title="getTranslation('user.name')" sortable="'name'" filter="{ 'name': 'text'}">
+					{{user.name}}
+				</td>
+				<td data-title="getTranslation('user.gender')" sortable="'gender'" filter="{ 'gender': 'select' }" filter-data="genders($column)">
+					<msg key="{{user.gender}}"/>
+				</td>
+				<td data-title="getTranslation('user.gym')" sortable="'gym.name'" filter="{ 'gym.name': 'text' }">
+					<a href="" ng-click="user.gym.id">{{user.gym.name}}</a>
+				</td>
+				<td data-title="getTranslation('user.role')" sortable="'role'" filter="{ 'role': 'select' }" filter-data="roles($column)">
+					{{getTranslation(user.role)}}
+				</td>
+				<td class="buttons" width="250">
+					<button class="btn btn-danger btn-sm pull-right" ng-click="deleteUser(user)"><i class="glyphicon glyphicon-trash"></i> <msg key="delete"/></button>
+					<button class="btn btn-sm pull-right" ng-click="changeRole(user)"><i class="glyphicon glyphicon-refresh"></i> <msg key="change.role"/></button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

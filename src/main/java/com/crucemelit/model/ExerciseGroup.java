@@ -2,7 +2,6 @@ package com.crucemelit.model;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,8 +9,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -38,7 +38,8 @@ public @Data class ExerciseGroup extends BaseEntity {
     @JoinColumn(name = "workoutId")
     private Workout workout;
 
-    @OneToMany(mappedBy = "exerciseGroup", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "groupexercises", joinColumns = @JoinColumn(name = "exerciseGroupId"), inverseJoinColumns = @JoinColumn(name = "exerciseId"))
     private List<Exercise> exercises;
 
     private boolean wod;

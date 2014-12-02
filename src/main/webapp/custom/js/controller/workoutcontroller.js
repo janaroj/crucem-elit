@@ -18,7 +18,7 @@
 				$scope.tableParams1 = new ngTableParams({
 					page: 1,            // show first page
 					count: 10,          // count per page
-					sorting: {'date' : 'desc'}
+					sorting: {'date' : 'asc'}
 				}, {
 					total: 0,           // length of data
 					getData: function($defer, params) {
@@ -62,7 +62,7 @@
 
 	});
 
-	app.controller('WorkoutController', function($scope, $modal, $location, $timeout, userService, toaster) {
+	app.controller('WorkoutController', function($scope, $modal, $location, $timeout, userService, exerciseService, toaster) {
 
 		$scope.open = function($event) {
 			$event.preventDefault();
@@ -79,6 +79,7 @@
         $scope.createWorkout = function() {
         	userService.addWorkout($scope.workout).then(
         	  function(result) {
+        		  $location.path('/user/workouts');
         		  toaster.pop('success', 'Workout' , 'Workout added successfully');
         	  },
         	  function(result) {
@@ -88,7 +89,7 @@
         }
 
         $scope.workout = {};
-		$scope.workout.exerciseGroups = [];
+		$scope.workout.exerciseGroups = [{name:"", isWod:false, exercises:[]}];
 		$scope.newExerciseGroup = function(){
 			$scope.workout.exerciseGroups.push({name:"", isWod:false, exercises:[]});
 		};
@@ -96,19 +97,46 @@
 			$scope.workout.exerciseGroups.splice($scope.workout.exerciseGroups.indexOf(group), 1);
 		};
 
-
 		$scope.removeExercise = function(group,exercise){
 			group.exercises.splice(group.exercises.indexOf(exercise), 1);
 		};
-
+		
+		$scope.isWodSelected = function() {
+			for (var i = 0; i < $scope.workout.exerciseGroups.length; i++) {
+				if ( $scope.workout.exerciseGroups[i].wod) {
+					return true;
+				}
+			}
+			return false;
+		};
+		
+		$scope.isMissingExercises = function() {
+			for (var i = 0; i < $scope.workout.exerciseGroups.length; i++) {
+				if ( $scope.workout.exerciseGroups[i].exercises.length === 0) {
+					return true;
+				}
+			}
+			return false;
+		};
+		
+		var exercises = [];
+			exerciseService.getExercises().then(
+			  function(result) {
+				  exercises = result.data;
+			  },
+			  function(result) {
+				  toaster.pop('error', 'Exercises' , result.data.message);
+			  }
+			);
+		
 		$scope.openModal = function (exerciseGroup) {
 
 			var modalInstance = $modal.open({
 				templateUrl: 'partials/user/addExerciseModal.html',
 				controller: 'ExerciseController',
 				resolve: {
-					exercises: function () {
-						return $scope.exercises;
+					exerciseData: function () {
+						return exercises;
 					}
 				}
 			});

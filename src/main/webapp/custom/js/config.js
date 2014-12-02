@@ -87,6 +87,11 @@
 			templateUrl: 'partials/admin/exercisetype.html',
 			resolve: {authentication : function(CheckAuthentication) {return CheckAuthentication();}}
 		})
+		.when('/admin/users', {
+			controller: 'AdminUsersController',
+			templateUrl: 'partials/admin/users.html',
+			resolve: {authentication : function(CheckAuthentication) {return CheckAuthentication();}}
+		})
 		.otherwise({ redirectTo : "/"});
 		
 	    $httpProvider.interceptors.push('interceptor');
