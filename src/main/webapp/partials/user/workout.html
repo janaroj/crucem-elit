@@ -1,7 +1,14 @@
-<div id="workoutdiv">
-	<h1 class=workout-header>
-		<msg key="workout.add.header" />
-	</h1>
+
+<div class="container">
+<div class="row">
+<div class="col-xs-12 col-sm-12 col-md-10 col-lg-10 col-xs-offset-0 col-sm-offset-0 col-md-offset-1 col-lg-offset-1 toppad">
+<div class= "panel panel-success">
+    <div class="panel-heading">
+        <h1 class="workout-header">
+            <msg key="workout.add.header" />
+        </h1>
+    </div>
+    <div class="panel-body">
 	<form id="form" class="form-horizontal" role="form" name="form" ng-submit="createWorkout()" novalidate show-validation>
 		<div class="form-group">
 			<label class="col-lg-2"><msg key="workout.add.name" /></label>
@@ -27,9 +34,11 @@
 		</div>
 		<div class="page-header">
 			<nav class="clear">
-				<h2 class="pull-left">
-					<msg key="workout.groups" />
-				</h2>
+                <div class= "panel panel-default">
+                    <h2 class="pull-left">
+                        <msg key="workout.groups" />
+                    </h2>
+                </div>
 				<a href="" class="btn btn-add btn-success pull-right pull-down" ng-click="newExerciseGroup()">
 					<i class="glyphicon-plus-sign glyphicon"></i>
 					<msg key="workout.add.group">
@@ -108,3 +117,10 @@
 			</div>
 		</div>
 	</form>
+                    
+                        </div>
+    </div>
+    </div>
+    </div>
+</div>
+</div>
