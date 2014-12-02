@@ -20,6 +20,7 @@
 				<td data-title="getTranslation('workout.table.date')" sortable="'date'" filter="{ 'date': 'text' }">{{workout.date}}</td>
 				<td data-title="getTranslation('workout.table.comment')" sortable="'comment'" filter="{ 'comment': 'text'}">{{workout.comment}}</td>
 				<td class="buttons" width="250">
+					<button class="btn btn-sm pull-right" ng-click="fillWorkout(workout)"><i class="glyphicon glyphicon-play-circle"></i><msg key="workout.fill"/></button>
 					<button class="btn btn-danger btn-sm pull-right" ng-click="deleteWorkout(workout)"><i class="glyphicon glyphicon-trash"></i> <msg key="delete"/></button>
 				</td>
 			</tr>

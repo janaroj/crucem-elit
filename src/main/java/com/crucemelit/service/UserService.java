@@ -58,4 +58,8 @@ public interface UserService extends UserDetailsService, SearchService, PictureS
 
     void deleteUser(long id);
 
+    Workout getWorkout(long id);
+
+    WorkoutDto getWorkoutDto(long id);
+
 }

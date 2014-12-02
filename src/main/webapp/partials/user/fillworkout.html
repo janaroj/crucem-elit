@@ -1,28 +1,24 @@
-<div id="workoutdiv">
+<div id="workoutdiv" ng-init="init()">
 	<h1 class=workout-header>
-		<msg key="workout.add.header" />
+		<msg key="workout.fill.header" />
 	</h1>
-	<form id="form" class="form-horizontal" role="form" name="form" ng-submit="createWorkout()" novalidate show-validation>
+	<form id="form" class="form-horizontal" role="form" name="form" ng-submit="saveFilledWorkout()" novalidate show-validation>
 		<div class="form-group">
 			<label class="col-lg-2"><msg key="workout.add.name" /></label>
 			<div>
-				<input type="text" ng-model="workout.name" class="text-name" required>
+				<label class="text-name">{{workout.name}}</label>
 			</div>
 		</div>
 		<div class="form-group">
 			<label class="col-lg-2"><msg key="workout.add.date" /></label>
 			<div class="pull-left">
-				<input type="text" ng-model="workout.date" datepicker-popup="{{format}}" class="text-calendar" placeholder="{{format}}" is-open="opened" required
-					show-button-bar=false datepicker-append-to-body=true style:display:inline;>
+				<label class="text-calendar">{{workout.date}}</label>
 			</div>
-			<a href="" class="btn btn-default btn-xs next-to-input-btn" ng-click="open($event)">
-				<i class="glyphicon glyphicon-calendar"></i>
-			</a>
 		</div>
 		<div class="form-group">
 			<label class="col-lg-2"><msg key="workout.add.comment" /></label>
 			<div>
-				<textarea ng-model="workout.comment" class="text-name"/>
+				<label class="text-name">{{workout.comment}}</label>
 			</div>
 		</div>
 		<div class="page-header">
@@ -30,10 +26,6 @@
 				<h2 class="pull-left">
 					<msg key="workout.groups" />
 				</h2>
-				<a href="" class="btn btn-add btn-success pull-right pull-down" ng-click="newExerciseGroup()">
-					<i class="glyphicon-plus-sign glyphicon"></i>
-					<msg key="workout.add.group">
-				</a>
 			</nav>
 		</div>
 
@@ -41,7 +33,7 @@
 			<div class="form-group">
 				<label class="pull-left col-lg-2"><msg key="workout.add.exercisegroup.name" /></label>
 				<div class="pull-left">
-					<input type="text" ng-model="group.name" class="text-name" required>
+					<label class="text-name">{{group.name}}</label>
 				</div>
 				<a href="" class="btn btn-danger pull-right del-workout-btn next-to-input-btn" ng-click="removeExerciseGroup(group)"><i
 					class="glyphicon glyphicon-trash"></i> <msg key="workout.add.exercisegroup.remove"></a>

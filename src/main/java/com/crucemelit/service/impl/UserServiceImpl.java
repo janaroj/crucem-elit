@@ -264,11 +264,20 @@ public class UserServiceImpl implements UserService {
         userRepository.saveAndFlush(user);
     }
 
+    @Override
     public Workout getWorkout(long id) {
         Workout workout = workoutRepository.findOne(id);
         if (workout == null) {
             throw new EntityNotFoundException();
         }
+        return workout;
+    }
+
+    @Override
+    public WorkoutDto getWorkoutDto(long id) {
+        User user = getCurrentUser();
+        Workout userWorkout = user.getWorkout(id);
+        WorkoutDto workout = workoutTransformer.transformToDtoWithExerciseGroups(userWorkout);
         return workout;
     }
 

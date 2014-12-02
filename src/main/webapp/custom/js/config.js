@@ -34,7 +34,7 @@
 			resolve: {authentication : function(CheckAuthentication) {return CheckAuthentication();}}
 		})
 		.when('/user/records', {
-			controller: 'RecordController',
+			controller: 'RecordsController',
 			templateUrl: 'partials/user/records.html',
 			resolve: {authentication : function(CheckAuthentication) {return CheckAuthentication();}}
 		})
@@ -90,6 +90,11 @@
 		.when('/admin/users', {
 			controller: 'AdminUsersController',
 			templateUrl: 'partials/admin/users.html',
+			resolve: {authentication : function(CheckAuthentication) {return CheckAuthentication();}}
+		})
+		.when('/user/workout/fill/:id', {
+			controller: 'RecordController',
+			templateUrl: 'partials/user/fillworkout.html',
 			resolve: {authentication : function(CheckAuthentication) {return CheckAuthentication();}}
 		})
 		.otherwise({ redirectTo : "/"});
