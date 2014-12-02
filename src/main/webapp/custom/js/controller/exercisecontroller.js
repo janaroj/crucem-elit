@@ -138,7 +138,7 @@
 	
 	
 	
-	app.controller('ExerciseController', function($scope, exerciseService, $filter, exerciseTypeService, toaster, ngTableParams, $modalInstance) {
+	app.controller('ExerciseController', function($scope, $filter, $modalInstance, ngTableParams, exerciseData, toaster) {
 		
 		var exercises = [];
 		
@@ -148,40 +148,23 @@
 		
 		$scope.addExercise = function(exercise) {
 			exercises.push(exercise);
-			
 		};
 
 		$scope.cancel = function () {
 			$modalInstance.dismiss('cancel');
 		};
-
 		
-		var exerciseData = null;
 		$scope.tableParams = new ngTableParams({
 			page: 1,            // show first page
 			count: 10,          // count per page
 		}, {
 			total: 0,           // length of data
 			getData: function($defer, params) {
-				if (exerciseData===null) {
-					exerciseService.getExercises().then(function(result) {
-						exerciseData = result.data;
-						ui.util.table.prepareData($defer, $filter, params, exerciseData);
-					}, function(result) {
-						toaster.pop('error', 'Exercises' , result.data.message);
-					});
-				}
-				else {
 					ui.util.table.prepareData($defer, $filter, params, exerciseData);
-				}
 			}
 		});
 		
 		$scope.tableParams.settings().$loading = true;
-		
-		
-		
-		
 	});
 
 }());

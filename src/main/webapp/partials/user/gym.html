@@ -3,7 +3,7 @@
 
   <div class="container">
   	<div class="pull-left"><insert-image source="imageSrc" classes="'img-rounded setLargeImgSize'"></insert-image></div>
-	<input type="file" class="col-lg-8" name="picture" ng-file-select="onFileSelect($files)" accept="image/*" ng-show="hasRole('ROLE_ADMIN')"/>
+	<input type="file" class="col-lg-8" name="picture" ng-file-select="onFileSelect($files)" accept="image/*" ng-show="hasRole('ADMIN')"/>
    <div class="text-right gymspan">
     <h1 style="margin-top:0px;color:#000">{{gym.name}}</h1>
     <p>Name: {{gym.name}}</p>

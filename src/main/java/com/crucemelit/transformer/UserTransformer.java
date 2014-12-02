@@ -26,7 +26,15 @@ public class UserTransformer {
     public UserDto transformToDtoWithAuthInfo(User user) {
         UserDto userDto = transformToDto(user);
         userDto.setToken(user.getToken());
-        userDto.setAuthorities(user.getAuthorities());
+        userDto.setRole(user.getRole());
         return userDto;
+    }
+
+    public List<UserDto> transformToDtoWithAuthInfo(List<User> users) {
+        List<UserDto> list = new ArrayList<>();
+        for (User user : users) {
+            list.add(transformToDtoWithAuthInfo(user));
+        }
+        return list;
     }
 }
