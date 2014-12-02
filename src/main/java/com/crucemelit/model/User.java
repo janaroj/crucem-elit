@@ -82,7 +82,7 @@ public @Data class User extends BaseEntity implements UserDetails, Suggestable {
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "friends", fetch = FetchType.LAZY)
     private List<User> friendOf;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Workout> workouts;
 
     private byte[] picture;
@@ -182,5 +182,9 @@ public @Data class User extends BaseEntity implements UserDetails, Suggestable {
     public void addWorkout(Workout workout) {
         this.getWorkouts().add(workout);
         workout.setUser(this);
+    }
+
+    public void removeWorkout(Workout workout) {
+        this.getWorkouts().remove(workout);
     }
 }

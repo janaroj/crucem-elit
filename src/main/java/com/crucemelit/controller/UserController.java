@@ -167,6 +167,12 @@ public class UserController {
         return new ResponseEntity<String>("Success", HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/workouts/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<String> deleteWorkout(@PathVariable long id) {
+        userService.deleteWorkout(id);
+        return new ResponseEntity<String>("Success", HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/workouts/results")
     public List<WorkoutDto> getWorkouts() {
         return workoutService.getWorkoutsWithResultsDto();

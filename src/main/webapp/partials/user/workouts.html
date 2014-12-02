@@ -5,7 +5,8 @@
 			<msg key="workout.pending" />
 		</h2>
 		<button class="btn btn-add btn-success pull-right pull-down" ng-click="newWorkout()">
-			<i class="glyphicon-plus-sign glyphicon"></i> <msg key="new.workout">
+			<i class="glyphicon-plus-sign glyphicon"></i>
+			<msg key="new.workout">
 		</button>
 	</nav>
 </div>
@@ -18,6 +19,9 @@
 				<td data-title="getTranslation('workout.table.wod')" sortable="'wod'" filter="{ 'wod': 'text'}">{{workout.wod}}</td>
 				<td data-title="getTranslation('workout.table.date')" sortable="'date'" filter="{ 'date': 'text' }">{{workout.date}}</td>
 				<td data-title="getTranslation('workout.table.comment')" sortable="'comment'" filter="{ 'comment': 'text'}">{{workout.comment}}</td>
+				<td class="buttons" width="250">
+					<button class="btn btn-danger btn-sm pull-right" ng-click="deleteWorkout(workout)"><i class="glyphicon glyphicon-trash"></i> <msg key="delete"/></button>
+				</td>
 			</tr>
 		</tbody>
 	</table>

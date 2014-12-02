@@ -46,6 +46,19 @@
 		$scope.newWorkout = function() {
 			$location.path('/user/workout/add');
 		};
+		
+		$scope.deleteWorkout = function(workout) {
+			if (confirm("Are you sure you wish to delete " + workout.name )) {
+				userService.deleteWorkout(workout.id).then(function() {
+					newWorkoutData.splice( newWorkoutData.indexOf(workout), 1 );
+					$scope.tableParams1.reload();
+					toaster.pop('success', 'Workout' , 'Workout deleted successfully');
+				}, 
+				function(result) {
+					toaster.pop('error', 'Workout', result.data.message);
+				});
+			}
+		};
 
 	});
 

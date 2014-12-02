@@ -124,8 +124,13 @@
 		this.getWorkouts = function() {
 			return $http.get('/api/user/workouts');
 		};
+		
+		this.deleteWorkout = function(id) {
+			return $http.delete('/api/user/workouts/' + id);
+		};
+		
 		this.addWorkout = function(workout) {
-			return $http.post("/api/user/workouts/", workout);
+			return $http.post("/api/user/workouts", workout);
 		};
 	});
 
@@ -170,6 +175,7 @@
 		this.getWorkouts = function() {
 			return $http.get('/api/user/workouts/results');
 		};
+
 	});
 	
 	app.service('exerciseService', function($http) {

@@ -27,6 +27,7 @@ import com.crucemelit.model.Gym;
 import com.crucemelit.model.User;
 import com.crucemelit.model.Workout;
 import com.crucemelit.repository.UserRepository;
+import com.crucemelit.repository.WorkoutRepository;
 import com.crucemelit.service.UserService;
 import com.crucemelit.transformer.UserTransformer;
 import com.crucemelit.transformer.WorkoutTransformer;
@@ -40,6 +41,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private WorkoutRepository workoutRepository;
 
     @Autowired
     private BCryptPasswordEncoder encoder;
@@ -251,4 +255,23 @@ public class UserServiceImpl implements UserService {
         user.addWorkout(workout);
         userRepository.saveAndFlush(user);
     }
+
+    @Override
+    public void deleteWorkout(long id) {
+        User user = getCurrentUser();
+        Workout workout = getWorkout(id);
+        System.out.println("************************DEBUG" + user.getWorkouts().size());
+        user.removeWorkout(workout);
+        System.out.println("************************DEBUG AFTER" + user.getWorkouts().size());
+        userRepository.saveAndFlush(user);
+    }
+
+    public Workout getWorkout(long id) {
+        Workout workout = workoutRepository.findOne(id);
+        if (workout == null) {
+            throw new EntityNotFoundException();
+        }
+        return workout;
+    }
+
 }
