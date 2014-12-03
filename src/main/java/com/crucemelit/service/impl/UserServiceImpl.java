@@ -30,7 +30,6 @@ import com.crucemelit.model.Gym;
 import com.crucemelit.model.User;
 import com.crucemelit.model.Workout;
 import com.crucemelit.repository.UserRepository;
-import com.crucemelit.repository.WorkoutRepository;
 import com.crucemelit.service.UserService;
 import com.crucemelit.transformer.UserTransformer;
 import com.crucemelit.transformer.WorkoutTransformer;
@@ -43,9 +42,6 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private WorkoutRepository workoutRepository;
 
     @Autowired
     private BCryptPasswordEncoder encoder;
@@ -251,36 +247,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void createWorkout(Workout workout) {
+    public void createUserWorkout(Workout workout) {
         User user = getCurrentUser();
         workout.setGymName(user.getGym().getName());
-        user.addWorkout(workout);
+        // user.addWorkout(workout);
         userRepository.saveAndFlush(user);
     }
 
     @Override
-    public void deleteWorkout(long id) {
+    public void deleteUserWorkoutById(long id) {
         User user = getCurrentUser();
-        Workout workout = getWorkout(id);
-        user.removeWorkout(workout);
+        user.removeWorkout(id);
         userRepository.saveAndFlush(user);
     }
 
     @Override
-    public Workout getWorkout(long id) {
-        Workout workout = workoutRepository.findOne(id);
-        if (workout == null) {
-            throw new EntityNotFoundException();
-        }
-        return workout;
-    }
-
-    @Override
-    public WorkoutDto getWorkoutDto(long id) {
-        User user = getCurrentUser();
-        Workout userWorkout = user.getWorkout(id);
-        WorkoutDto workout = workoutTransformer.transformToDtoWithExerciseGroups(userWorkout);
-        return workout;
+    public WorkoutDto getUserWorkoutDto(long id) {
+        return workoutTransformer.transformToDtoWithExerciseGroups(getCurrentUser().getWorkout(id));
     }
 
     @Override
@@ -301,7 +284,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void createComment(Comment comment) {
+    public void createUserComment(Comment comment) {
         comment.setDate(new Date());
         User user = getCurrentUser();
         user.addComment(comment);
@@ -309,9 +292,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteComment(Comment comment) {
+    public void deleteUserCommentById(long id) {
         User user = getCurrentUser();
-        user.removeComment(comment);
+        user.removeComment(id);
         userRepository.saveAndFlush(user);
     }
 }

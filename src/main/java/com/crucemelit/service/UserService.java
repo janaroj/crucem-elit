@@ -49,9 +49,9 @@ public interface UserService extends UserDetailsService, SearchService, PictureS
 
     UserDto getCurrentUserWithAuthInfo();
 
-    void createWorkout(Workout workout);
+    void createUserWorkout(Workout workout);
 
-    void deleteWorkout(long id);
+    void deleteUserWorkoutById(long id);
 
     List<UserDto> getUsersWithAuthInfo();
 
@@ -59,12 +59,10 @@ public interface UserService extends UserDetailsService, SearchService, PictureS
 
     void deleteUser(long id);
 
-    void createComment(Comment comment);
+    void createUserComment(Comment comment);
 
-    void deleteComment(Comment comment);
+    void deleteUserCommentById(long id);
 
-    Workout getWorkout(long id);
-
-    WorkoutDto getWorkoutDto(long id);
+    WorkoutDto getUserWorkoutDto(long id);
 
 }

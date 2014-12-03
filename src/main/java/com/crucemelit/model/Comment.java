@@ -18,8 +18,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
 @Table(name = "COMMENT")
 @NoArgsConstructor
@@ -27,7 +25,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public @Data class Comment extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
     private long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -38,7 +37,7 @@ public @Data class Comment extends BaseEntity {
     @JoinColumn(name = "person", nullable = false)
     private User user;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
     private Date date;
 

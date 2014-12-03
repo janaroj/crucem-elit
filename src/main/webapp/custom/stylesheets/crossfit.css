@@ -401,3 +401,7 @@ hr {
 .pdgnContact{
 	padding-top: 15px!important;
 }
+
+textarea {
+	resize : vertical;
+}

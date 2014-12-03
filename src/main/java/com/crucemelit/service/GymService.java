@@ -8,7 +8,7 @@ import com.crucemelit.model.Gym;
 
 public interface GymService extends SearchService, PictureService {
 
-    List<GymDto> getGymsDto();
+    List<GymDto> getGymDtos();
 
     GymDto getGymDto(long id);
 

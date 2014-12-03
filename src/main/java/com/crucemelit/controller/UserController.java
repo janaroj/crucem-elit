@@ -66,7 +66,7 @@ public class UserController {
 
     @RequestMapping(value = "/gyms")
     public List<GymDto> getGyms() {
-        return gymService.getGymsDto();
+        return gymService.getGymDtos();
     }
 
     @RequestMapping(value = "/gyms/{id}")
@@ -165,13 +165,13 @@ public class UserController {
 
     @RequestMapping(value = "/workouts", method = RequestMethod.POST)
     public ResponseEntity<String> createWorkout(@RequestBody Workout workout) {
-        userService.createWorkout(workout);
+        userService.createUserWorkout(workout);
         return new ResponseEntity<String>("Success", HttpStatus.OK);
     }
 
     @RequestMapping(value = "/workouts/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<String> deleteWorkout(@PathVariable long id) {
-        userService.deleteWorkout(id);
+    public ResponseEntity<String> deleteWorkoutById(@PathVariable long id) {
+        userService.deleteUserWorkoutById(id);
         return new ResponseEntity<String>("Success", HttpStatus.OK);
     }
 
@@ -182,7 +182,7 @@ public class UserController {
 
     @RequestMapping(value = "/workouts/{id}")
     public WorkoutDto getWorkout(@PathVariable long id) {
-        return userService.getWorkoutDto(id);
+        return userService.getUserWorkoutDto(id);
     }
 
     @RequestMapping(value = "/genders")
@@ -216,8 +216,14 @@ public class UserController {
     }
 
     @RequestMapping(value = "/comments", method = RequestMethod.POST)
-    public ResponseEntity<String> createComment(@RequestBody Comment comment) {
-        userService.createComment(comment);
+    public ResponseEntity<Long> createComment(@RequestBody Comment comment) {
+        userService.createUserComment(comment);
+        return new ResponseEntity<Long>(comment.getId(), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/comments/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<String> deleteComment(@PathVariable long id) {
+        userService.deleteUserCommentById(id);
         return new ResponseEntity<String>("Success", HttpStatus.OK);
     }
 

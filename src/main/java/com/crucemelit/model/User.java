@@ -49,7 +49,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public @Data class User extends BaseEntity implements UserDetails, Suggestable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
     private long id;
 
     @Email
@@ -83,10 +84,10 @@ public @Data class User extends BaseEntity implements UserDetails, Suggestable {
     @ManyToMany(mappedBy = "friends", fetch = FetchType.LAZY)
     private List<User> friendOf;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<Workout> workouts;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<Comment> comments;
 
     private byte[] picture;
@@ -187,22 +188,48 @@ public @Data class User extends BaseEntity implements UserDetails, Suggestable {
         friend.getFriendOf().remove(this);
     }
 
-    public void addWorkout(Workout workout) {
-        this.getWorkouts().add(workout);
-        workout.setUser(this);
+    public List<Workout> getWorkouts() {
+        if (this.workouts == null) {
+            workouts = new ArrayList<>();
+        }
+        return workouts;
     }
 
-    public void removeWorkout(Workout workout) {
-        this.getWorkouts().remove(workout);
+    public void addWorkout(Workout workout) {
+        workout.setUser(this);
+        this.getWorkouts().add(workout);
+    }
+
+    public void removeWorkout(long id) {
+        for (Workout workout : getWorkouts()) {
+            if (workout.getId() == id) {
+                this.getWorkouts().remove(workout);
+                return;
+            }
+        }
+        throw new EntityNotFoundException();
+    }
+
+    public List<Comment> getComments() {
+        if (this.comments == null) {
+            comments = new ArrayList<>();
+        }
+        return comments;
     }
 
     public void addComment(Comment comment) {
-        this.getComments().add(comment);
         comment.setUser(this);
+        this.getComments().add(comment);
     }
 
-    public void removeComment(Comment comment) {
-        this.getComments().remove(comment);
+    public void removeComment(long id) {
+        for (Comment comment : getComments()) {
+            if (comment.getId() == id) {
+                this.getComments().remove(comment);
+                return;
+            }
+        }
+        throw new EntityNotFoundException();
     }
 
     public Workout getWorkout(long id) {
@@ -211,7 +238,6 @@ public @Data class User extends BaseEntity implements UserDetails, Suggestable {
                 return workout;
             }
         }
-
         throw new EntityNotFoundException();
     }
 }

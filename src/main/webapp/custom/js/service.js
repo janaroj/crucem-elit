@@ -148,6 +148,9 @@
 		this.createComment = function(comment) {
 			return $http.post("/api/user/comments", comment);
 		};
+		this.deleteComment = function(id) {
+			return $http.delete("/api/user/comments/" + id);
+		};
 	});
 
 	app.service('gymService', function($http, $upload) {

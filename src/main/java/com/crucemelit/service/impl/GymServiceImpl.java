@@ -10,7 +10,6 @@ import com.crucemelit.domain.SuggestionType;
 import com.crucemelit.dto.CommentDto;
 import com.crucemelit.dto.GymDto;
 import com.crucemelit.dto.Suggestion;
-import com.crucemelit.exception.EntityNotFoundException;
 import com.crucemelit.model.Gym;
 import com.crucemelit.repository.GymRepository;
 import com.crucemelit.service.GymService;
@@ -36,19 +35,13 @@ public class GymServiceImpl implements GymService {
     }
 
     @Override
-    public List<GymDto> getGymsDto() {
+    public List<GymDto> getGymDtos() {
         return gymTransformer.transformToDto(getAllGyms());
     }
 
     @Override
     public Gym getGym(long id) {
-        Gym gym = gymRepository.findOne(id);
-
-        if (gym == null) {
-            throw new EntityNotFoundException();
-        }
-
-        return gym;
+        return gymRepository.findOne(id);
     }
 
     @Override
