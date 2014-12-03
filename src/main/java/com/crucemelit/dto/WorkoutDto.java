@@ -42,4 +42,10 @@ public @Data class WorkoutDto {
         }
     }
 
+    @Override
+    public String toString() {
+        return "WorkoutDto [id=" + id + ", date=" + date + ", name=" + name + ", comment=" + comment + ", gym=" + gym
+                + ", wod=" + wod + ", result=" + result + ", user=" + user + ", exerciseGroups=" + exerciseGroups + "]";
+    }
+
 }

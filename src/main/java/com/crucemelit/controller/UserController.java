@@ -180,6 +180,7 @@ public class UserController {
 
     @RequestMapping(value = "/workouts/{id}")
     public WorkoutDto getWorkout(@PathVariable long id) {
+        System.out.println(userService.getWorkoutDto(id).toString());
         return userService.getWorkoutDto(id);
     }
 

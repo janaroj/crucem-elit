@@ -76,4 +76,9 @@ public @Data class Workout extends BaseEntity {
         return null;
     }
 
+    @Override
+    public String toString() {
+        return "Workout name: " + this.name + ", workout comment: " + this.getComment() + ", id: " + this.getId();
+    }
+
 }

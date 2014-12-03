@@ -17,7 +17,7 @@
 			total: 0,           // length of data
 			getData: function($defer, params) {
 				if (recordData===null) {
-					
+
 					workoutService.getWorkouts().then(function(result) {
 						recordData = result.data;
 						ui.util.table.prepareData($defer, $filter, params, recordData);
@@ -40,13 +40,13 @@
 		$scope.viewUser = function(id) {
 			$location.path('/user/contacts/' + id);
 		};
-		
+
 		$scope.$watch('language()', function(newLang, oldLang) {
 			if (oldLang !== newLang) {
 				angular.forEach(genders,function(val,key) {val.title = $scope.getTranslation(val.id);})
 			}
 		});
-		
+
 		var genders = [];
 
 		$scope.genders = function(column) {
@@ -64,9 +64,9 @@
 		};
 
 	});
-	
-	
-	app.controller('RecordController', function($scope, $location, userService, workoutService, toaster) {
+
+
+	app.controller('RecordController', function($scope, $routeParams, $location, userService, workoutService, toaster) {
 		$scope.init = function() {
 			userService.getWorkout($routeParams.id).then(function(result) {
 				$scope.workout = result.data;
@@ -76,5 +76,5 @@
 		};
 
 	});
-	
+
 }());
