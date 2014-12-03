@@ -405,3 +405,9 @@ hr {
 textarea {
 	resize : vertical;
 }
+
+#showMore {
+	color: black;
+	display: block;
+	text-align: center;
+}

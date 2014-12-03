@@ -114,18 +114,33 @@
 			});
 			
 			gymService.getComments($routeParams.id).then(function(result) {
+				$scope.commentQuantity = 5;
 				$scope.comments = result.data;
 			}, function(result) {
 				toaster.pop('error', 'Gym comments' , result.data.message);
 			});
 		};
 		
+		$scope.showMoreComments = function() {
+			$scope.commentQuantity += $scope.hasMoreComments() ? 5 : 0;
+		};
+		
+		$scope.hasMoreComments = function() {
+			if (!$scope.comments) {
+				return false;
+			}
+			return $scope.comments.length > $scope.commentQuantity;
+		};
+		
 		$scope.pictures = {};
 
 		$scope.getPicture = function(id, gender) {
 			if (!$scope.pictures[id]) {
+				$scope.pictures[id] = getDefaultUserImageSrc(gender);
 				userService.getProfilePicture(id).then(function(result) {
-					$scope.pictures[id] = (!result.data) ? getDefaultUserImageSrc(gender) : "data:image/png;base64," + result.data;
+					if (result.data) {
+						$scope.pictures[id] = "data:image/png;base64," + result.data;
+					}
 				}, 
 				function(result) {
 					toaster.pop('error', 'Contact Picture' , result.data.message);
