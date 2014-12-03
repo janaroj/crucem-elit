@@ -26,6 +26,11 @@
 		
 		$rootScope.isFriend = function(contact) {
 			var friends = $rootScope.getFriends();
+			
+			if (!friends || ! contact) {
+				return false;
+			}
+			
 			for (var i = 0; i < friends.length; i++) {
 				if (friends[i].id === contact.id) {
 					return true;

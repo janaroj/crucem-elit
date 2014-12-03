@@ -39,10 +39,13 @@ public @Data class Gym extends BaseEntity implements Suggestable {
     @OneToMany(mappedBy = "gym", fetch = FetchType.LAZY)
     private List<User> users;
 
+    @OneToMany(mappedBy = "gym", fetch = FetchType.LAZY)
+    private List<Comment> comments;
+
     private byte[] picture;
 
     public String getFullAddress() {
-    	 return Utility.formatStrings(getCity(), getAddress());
+        return Utility.formatStrings(getCity(), getAddress());
     }
 
 }

@@ -23,7 +23,7 @@ public class WorkoutServiceImpl implements WorkoutService {
 
     @Override
     public List<WorkoutDto> getWorkoutsWithResultsDto() {
-        return workoutTransformer.transformToDto(workoutRepository.findByExerciseGroupsRecordNotNull());
+        return workoutTransformer.transformToDtoWithUserInfo(workoutRepository.findByExerciseGroupsRecordNotNull());
     }
 
 }

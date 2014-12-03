@@ -85,6 +85,9 @@ public @Data class User extends BaseEntity implements UserDetails, Suggestable {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Workout> workouts;
 
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments;
+
     private byte[] picture;
 
     @Column(name = "INVALID_LOGIN_COUNT")
@@ -191,4 +194,14 @@ public @Data class User extends BaseEntity implements UserDetails, Suggestable {
     public void removeWorkout(Workout workout) {
         this.getWorkouts().remove(workout);
     }
+
+    public void addComment(Comment comment) {
+        this.getComments().add(comment);
+        comment.setUser(this);
+    }
+
+    public void removeComment(Comment comment) {
+        this.getComments().remove(comment);
+    }
+
 }

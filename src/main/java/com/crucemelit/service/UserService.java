@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 import com.crucemelit.dto.UserDto;
 import com.crucemelit.dto.WorkoutDto;
+import com.crucemelit.model.Comment;
 import com.crucemelit.model.Gym;
 import com.crucemelit.model.User;
 import com.crucemelit.model.Workout;
@@ -57,5 +58,9 @@ public interface UserService extends UserDetailsService, SearchService, PictureS
     void changeUserRole(long id);
 
     void deleteUser(long id);
+
+    void createComment(Comment comment);
+
+    void deleteComment(Comment comment);
 
 }

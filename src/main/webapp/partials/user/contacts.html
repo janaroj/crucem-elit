@@ -1,8 +1,9 @@
 <div ng-init="init()"/>
 <ul>
-	<text ng-repeat="contact in contacts">
+	<text ng-repeat="contact in contacts | orderBy : 'id'">
 	<div class="contactBox pull-left" ng-class="(isFriend(contact)) ? 'friendBox' : 'gymContactBox'" ng-init="getPicture(contact.id, contact.gender)">
-        <a href="" class="btn btn-danger pull-right btn-xs" ng-click="removeFriend(contact)" ng-cloak ng-show="isFriend(contact)"><i class="glyphicon glyphicon-trash"></i> <msg key="delete"/></a>
+        <a ng-if="isFriend(contact)" href="" class="btn btn-danger pull-right btn-xs" ng-click="removeFriend(contact)" ng-cloak><i class="glyphicon glyphicon-trash"></i> <msg key="remove.friend"/></a>
+        <a ng-if="!isFriend(contact)" href="" class="btn btn-success pull-right btn-xs" ng-click="addFriend(contact)" ng-cloak><i class="glyphicon glyphicon-plus"></i> <msg key="add.friend"/></a>
         <div>  
             <div class="pull-left">
                 <a href="" ng-click="viewContact(contact.id)">
@@ -12,7 +13,7 @@
             <div class="contactsInfo">
                 <a class="contactsLink" href="" ng-click="viewContact(contact.id)">{{ contact.name }}</a>                
                 <br>
-                <span>{{ contact.gym.name }}</span>
+               <a href="" class="contactsLink" ng-click="viewGym(contact.gym.id)"> {{ contact.gym.name }}</a>
             </div>
         </div>
 	</div>

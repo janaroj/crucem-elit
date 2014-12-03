@@ -22,12 +22,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.crucemelit.domain.Gender;
+import com.crucemelit.dto.CommentDto;
 import com.crucemelit.dto.EmailDto;
 import com.crucemelit.dto.ExerciseDto;
 import com.crucemelit.dto.GymDto;
 import com.crucemelit.dto.Suggestion;
 import com.crucemelit.dto.UserDto;
 import com.crucemelit.dto.WorkoutDto;
+import com.crucemelit.model.Comment;
 import com.crucemelit.model.User;
 import com.crucemelit.model.Workout;
 import com.crucemelit.service.ExerciseService;
@@ -194,12 +196,23 @@ public class UserController {
         return gymService.getPicture(id);
     }
 
+    @RequestMapping(value = "/gym/comments/{id}")
+    public List<CommentDto> getGymComments(@PathVariable long id) {
+        return gymService.getGymComments(id);
+    }
+
     @RequestMapping(value = "/update/user", method = RequestMethod.PUT)
     @SneakyThrows
     public ResponseEntity<String> updateUser(HttpServletRequest req) {
         User user = userService.getCurrentUser();
         objectMapper.readerForUpdating(user).readValue(req.getReader());
         userService.updateUser(user);
+        return new ResponseEntity<String>("Success", HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/comments", method = RequestMethod.POST)
+    public ResponseEntity<String> createComment(@RequestBody Comment comment) {
+        userService.createComment(comment);
         return new ResponseEntity<String>("Success", HttpStatus.OK);
     }
 

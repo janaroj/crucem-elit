@@ -1,5 +1,6 @@
 package com.crucemelit.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import lombok.SneakyThrows;
@@ -24,6 +25,7 @@ import com.crucemelit.dto.WorkoutDto;
 import com.crucemelit.exception.CredentialsExpiredException;
 import com.crucemelit.exception.EntityNotFoundException;
 import com.crucemelit.exception.UserAlreadyExistsException;
+import com.crucemelit.model.Comment;
 import com.crucemelit.model.Gym;
 import com.crucemelit.model.User;
 import com.crucemelit.model.Workout;
@@ -287,5 +289,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(long id) {
         userRepository.delete(id);
+    }
+
+    @Override
+    public void createComment(Comment comment) {
+        comment.setDate(new Date());
+        User user = getCurrentUser();
+        user.addComment(comment);
+        userRepository.saveAndFlush(user);
+    }
+
+    @Override
+    public void deleteComment(Comment comment) {
+        User user = getCurrentUser();
+        user.removeComment(comment);
+        userRepository.saveAndFlush(user);
     }
 }
