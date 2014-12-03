@@ -36,6 +36,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.crucemelit.domain.Gender;
 import com.crucemelit.domain.Role;
+import com.crucemelit.exception.EntityNotFoundException;
 import com.crucemelit.util.Utility;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -204,4 +205,13 @@ public @Data class User extends BaseEntity implements UserDetails, Suggestable {
         this.getComments().remove(comment);
     }
 
+    public Workout getWorkout(long id) {
+        for (Workout workout : getWorkouts()) {
+            if (workout.getId() == id) {
+                return workout;
+            }
+        }
+
+        throw new EntityNotFoundException();
+    }
 }

@@ -1,6 +1,7 @@
 package com.crucemelit.dto;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,6 +26,8 @@ public @Data class WorkoutDto {
     private Result result;
 
     private UserDto user;
+
+    private List<ExerciseGroupDto> exerciseGroups;
 
     public WorkoutDto(Workout workout) {
         if (workout != null) {

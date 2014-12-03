@@ -180,6 +180,11 @@ public class UserController {
         return workoutService.getWorkoutsWithResultsDto();
     }
 
+    @RequestMapping(value = "/workouts/{id}")
+    public WorkoutDto getWorkout(@PathVariable long id) {
+        return userService.getWorkoutDto(id);
+    }
+
     @RequestMapping(value = "/genders")
     public Gender[] getGenders() {
         return Gender.values();

@@ -1,7 +1,7 @@
 (function() {
 	var app = angular.module('crucem-elit');
 
-	app.controller('RecordController', function($scope, $q, $location, $filter, userService, workoutService, ngTableParams, toaster) {
+	app.controller('RecordsController', function($scope, $q, $location, $filter, userService, workoutService, ngTableParams, toaster) {
 		var recordData = null;
 		$scope.tableParams = new ngTableParams({
 			page: 1,            // show first page
@@ -64,5 +64,17 @@
 		};
 
 	});
+	
+	
+	app.controller('RecordController', function($scope, $location, userService, workoutService, toaster) {
+		$scope.init = function() {
+			userService.getWorkout($routeParams.id).then(function(result) {
+				$scope.workout = result.data;
+			}, function(result) {
+				toaster.pop('error', 'Workout' , result.data.message);
+			});
+		};
 
+	});
+	
 }());

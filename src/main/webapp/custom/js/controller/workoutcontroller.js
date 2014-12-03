@@ -42,6 +42,10 @@
 				toaster.pop('error', 'Workouts' , result.data.message);
 			});
 		};
+		
+		$scope.fillWorkout = function(workout) {
+			$location.path('/user/workout/fill/' + workout.id);
+		}
 
 		$scope.newWorkout = function() {
 			$location.path('/user/workout/add');

@@ -136,11 +136,12 @@
 		this.getWorkouts = function() {
 			return $http.get('/api/user/workouts');
 		};
-		
+		this.getWorkout = function(id){
+			return $http.get('/api/user/workouts/' + id);
+		};
 		this.deleteWorkout = function(id) {
 			return $http.delete('/api/user/workouts/' + id);
 		};
-		
 		this.addWorkout = function(workout) {
 			return $http.post("/api/user/workouts", workout);
 		};

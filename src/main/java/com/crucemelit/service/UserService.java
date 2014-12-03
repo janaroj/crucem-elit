@@ -63,4 +63,8 @@ public interface UserService extends UserDetailsService, SearchService, PictureS
 
     void deleteComment(Comment comment);
 
+    Workout getWorkout(long id);
+
+    WorkoutDto getWorkoutDto(long id);
+
 }
