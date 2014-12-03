@@ -160,7 +160,7 @@ public class UserController {
 
     @RequestMapping(value = "/workouts")
     public List<WorkoutDto> getUserWorkouts() {
-        return userService.getUserWorkoutsDto();
+        return workoutService.getUserWorkoutsDto(userService.getCurrentUser());
     }
 
     @RequestMapping(value = "/workouts", method = RequestMethod.POST)
@@ -182,7 +182,7 @@ public class UserController {
 
     @RequestMapping(value = "/workouts/{id}")
     public WorkoutDto getWorkout(@PathVariable long id) {
-        return userService.getUserWorkoutDto(id);
+        return workoutService.getUserWorkoutDto(id, userService.getCurrentUser());
     }
 
     @RequestMapping(value = "/genders")

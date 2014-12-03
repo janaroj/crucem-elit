@@ -21,7 +21,6 @@ import com.crucemelit.domain.Role;
 import com.crucemelit.domain.SuggestionType;
 import com.crucemelit.dto.Suggestion;
 import com.crucemelit.dto.UserDto;
-import com.crucemelit.dto.WorkoutDto;
 import com.crucemelit.exception.CredentialsExpiredException;
 import com.crucemelit.exception.EntityNotFoundException;
 import com.crucemelit.exception.UserAlreadyExistsException;
@@ -32,7 +31,6 @@ import com.crucemelit.model.Workout;
 import com.crucemelit.repository.UserRepository;
 import com.crucemelit.service.UserService;
 import com.crucemelit.transformer.UserTransformer;
-import com.crucemelit.transformer.WorkoutTransformer;
 import com.crucemelit.util.TokenUtils;
 import com.crucemelit.util.Utility;
 
@@ -54,9 +52,6 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserTransformer userTransformer;
-
-    @Autowired
-    private WorkoutTransformer workoutTransformer;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -181,11 +176,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<WorkoutDto> getUserWorkoutsDto() {
-        return workoutTransformer.transformToDto(getCurrentUser().getWorkouts());
-    }
-
-    @Override
     public void updateUser(User user) {
         userRepository.saveAndFlush(user);
     }
@@ -259,11 +249,6 @@ public class UserServiceImpl implements UserService {
         User user = getCurrentUser();
         user.removeWorkout(id);
         userRepository.saveAndFlush(user);
-    }
-
-    @Override
-    public WorkoutDto getUserWorkoutDto(long id) {
-        return workoutTransformer.transformToDtoWithExerciseGroups(getCurrentUser().getWorkout(id));
     }
 
     @Override

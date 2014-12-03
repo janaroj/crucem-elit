@@ -232,12 +232,4 @@ public @Data class User extends BaseEntity implements UserDetails, Suggestable {
         throw new EntityNotFoundException();
     }
 
-    public Workout getWorkout(long id) {
-        for (Workout workout : getWorkouts()) {
-            if (workout.getId() == id) {
-                return workout;
-            }
-        }
-        throw new EntityNotFoundException();
-    }
 }
