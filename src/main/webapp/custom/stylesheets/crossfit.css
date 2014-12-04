@@ -432,3 +432,6 @@ textarea {
 .contactFile {
 	padding-left: 3em;
 }
+.mainTable{
+    padding-left: 150px!important; 
+}
