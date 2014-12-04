@@ -1,7 +1,7 @@
 (function() {
 	var app = angular.module('crucem-elit');
 
-	app.controller('GymsController', function($scope, $location, $filter, gymService, userService, ngTableParams, toaster) {
+	app.controller('GymsController', function($scope, $rootScope, $location, $filter, gymService, userService, ngTableParams, toaster) {
 		var gymData = null;
 		var tempData = null;
 		$scope.tableParams = new ngTableParams({
@@ -52,6 +52,7 @@
 			if (confirm("Are you sure you wish to leave from " + gym.name )) {
 				userService.leaveGym().then(function() {
 					$scope.user.gym = null;
+					$rootScope.removeGym($scope.user);
 					toaster.pop('success', 'Gym', 'Left from gym successfully!');
 				}, function(result) {
 					toaster.pop('error', 'Gym' , result.data.message);
