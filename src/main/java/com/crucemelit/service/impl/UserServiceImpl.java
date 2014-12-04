@@ -240,7 +240,7 @@ public class UserServiceImpl implements UserService {
     public void createUserWorkout(Workout workout) {
         User user = getCurrentUser();
         workout.setGymName(user.getGym().getName());
-        // user.addWorkout(workout);
+        user.addWorkout(workout);
         userRepository.saveAndFlush(user);
     }
 

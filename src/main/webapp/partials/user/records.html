@@ -13,7 +13,7 @@
 				<td data-title="getTranslation('record.table.result.comment')" sortable="'result.comment'" filter="{ 'result.comment': 'text'}">{{record.result.comment}}</td>
 				<td data-title="getTranslation('record.table.gym')" sortable="'gym'" filter="{ 'gym': 'text'}">{{record.gym}}</td>
 				<td data-title="getTranslation('record.table.gender')" sortable="'user.gender'" filter="{ 'user.gender': 'select' }" filter-data="genders($column)"><msg key="{{record.user.gender}}"/></td>
-				<td data-title="getTranslation('record.table.date')" sortable="'date'" filter="{ 'date': 'text' }">{{record.date}}</td>
+				<td data-title="getTranslation('record.table.date')" sortable="'date'" filter="{ 'date': 'text' }">{{record.date | date:'dd.MM.yyyy'}}</td>
 			</tr>
 		</tbody>
 	</table>

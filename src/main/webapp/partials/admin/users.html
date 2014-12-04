@@ -9,7 +9,7 @@
 		<tbody>
 			<tr ng-repeat="user in $data">
 				<td data-title="getTranslation('user.email')" sortable="'email'" filter="{ 'email': 'text' }">
-					{{user.email}}
+					<a href="" ng-click="viewUser(user.id)">{{user.email}}</a>
 				</td>
 				<td data-title="getTranslation('user.name')" sortable="'name'" filter="{ 'name': 'text'}">
 					{{user.name}}

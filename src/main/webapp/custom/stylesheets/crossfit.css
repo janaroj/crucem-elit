@@ -428,3 +428,7 @@ textarea {
 	display: block;
 	text-align: center;
 }
+
+.contactFile {
+	padding-left: 3em;
+}

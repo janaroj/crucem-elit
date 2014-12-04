@@ -104,7 +104,7 @@
 
 		$scope.cancelProfile = function(){
 			$scope.toggleProfileChange();
-			angular.copy($scope.user, $scope.contact);
+			angular.extend($scope.user, $scope.contact);
 		};
 
 		$scope.toggleProfileChange = function() {
@@ -113,11 +113,11 @@
 		};
 
 		$scope.updateProfile = function() {
-			userService.updateUser(createUserDTO()).then(function(result) {
+			userService.updateUser(createUserDTO($scope.contact)).then(function(result) {
 				if (!/^\d{4}-\d{2}-\d{2}$/.test($scope.contact.dateOfBirth)) {
 					$scope.contact.dateOfBirth = $.datepicker.formatDate("yy-mm-dd", $scope.contact.dateOfBirth); //HACK to correct DOB
 				}
-				angular.copy($scope.contact, $scope.user);
+				angular.extend(createUserDTO($scope.contact), $scope.user);
 				$scope.toggleProfileChange();
 				toaster.pop('success', 'Contact' , 'Updated successfully');
 			}, 
@@ -127,14 +127,14 @@
 
 		};
 
-		var createUserDTO = function() {
+		var createUserDTO = function(user) {
 			return userDTO = {
-					firstName : $scope.contact.firstName,
-					lastName : $scope.contact.lastName,
-					weight : $scope.contact.weight,
-					length : $scope.contact.length,
-					dateOfBirth : $scope.contact.dateOfBirth,
-					gender : $scope.contact.gender,
+					firstName : user.firstName,
+					lastName : user.lastName,
+					weight : user.weight,
+					length : user.length,
+					dateOfBirth : user.dateOfBirth,
+					gender : user.gender,
 			};
 		};
 
@@ -169,15 +169,17 @@
 		};
 		
 		$scope.removeFriend = function(friend) {
-			userService.removeFriend(friend.id).then(
-				function(data) {
-					$rootScope.removeFriend(friend.id);
-					toaster.pop('success', 'Friend', 'Friend removed successfully!');
-				},
-				function(data) {
-					toaster.pop('error', 'Friend', data.result.message);
-				}
-			);
+			if (confirm("Are you sure you wish to remove " + friend.name + " from friend list?")) {
+				userService.removeFriend(friend.id).then(
+					function(data) {
+						$rootScope.removeFriend(friend.id);
+						toaster.pop('success', 'Friend', 'Friend removed successfully!');
+					},
+					function(data) {
+						toaster.pop('error', 'Friend', data.result.message);
+					}
+				);
+			}
 		};
 
 	});
