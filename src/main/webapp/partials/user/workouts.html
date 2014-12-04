@@ -17,7 +17,7 @@
 			<tr ng-repeat="workout in $data">
 				<td data-title="getTranslation('workout.table.workout')" sortable="'name'" filter="{ 'name': 'text' }">{{workout.name}}</td>
 				<td data-title="getTranslation('workout.table.wod')" sortable="'wod'" filter="{ 'wod': 'text'}">{{workout.wod}}</td>
-				<td data-title="getTranslation('workout.table.date')" sortable="'date'" filter="{ 'date': 'text' }">{{workout.date}}</td>
+				<td data-title="getTranslation('workout.table.date')" sortable="'date'" filter="{ 'date': 'text' }">{{workout.date | date:'dd.MM.yyyy'}}</td>
 				<td data-title="getTranslation('workout.table.comment')" sortable="'comment'" filter="{ 'comment': 'text'}">{{workout.comment}}</td>
 				<td class="buttons" width="250">
 					<button class="btn btn-danger btn-sm pull-right" ng-click="deleteWorkout(workout)"><i class="glyphicon glyphicon-trash"></i> <msg key="delete"/></button>
@@ -47,7 +47,7 @@
 				<td data-title="getTranslation('workout.table.result.weight')" sortable="'result.weight'" filter="{ 'result.weight': 'text'}">{{workout.result.weight}}</td>
 				<td data-title="getTranslation('workout.table.result.comment')" sortable="'result.comment'" filter="{ 'result.comment': 'text'}">{{workout.result.comment}}</td>
 				<td data-title="getTranslation('workout.table.gym')" sortable="'gym'" filter="{ 'gym': 'text'}">{{workout.gym}}</td>
-				<td data-title="getTranslation('workout.table.date')" sortable="'date'" filter="{ 'date': 'text' }">{{workout.date}}</td>
+				<td data-title="getTranslation('workout.table.date')" sortable="'date'" filter="{ 'date': 'text' }">{{workout.date | date:'dd.MM.yyyy'}}</td>
 			</tr>
 		</tbody>
 	</table>

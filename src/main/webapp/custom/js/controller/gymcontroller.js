@@ -8,6 +8,7 @@
 			page: 1,            // show first page
 			count: 10,          // count per page
 			sorting: {
+				name : 'asc'
 			}
 		}, {
 			total: 0,           // length of data

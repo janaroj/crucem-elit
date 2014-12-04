@@ -81,7 +81,7 @@
 				$http.defaults.headers.common['X-Auth-Token'] = result.data.token;
 				$cookieStore.put('user', result.data);
 
-				if($rootScope.redirectUrl != null) {
+				if($rootScope.redirectUrl != null && $rootScope.redirectUrl != "/") {
 					$location.url($rootScope.redirectUrl);
 				}
 				else {
@@ -103,10 +103,7 @@
 			},
 			function(result) {
 				$rootScope.loginClicked = false;
-				if($rootScope.redirectStatus == 401) {
-					$location.url($rootScope.redirectUrl);
-					toaster.pop('error', 'Authentication', result.data.message);
-				}
+				toaster.pop('error', 'Authentication', result.data.message);
 			});
 		};
 

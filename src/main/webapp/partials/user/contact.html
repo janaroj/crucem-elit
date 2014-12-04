@@ -13,7 +13,7 @@
 								<insert-image source="imageSrc" classes="'setImgSize img-rounded'"></insert-image>
 							</div>
 							<div class="form-group" ng-cloak ng-if="isMyProfile()">
-								<input type="file" class="col-lg-9" name="picture" ng-file-select="onFileSelect($files)" accept="image/*" ng-cloak ng-show="isChangeInProgress" />
+								<input type="file" class="col-lg-9 col-md-11 contactFile" name="picture" ng-file-select="onFileSelect($files)" accept="image/*" ng-cloak ng-show="isChangeInProgress" />
 							</div>
 							<div ng-cloak ng-show="!isMyProfile() && isProfileLoaded">
 								<a ng-if="isFriend(contact)" href="" class="btn btn-danger" ng-click="removeFriend(contact)"><msg key="remove.friend" /></a>
@@ -24,9 +24,9 @@
 						<div class=" col-md-9 col-lg-9 ">
 							<table class="table table-user-information">
 								<tbody>
-									<tr>
-										<td ng-cloak ng-hide="isChangeInProgress"><msg key="email" /></td>
-										<td ng-cloak ng-hide="isChangeInProgress">{{contact.email}}</td>
+									<tr ng-cloak ng-hide="isChangeInProgress">
+										<td><msg key="email" /></td>
+										<td>{{contact.email}}</td>
 									</tr>
 									<tr>
 										<td class="pdgnContact"><msg key="firstName" /></td>
@@ -61,7 +61,7 @@
 										<td class="pdgnContact"><msg key="dateOfBirth" /></td>
 										<td><div class="col-lg-5">
 										<input type="text" class="form-control" ng-model="contact.dateOfBirth" ng-cloak ng-show="isChangeInProgress" datepicker-popup="{{format}}" placeholder="{{format}}" is-open="opened" max-date="maxDate" show-button-bar=false datepicker-append-to-body=true style:display:inline;>
-										<p class="form-control-static" ng-cloak ng-hide="isChangeInProgress">{{contact.dateOfBirth}}</p></div>
+										<p class="form-control-static" ng-cloak ng-hide="isChangeInProgress">{{contact.dateOfBirth | date:'dd.MM.yyyy'}}</p></div>
 										<a class="btn btn-default" ng-click="open($event)" ng-cloak ng-show="isChangeInProgress">
 											<i class="glyphicon glyphicon-calendar" ng-cloak ng-show="isChangeInProgress"></i>
 										</a></td>

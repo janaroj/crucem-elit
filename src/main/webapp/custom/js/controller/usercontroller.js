@@ -1,12 +1,13 @@
 (function() {
 	var app = angular.module('crucem-elit');
-	app.controller('AdminUsersController', function($scope, $q, $filter, ngTableParams, userService, toaster) {
+	app.controller('AdminUsersController', function($scope, $q, $filter, $location, ngTableParams, userService, toaster) {
 
 		var userData = null;
 		$scope.tableParams = new ngTableParams({
 			page: 1,            // show first page
 			count: 10,          // count per page
 			sorting: {
+				email : 'asc'
 			}
 		}, {
 			total: 0,           // length of data
@@ -66,6 +67,10 @@
 		
 		$scope.viewGym = function(id) {
 			$location.path('/user/gyms/' + id);
+		};
+		
+		$scope.viewUser = function(id) {
+			$location.path('/user/contacts/' + id);
 		};
 		
 		$scope.deleteUser = function(user) {

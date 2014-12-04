@@ -7,7 +7,10 @@
 		var tempData = null;
 		$scope.tableParams = new ngTableParams({
 			page: 1,            // show first page
-			count: 10,          // count per page
+			count: 10, 
+			sorting: {
+				name : 'asc'
+			}
 		}, {
 			total: 0,           // length of data
 			getData: function($defer, params) {

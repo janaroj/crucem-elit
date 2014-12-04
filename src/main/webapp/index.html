@@ -42,18 +42,23 @@
 </head>
 
 <body ng-controller="MainController">
+<nav class="navbar navbar-default" role="navigation">
 <div class="container">
-	<div class="navbar navbar-default" role="navigation">
-		<div class="container-fluid">
 			<div class="navbar-header">
 				<a class="navbar-brand" href="#/"> <msg key="title"></msg></a>
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="sr-only">Toggle navigation</span>
+              		<span class="icon-bar"></span>
+              		<span class="icon-bar"></span>
+              		<span class="icon-bar"></span>
+				</button>
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav" ng-cloak ng-show="user">
-					<li ng-class="activeWhen(pathContains('/user/workouts'))"><a href="#/user/workouts"><msg key="workouts"/></a></li>
-					<li ng-class="activeWhen(pathContains('/user/gyms'))"><a href="#/user/gyms"><msg key="gym"/></a></li>
-                	<li ng-class="activeWhen(pathContains('/user/contacts'))"><a href="#/user/contacts"><msg key="contacts"/></a></li>
-					<li ng-class="activeWhen(pathContains('/user/records'))"><a href="#/user/records"><msg key="records"/></a></li>
+					<li ng-class="activeWhen(pathContains('/user/workout'))"><a href="#/user/workouts"><msg key="workouts"/></a></li>
+					<li ng-class="activeWhen(pathContains('/user/gym'))"><a href="#/user/gyms"><msg key="gym"/></a></li>
+                	<li ng-class="activeWhen(pathContains('/user/contact'))"><a href="#/user/contacts"><msg key="contacts"/></a></li>
+					<li ng-class="activeWhen(pathContains('/user/record'))"><a href="#/user/records"><msg key="records"/></a></li>
 					<li>
 						<a data-toggle="popover" data-placement="bottom" data-target=".popover-target-search"><span class="glyphicon glyphicon-search"></span> <msg key="search"/></a>
 						<div class="popover-target popover-target-search">
@@ -113,13 +118,13 @@
     					</ul>
     				</li>
 				</ul>
-            </div>         
-		</div>
-	</div>
+            </div>   
+    	</div>
+	</nav>      
 	<div class="container">
 		<toaster-container toaster-options="{'time-out': 3000, 'position-class': 'toast-top-right'}"></toaster-container>
 		<ng-view />
 	</div>
-</div>
+
 </body>
 </html>
