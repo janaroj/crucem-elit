@@ -11,8 +11,8 @@ set "DATABASE_URL=postgres://vvkzfbhgijnfop:xeX1a_YN7yfVmUrxZ9oP0cssMc@ec2-54-22
 
 :: ----- Set Commands -----
 
-set "MVN_CMD=C:\soft\apache-maven-3.1.1\bin\mvn"
-set "HEROKU_CMD=C:\Program Files (x86)\Heroku\bin\foreman"
+set "MVN_CMD=C:\Maven\apache-maven-3.1.1\bin\mvn"
+set "HEROKU_CMD=C:\Program Files (x86)\HerokuToolbelt\bin\foreman"
 
 :: ----- Finished -----
 
