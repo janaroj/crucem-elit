@@ -27,7 +27,6 @@ import javax.persistence.Transient;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import org.hibernate.validator.constraints.Email;
 import org.springframework.security.core.GrantedAuthority;
@@ -44,7 +43,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Entity
 @Table(name = "PERSON")
 @NoArgsConstructor
-@ToString(of = { "id" })
 @EqualsAndHashCode(callSuper = false)
 public @Data class User extends BaseEntity implements UserDetails, Suggestable {
 
