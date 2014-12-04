@@ -126,6 +126,10 @@
 			$scope.commentQuantity += $scope.hasMoreComments() ? 5 : 0;
 		};
 		
+		$scope.showAllGyms = function() {
+			$location.path("/user/gyms");
+		};
+		
 		$scope.hasMoreComments = function() {
 			if (!$scope.comments) {
 				return false;

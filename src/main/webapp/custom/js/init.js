@@ -129,6 +129,10 @@
 					event.preventDefault();
 					$timeout(function(){$location.path("/user/main");});
 				}
+				else if ( $location.url().replace("/user/gyms/", "") > 0 && !user.gym) {
+					event.preventDefault();
+					$timeout(function(){$location.path("/user/gyms/");});
+				}
 			}
 		});
 	});
