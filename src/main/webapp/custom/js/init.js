@@ -40,10 +40,6 @@
 			return false;
 		};
 		
-		$rootScope.removeGym = function(user) {
-			$cookieStore.put('user', user);
-		};
-		
 		$rootScope.removeFriend = function(id) {
 			friends =  $filter('filter')(friends, {id: id}, function (obj, test) { return obj !== test; });
 			$cookieStore.put('friends', friends);
