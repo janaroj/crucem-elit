@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import com.crucemelit.dto.UserDto;
-import com.crucemelit.dto.WorkoutDto;
+import com.crucemelit.model.Comment;
 import com.crucemelit.model.Gym;
 import com.crucemelit.model.User;
 import com.crucemelit.model.Workout;
@@ -34,8 +34,6 @@ public interface UserService extends UserDetailsService, SearchService, PictureS
 
     void forgotPassword(String email);
 
-    List<WorkoutDto> getUserWorkoutsDto();
-
     void updateUser(User user);
 
     List<UserDto> getFriendsDto();
@@ -48,9 +46,11 @@ public interface UserService extends UserDetailsService, SearchService, PictureS
 
     UserDto getCurrentUserWithAuthInfo();
 
-    void createWorkout(Workout workout);
+    void createUserWorkout(Workout workout);
 
-    void deleteWorkout(long id);
+    void fillUserWorkout(Workout workout);
+
+    void deleteUserWorkoutById(long id);
 
     List<UserDto> getUsersWithAuthInfo();
 
@@ -58,8 +58,8 @@ public interface UserService extends UserDetailsService, SearchService, PictureS
 
     void deleteUser(long id);
 
-    Workout getWorkout(long id);
+    void createUserComment(Comment comment);
 
-    WorkoutDto getWorkoutDto(long id);
+    void deleteUserCommentById(long id);
 
 }

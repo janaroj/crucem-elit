@@ -1,103 +1,76 @@
 <div class="container">
 	<div class="row">
-		<div
-			class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xs-offset-0 col-sm-offset-0 col-md-offset-1 col-lg-offset-1 toppad">
-
+		<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xs-offset-0 col-sm-offset-0 col-md-offset-1 col-lg-offset-1 toppad">
 			<div class="panel panel-info" >
 				<div class="panel-heading">
-					<h3 class="panel-title">{{contact.firstName}}
-						{{contact.lastName}}</h3>
+					<h3 class="panel-title">{{contact.firstName}} {{contact.lastName}}</h3>
 				</div>
-                <form id="form" class="form-horizontal" role="form" name="form"
-			ng-init="init()" ng-submit="updateProfile()" novalidate
-			show-validation>
+                <form id="form" class="form-horizontal" role="form" name="form" ng-init="init()" ng-submit="updateProfile()" novalidate show-validation>
 				<div class="panel-body" >
 					<div class="row" >
 						<div class="col-md-3 col-lg-3 " align="center">
 							<div class=" profile-img">
-								<insert-image source="imageSrc"
-									classes="'setImgSize img-rounded'"></insert-image>
+								<insert-image source="imageSrc" classes="'setImgSize img-rounded'"></insert-image>
 							</div>
 							<div class="form-group" ng-cloak ng-if="isMyProfile()">
-								<input type="file" class="col-lg-8 pull-right" name="picture"
-									ng-file-select="onFileSelect($files)" accept="image/*" ng-cloak
-									ng-show="isChangeInProgress" />
+								<input type="file" class="col-lg-9" name="picture" ng-file-select="onFileSelect($files)" accept="image/*" ng-cloak ng-show="isChangeInProgress" />
 							</div>
-							<div ng-cloak
-								ng-show="!isMyProfile() && isProfileLoaded && !isFriend(contact)">
-								<button class="btn btn-primary" ng-click="addFriend(contact)">
-									<msg key="add.friend" />
-								</button>
+							<div ng-cloak ng-show="!isMyProfile() && isProfileLoaded">
+								<a ng-if="isFriend(contact)" href="" class="btn btn-danger" ng-click="removeFriend(contact)"><msg key="remove.friend" /></a>
+								<a ng-if="!isFriend(contact)" href="" class="btn btn-success" ng-click="addFriend(contact)"><msg key="add.friend" /></a>
 							</div>
 						</div>
 
 						<div class=" col-md-9 col-lg-9 ">
-							<table class="table table-user-information" ng-init="init()"
-								ng-submit="updateProfile()" novalidate show-validation>
+							<table class="table table-user-information">
 								<tbody>
 									<tr>
-										<td ng-cloak ng-hide="isChangeInProgress"><msg
-												key="email" /></td>
+										<td ng-cloak ng-hide="isChangeInProgress"><msg key="email" /></td>
 										<td ng-cloak ng-hide="isChangeInProgress">{{contact.email}}</td>
 									</tr>
 									<tr>
 										<td class="pdgnContact"><msg key="firstName" /></td>
-										<td><input class="form-control" type="text" ng-cloak
-											ng-show="isChangeInProgress" ng-model="contact.firstName">
-											<p class="form-control-static" ng-cloak
-												ng-hide="isChangeInProgress">{{contact.firstName}}</p></td>
+										<td><input class="form-control" type="text" ng-cloak ng-show="isChangeInProgress" ng-model="contact.firstName">
+											<p class="form-control-static" ng-cloak ng-hide="isChangeInProgress">{{contact.firstName}}</p></td>
 									</tr>
 									<tr>
 										<td class="pdgnContact"><msg key="lastName" /></td>
-										<td><input class="form-control" type="text" ng-cloak
-											ng-show="isChangeInProgress" ng-model="contact.lastName">
-											<p class="form-control-static" ng-cloak
-												ng-hide="isChangeInProgress">{{contact.lastName}}</p></td>
+										<td><input class="form-control" type="text" ng-cloak ng-show="isChangeInProgress" ng-model="contact.lastName">
+											<p class="form-control-static" ng-cloak ng-hide="isChangeInProgress">{{contact.lastName}}</p></td>
 									</tr>
 
 									<tr>
-									<tr>
 										<td class="pdgnContact"><msg key="gender" /></td>
-										<td><select class="form-control"
-											ng-model="contact.gender" ng-cloak
-											ng-show="isChangeInProgress">
+										<td><select class="form-control" ng-model="contact.gender" ng-cloak ng-show="isChangeInProgress">
 												<option value="MALE" label="{{getTranslation('MALE')}}" />
 												<option value="FEMALE" label="{{getTranslation('FEMALE')}}" />
 										</select>
-											<p class="form-control-static" ng-cloak
-												ng-hide="isChangeInProgress">{{getTranslation(contact.gender)}}</p></td>
+											<p class="form-control-static" ng-cloak ng-hide="isChangeInProgress">{{getTranslation(contact.gender)}}</p></td>
 									</tr>
 									<tr>
 										<td class="pdgnContact"><msg key="length" /></td>
-										<td><input class="form-control" type="text" ng-cloak
-											ng-show="isChangeInProgress" ng-model="contact.length">
-											<p class="form-control-static" ng-cloak
-												ng-hide="isChangeInProgress">{{contact.length}}</p></td>
+										<td><input class="form-control" type="text" ng-cloak ng-show="isChangeInProgress" ng-model="contact.length">
+											<p class="form-control-static" ng-cloak ng-hide="isChangeInProgress">{{contact.length}}</p></td>
 									</tr>
 									<tr>
 										<td><msg key="weight" /></td>
-										<td><input class="form-control" type="text" ng-cloak
-											ng-show="isChangeInProgress" ng-model="contact.weight">
-											<p class="form-control-static" ng-cloak
-												ng-hide="isChangeInProgress">{{contact.weight}}</p>
-											</div></td>
+										<td><input class="form-control" type="text" ng-cloak ng-show="isChangeInProgress" ng-model="contact.weight">
+											<p class="form-control-static" ng-cloak ng-hide="isChangeInProgress">{{contact.weight}}</p></td>
 									</tr>
-									<td class="pdgnContact"><msg key="dateOfBirth" /></td>
-									<td><div class="col-lg-5">
-					<input type="text" class="form-control" ng-model="contact.dateOfBirth" ng-cloak ng-show="isChangeInProgress" datepicker-popup="{{format}}" placeholder="{{format}}"
-						is-open="opened" max-date="maxDate" show-button-bar=false datepicker-append-to-body=true style:display:inline;>
-					<p class="form-control-static" ng-cloak ng-hide="isChangeInProgress">{{contact.dateOfBirth}}</p>
-				</div>
-				<button type="button" class="btn btn-default" ng-click="open($event)" ng-cloak ng-show="isChangeInProgress">
-					<i class="glyphicon glyphicon-calendar" ng-cloak ng-show="isChangeInProgress"></i>
-				</button></td>
+									<tr>
+										<td class="pdgnContact"><msg key="dateOfBirth" /></td>
+										<td><div class="col-lg-5">
+										<input type="text" class="form-control" ng-model="contact.dateOfBirth" ng-cloak ng-show="isChangeInProgress" datepicker-popup="{{format}}" placeholder="{{format}}" is-open="opened" max-date="maxDate" show-button-bar=false datepicker-append-to-body=true style:display:inline;>
+										<p class="form-control-static" ng-cloak ng-hide="isChangeInProgress">{{contact.dateOfBirth}}</p></div>
+										<a class="btn btn-default" ng-click="open($event)" ng-cloak ng-show="isChangeInProgress">
+											<i class="glyphicon glyphicon-calendar" ng-cloak ng-show="isChangeInProgress"></i>
+										</a></td>
+									</tr>
 									<tr>
 										<td class="pdgnContact" ng-cloak ng-hide="isChangeInProgress"><msg key="gym" /></td>
-										<td ng-cloak ng-hide="isChangeInProgress"><p
-												class="form-control-static">
-												<a href="" ng-click="viewGym(contact.gym.id)">{{contact.gym.name}}</a>
-											</p></td>
-									</tr>
+										<td ng-cloak ng-hide="isChangeInProgress"><p class="form-control-static">
+											<a href="" ng-click="viewGym(contact.gym.id)">{{contact.gym.name}}</a>
+										</p></td>
 									</tr>
 								</tbody>
 							</table>
@@ -115,9 +88,9 @@
 								<a class="btn btn-success" ng-click="toggleProfileChange()"><msg key="change" /></a>
 							</div>
 						
+						</div>
 					</div>
                     </form>
-				</div>
 
 			</div>
 		</div>

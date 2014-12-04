@@ -18,6 +18,23 @@ hr {
   text-align:left;
 }
 
+.crucem-inline {
+	display:inline;
+}
+
+.crucem-red {
+	text-color:#FF0000;
+}
+
+.text-result {
+	width:100px;
+}
+
+.result-label {
+	margin-left:30px;
+	width:100px;
+}
+
 .workout-header {
 	margin-top:20px;
 	margin-bottom:30px;
@@ -223,6 +240,11 @@ hr {
 	width:600px;
 }
 
+.setSmallImgSize {
+	width: 80px;
+	height: 80px;
+}
+
 .removeFriend {
 	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #fe1a00), color-stop(1, #ce0100) );
 	background:-moz-linear-gradient( center top, #fe1a00 5%, #ce0100 100% );
@@ -395,4 +417,8 @@ hr {
 }
 .pdgnContact{
 	padding-top: 15px!important;
+}
+
+textarea {
+	resize : vertical;
 }

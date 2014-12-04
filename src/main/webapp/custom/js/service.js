@@ -145,6 +145,15 @@
 		this.addWorkout = function(workout) {
 			return $http.post("/api/user/workouts", workout);
 		};
+		this.fillWorkout = function(workout) {
+			return $http.post("/api/user/workouts/fill", workout);
+		};
+		this.createComment = function(comment) {
+			return $http.post("/api/user/comments", comment);
+		};
+		this.deleteComment = function(id) {
+			return $http.delete("/api/user/comments/" + id);
+		};		
 	});
 
 	app.service('gymService', function($http, $upload) {
@@ -159,6 +168,9 @@
 		};
 		this.getGymPicture = function(id) {
 			return $http.get('/api/user/gym/picture/' + id);
+		};
+		this.getComments = function(id) {
+			return $http.get('/api/user/gym/comments/' + id);
 		};
 		this.deleteGym = function(id) {
 			return $http.delete('/api/admin/gyms/' + id);

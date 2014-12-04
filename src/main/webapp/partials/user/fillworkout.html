@@ -1,100 +1,109 @@
 <div id="workoutdiv" ng-init="init()">
-	<h1 class=workout-header>
-		<msg key="workout.fill.header" />
-	</h1>
+	<div class="page-header">
+		<h1 class=workout-header>{{workout.name}} ({{workout.date}})</h1>
+		<label><msg key="workout.fill.workout.comment" /></label>
+		<div>
+			<p>{{workout.comment}}</p>
+		</div>
+	</div>
 	<form id="form" class="form-horizontal" role="form" name="form" ng-submit="saveFilledWorkout()" novalidate show-validation>
-		<div class="form-group">
-			<label class="col-lg-2"><msg key="workout.add.name" /></label>
-			<div>
-				<label class="text-name">{{workout.name}}</label>
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-lg-2"><msg key="workout.add.date" /></label>
-			<div class="pull-left">
-				<label class="text-calendar">{{workout.date}}</label>
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-lg-2"><msg key="workout.add.comment" /></label>
-			<div>
-				<label class="text-name">{{workout.comment}}</label>
-			</div>
-		</div>
-		<div class="page-header">
-			<nav class="clear">
-				<h2 class="pull-left">
-					<msg key="workout.groups" />
-				</h2>
-			</nav>
-		</div>
-
 		<div ng-repeat="group in workout.exerciseGroups">
 			<div class="form-group">
-				<label class="pull-left col-lg-2"><msg key="workout.add.exercisegroup.name" /></label>
-				<div class="pull-left">
-					<label class="text-name">{{group.name}}</label>
+				<div class="pull-left crucem-inline">
+					<h2>{{group.name}}</h2>
 				</div>
-				<a href="" class="btn btn-danger pull-right del-workout-btn next-to-input-btn" ng-click="removeExerciseGroup(group)"><i
-					class="glyphicon glyphicon-trash"></i> <msg key="workout.add.exercisegroup.remove"></a>
+				<div class="crucem-inline crucem-red" ng-if="group.wod">WOD</div>
 			</div>
-			<div class="form-group">
-				<label class="col-lg-2 pull-left"><msg key="workout.add.exercisegroup.isWod" /></label>
-				<div>
-					<input type="checkbox" ng-model="group.wod">
-				</div>
-			</div>
-			<h3 class="pull-left">
-				<msg key="workout.add.added.exercises" />
-			</h3>
-			<a href="" class="btn btn-add btn-success pull-left btn-xs add-exercise-btn" ng-click="openModal(group)">
-				<span class="glyphicon-plus-sign glyphicon"></span>
-				<msg key="workout.add.exercises">
-			</a>
-			<br> <br> <br>
-			<ul>
-				<div ng-repeat="exercise in group.exercises track by $index">
-					<div>
-						<li class="pull-left">{{exercise.name}}</li> <a class="col-lg-1" href="" ng-click="showExerciseDetails(exercise)"><msg
-								key="workout.add.exercise.details"></a>
-						<a href="" class="btn btn-danger pull-left btn-xs" ng-click="removeExercise(group,exercise)">
-							<span class="glyphicon glyphicon-remove"></span>
-							<msg key="workout.add.exercise.remove">
-						</a>
-						<br> <br>
-						<div ng-if="exercise.clicked">
-							<div>
-								<i class="glyphicon" ng-class="(exercise.countTime) ? 'glyphicon-ok' : 'glyphicon-remove'"></i>
-								<msg key="workout.add.exercise.measure.time">
-							</div>
-
-							<div>
-								<i class="glyphicon" ng-class="(exercise.countWeight) ? 'glyphicon-ok' : 'glyphicon-remove'"></i>
-								<msg key="workout.add.exercise.measure.weight">
-							</div>
-
-							<div>
-								<i class="glyphicon" ng-class="(exercise.countRepeats) ? 'glyphicon-ok' : 'glyphicon-remove'"></i>
-								<msg key="workout.add.exercise.measure.repeats">
-							</div>
-							
-							<div>
-								<label class="underlined"><msg key="workout.add.exercise.comment"></label>
-								<p class="commentary">{{exercise.comment}}</p>
-							</div>
-
-						</div>
-
+			<div ng-if="group.wod" class="form-group">
+				<p class="col-lg-1 result-label">
+					<msg key="workout.fill.wod" />
+				</p>
+				<div class="form-group">
+					<p class="col-lg-1 result-label">
+						<msg key="workout.fill.time" />
+					</p>
+					<div class="pull-left">
+						<input class="text-result" type="text" ng-model="group.result.time">
 					</div>
 				</div>
-			</ul>
+				<div class="form-group">
+					<p class="col-lg-1 result-label">
+						<msg key="workout.fill.weight" />
+					</p>
+					<div class="pull-left">
+						<input type="text" class="text-result" ng-model="group.result.weight">
+					</div>
+				</div>
+				<div class="form-group">
+					<p class="col-lg-1 result-label">
+						<msg key="workout.fill.repeats" />
+					</p>
+					<div class="pull-left">
+						<input type="text" class="text-result" ng-model="group.result.repeats">
+					</div>
+				</div>
+				<div class="form-group">
+					<p class="col-lg-1 result-label">
+						<msg key="workout.fill.comment" />
+					</p>
+					<div>
+						<textarea class="text-name" ng-model="group.result.comment"/>
+					</div>
+				</div>
+			</div>
+			<div ng-repeat="exercise in group.exercises track by $index">
+				<div>
+					<li class="pull-left"><label>{{exercise.name}}</label></li> <br> <br>
+					<div ng-if="exercise.countTime">
+						<div class="form-group">
+							<p class="col-lg-1 result-label">
+								<msg key="workout.fill.time" />
+							</p>
+							<div class="pull-left">
+								<input class="text-result" type="text" ng-model="exercise.records.record.time">
+							</div>
+						</div>
+					</div>
+					<div ng-if="exercise.countWeight">
+						<div class="form-group">
+							<p class="col-lg-1 result-label">
+								<msg key="workout.fill.weight" />
+
+							</p>
+							<div class="pull-left">
+								<input type="text" class="text-result" ng-model="exercise.records.record.weight">
+							</div>
+						</div>
+					</div>
+					<div ng-if="exercise.countRepeats">
+						<div class="form-group">
+							<p class="col-lg-1 result-label">
+								<msg key="workout.fill.repeats" />
+							</p>
+
+							<div class="pull-left">
+								<input type="text" class="text-result" ng-model="exercise.records.record.repeats">
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<p class="col-lg-1 result-label">
+							<msg key="workout.add.comment" />
+						</p>
+						<div>
+							<textarea class="text-name" />
+						</div>
+					</div>
+					<br> <br> <br>
+				</div>
+			</div>
 			<hr class="padding-hr">
 		</div>
 
 		<div class="form-group">
 			<label class="col-md-3 control-label"></label>
 			<div class="col-md-8">
-				<button type="submit" class="btn btn-primary" ng-disabled="form.$invalid || !isWodSelected() || isMissingExercises()">
+				<button type="submit" class="btn btn-primary" ng-disabled="form.$invalid || isMissingExerciseResult() || isMissingWodResult()">
 					<msg key="save" />
 				</button>
 			</div>

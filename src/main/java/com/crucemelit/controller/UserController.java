@@ -22,12 +22,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.crucemelit.domain.Gender;
+import com.crucemelit.dto.CommentDto;
 import com.crucemelit.dto.EmailDto;
 import com.crucemelit.dto.ExerciseDto;
 import com.crucemelit.dto.GymDto;
 import com.crucemelit.dto.Suggestion;
 import com.crucemelit.dto.UserDto;
 import com.crucemelit.dto.WorkoutDto;
+import com.crucemelit.model.Comment;
 import com.crucemelit.model.User;
 import com.crucemelit.model.Workout;
 import com.crucemelit.service.ExerciseService;
@@ -64,7 +66,7 @@ public class UserController {
 
     @RequestMapping(value = "/gyms")
     public List<GymDto> getGyms() {
-        return gymService.getGymsDto();
+        return gymService.getGymDtos();
     }
 
     @RequestMapping(value = "/gyms/{id}")
@@ -158,18 +160,24 @@ public class UserController {
 
     @RequestMapping(value = "/workouts")
     public List<WorkoutDto> getUserWorkouts() {
-        return userService.getUserWorkoutsDto();
+        return workoutService.getUserWorkoutsDto(userService.getCurrentUser());
     }
 
     @RequestMapping(value = "/workouts", method = RequestMethod.POST)
     public ResponseEntity<String> createWorkout(@RequestBody Workout workout) {
-        userService.createWorkout(workout);
+        userService.createUserWorkout(workout);
+        return new ResponseEntity<String>("Success", HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/workouts/fill", method = RequestMethod.POST)
+    public ResponseEntity<String> fillWorkout(@RequestBody Workout workout) {
+        userService.fillUserWorkout(workout);
         return new ResponseEntity<String>("Success", HttpStatus.OK);
     }
 
     @RequestMapping(value = "/workouts/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<String> deleteWorkout(@PathVariable long id) {
-        userService.deleteWorkout(id);
+    public ResponseEntity<String> deleteWorkoutById(@PathVariable long id) {
+        userService.deleteUserWorkoutById(id);
         return new ResponseEntity<String>("Success", HttpStatus.OK);
     }
 
@@ -180,8 +188,7 @@ public class UserController {
 
     @RequestMapping(value = "/workouts/{id}")
     public WorkoutDto getWorkout(@PathVariable long id) {
-        System.out.println(userService.getWorkoutDto(id).toString());
-        return userService.getWorkoutDto(id);
+        return workoutService.getUserWorkoutDto(id, userService.getCurrentUser());
     }
 
     @RequestMapping(value = "/genders")
@@ -200,12 +207,29 @@ public class UserController {
         return gymService.getPicture(id);
     }
 
+    @RequestMapping(value = "/gym/comments/{id}")
+    public List<CommentDto> getGymComments(@PathVariable long id) {
+        return gymService.getGymComments(id);
+    }
+
     @RequestMapping(value = "/update/user", method = RequestMethod.PUT)
     @SneakyThrows
     public ResponseEntity<String> updateUser(HttpServletRequest req) {
         User user = userService.getCurrentUser();
         objectMapper.readerForUpdating(user).readValue(req.getReader());
         userService.updateUser(user);
+        return new ResponseEntity<String>("Success", HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/comments", method = RequestMethod.POST)
+    public ResponseEntity<Long> createComment(@RequestBody Comment comment) {
+        userService.createUserComment(comment);
+        return new ResponseEntity<Long>(comment.getId(), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/comments/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<String> deleteComment(@PathVariable long id) {
+        userService.deleteUserCommentById(id);
         return new ResponseEntity<String>("Success", HttpStatus.OK);
     }
 

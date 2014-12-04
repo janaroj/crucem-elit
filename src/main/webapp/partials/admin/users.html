@@ -18,7 +18,7 @@
 					<msg key="{{user.gender}}"/>
 				</td>
 				<td data-title="getTranslation('user.gym')" sortable="'gym.name'" filter="{ 'gym.name': 'text' }">
-					<a href="" ng-click="user.gym.id">{{user.gym.name}}</a>
+					<a href="" ng-click="viewGym(user.gym.id)">{{user.gym.name}}</a>
 				</td>
 				<td data-title="getTranslation('user.role')" sortable="'role'" filter="{ 'role': 'select' }" filter-data="roles($column)">
 					{{getTranslation(user.role)}}

@@ -46,4 +46,11 @@ public @Data class Exercise extends BaseEntity {
     @OneToMany(mappedBy = "exercise", fetch = FetchType.LAZY)
     private List<Record> records;
 
+    @Override
+    public String toString() {
+        return "Exercise [id=" + id + ", name=" + name + ", exerciseType=" + exerciseType + ", countTime=" + countTime
+                + ", countWeight=" + countWeight + ", countRepeats=" + countRepeats + ", comment=" + comment
+                + ", records=" + records + "]";
+    }
+
 }

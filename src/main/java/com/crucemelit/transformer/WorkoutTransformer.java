@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.crucemelit.dto.UserDto;
 import com.crucemelit.dto.WorkoutDto;
 import com.crucemelit.model.Workout;
 
@@ -23,6 +24,20 @@ public class WorkoutTransformer {
         List<WorkoutDto> list = new ArrayList<>();
         for (Workout workout : workouts) {
             list.add(transformToDto(workout));
+        }
+        return list;
+    }
+
+    public WorkoutDto transformToDtoWithUserInfo(Workout workout) {
+        WorkoutDto workoutDto = transformToDto(workout);
+        workoutDto.setUser(new UserDto(workout.getUser()));
+        return workoutDto;
+    }
+
+    public List<WorkoutDto> transformToDtoWithUserInfo(List<Workout> workouts) {
+        List<WorkoutDto> list = new ArrayList<>();
+        for (Workout workout : workouts) {
+            list.add(transformToDtoWithUserInfo(workout));
         }
         return list;
     }

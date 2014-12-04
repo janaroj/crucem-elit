@@ -1,5 +1,6 @@
 package com.crucemelit.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import lombok.SneakyThrows;
@@ -20,18 +21,16 @@ import com.crucemelit.domain.Role;
 import com.crucemelit.domain.SuggestionType;
 import com.crucemelit.dto.Suggestion;
 import com.crucemelit.dto.UserDto;
-import com.crucemelit.dto.WorkoutDto;
 import com.crucemelit.exception.CredentialsExpiredException;
 import com.crucemelit.exception.EntityNotFoundException;
 import com.crucemelit.exception.UserAlreadyExistsException;
+import com.crucemelit.model.Comment;
 import com.crucemelit.model.Gym;
 import com.crucemelit.model.User;
 import com.crucemelit.model.Workout;
 import com.crucemelit.repository.UserRepository;
-import com.crucemelit.repository.WorkoutRepository;
 import com.crucemelit.service.UserService;
 import com.crucemelit.transformer.UserTransformer;
-import com.crucemelit.transformer.WorkoutTransformer;
 import com.crucemelit.util.TokenUtils;
 import com.crucemelit.util.Utility;
 
@@ -41,9 +40,6 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private WorkoutRepository workoutRepository;
 
     @Autowired
     private BCryptPasswordEncoder encoder;
@@ -56,9 +52,6 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserTransformer userTransformer;
-
-    @Autowired
-    private WorkoutTransformer workoutTransformer;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -183,11 +176,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<WorkoutDto> getUserWorkoutsDto() {
-        return workoutTransformer.transformToDto(getCurrentUser().getWorkouts());
-    }
-
-    @Override
     public void updateUser(User user) {
         userRepository.saveAndFlush(user);
     }
@@ -249,36 +237,36 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void createWorkout(Workout workout) {
+    public void createUserWorkout(Workout workout) {
         User user = getCurrentUser();
         workout.setGymName(user.getGym().getName());
-        user.addWorkout(workout);
+        // user.addWorkout(workout);
         userRepository.saveAndFlush(user);
     }
 
     @Override
-    public void deleteWorkout(long id) {
+    public void fillUserWorkout(Workout workout) {
         User user = getCurrentUser();
-        Workout workout = getWorkout(id);
-        user.removeWorkout(workout);
-        userRepository.saveAndFlush(user);
-    }
-
-    @Override
-    public Workout getWorkout(long id) {
-        Workout workout = workoutRepository.findOne(id);
-        if (workout == null) {
-            throw new EntityNotFoundException();
+        List<Workout> userWorkouts = user.getWorkouts();
+        Workout targetWorkout = null;
+        for (Workout w : userWorkouts) {
+            if (w.getId() == workout.getId()) {
+                targetWorkout = w;
+                break;
+            }
         }
-        return workout;
+        if (targetWorkout != null) {
+            targetWorkout.setExerciseGroups(workout.getExerciseGroups());
+        }
+        userRepository.saveAndFlush(user);
+
     }
 
     @Override
-    public WorkoutDto getWorkoutDto(long id) {
+    public void deleteUserWorkoutById(long id) {
         User user = getCurrentUser();
-        Workout userWorkout = user.getWorkout(id);
-        WorkoutDto workout = workoutTransformer.transformToDtoWithExerciseGroups(userWorkout);
-        return workout;
+        user.removeWorkout(id);
+        userRepository.saveAndFlush(user);
     }
 
     @Override
@@ -296,5 +284,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(long id) {
         userRepository.delete(id);
+    }
+
+    @Override
+    public void createUserComment(Comment comment) {
+        comment.setDate(new Date());
+        User user = getCurrentUser();
+        user.addComment(comment);
+        userRepository.saveAndFlush(user);
+    }
+
+    @Override
+    public void deleteUserCommentById(long id) {
+        User user = getCurrentUser();
+        user.removeComment(id);
+        userRepository.saveAndFlush(user);
     }
 }

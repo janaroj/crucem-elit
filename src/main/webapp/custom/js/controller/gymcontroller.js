@@ -99,7 +99,7 @@
 
 	});
 
-	app.controller('GymController', function($scope, $routeParams, gymService, toaster) {
+	app.controller('GymController', function($scope, $routeParams, $location, gymService, userService, toaster) {
 		$scope.init = function() {
 			gymService.getGymById($routeParams.id).then(function(result) {
 				$scope.gym = result.data;
@@ -109,7 +109,32 @@
 
 			gymService.getGymPicture($routeParams.id).then(function(result) {
 				$scope.imageSrc = (!result.data) ? getDefaultImageSrc() : "data:image/png;base64," + result.data;
+			}, function(result) {
+				toaster.pop('error', 'Gym Picture' , result.data.message);
 			});
+			
+			gymService.getComments($routeParams.id).then(function(result) {
+				$scope.comments = result.data;
+			}, function(result) {
+				toaster.pop('error', 'Gym comments' , result.data.message);
+			});
+		};
+		
+		$scope.pictures = {};
+
+		$scope.getPicture = function(id, gender) {
+			if (!$scope.pictures[id]) {
+				userService.getProfilePicture(id).then(function(result) {
+					$scope.pictures[id] = (!result.data) ? getDefaultUserImageSrc(gender) : "data:image/png;base64," + result.data;
+				}, 
+				function(result) {
+					toaster.pop('error', 'Contact Picture' , result.data.message);
+				});
+			}
+		};
+
+		var getDefaultUserImageSrc = function(gender) {
+			return (gender === 'FEMALE') ? '../../images/jane_doe_test.png' : '../../images/john_doe_test.png';
 		};
 
 		var getDefaultImageSrc = function() {
@@ -125,6 +150,45 @@
 					toaster.pop('error', 'Upload', 'Uploading file failed');
 				});
 			}
+		};
+		
+		$scope.refreshComments = function() {
+			gymService.getComments($routeParams.id).then(function(result) {
+				$scope.comments = result.data;
+			}, function(result) {
+				toaster.pop('error', 'Gym comments' , result.data.message);
+			});
+		};
+		
+		$scope.createComment = function() {
+			$scope.comment.gym = $scope.gym;
+			userService.createComment($scope.comment).then(function(result) {
+				$scope.comment.id = result.data;
+				$scope.comment.user = $scope.user;
+				$scope.comment.date = Date.parse(new Date());
+				$scope.comments.push($scope.comment);
+				$scope.comment = null;
+				toaster.pop('success', 'Comment' , 'Comment created successfully');
+			}, 
+			function(result) {
+				toaster.pop('error', 'Comment' , result.data.message);
+			});
+		};
+		
+		$scope.deleteComment = function(comment) {
+			if (confirm("Are you sure you wish to delete this comment?")) {
+				userService.deleteComment(comment.id).then(function(result) {
+					$scope.comments.splice( $scope.comments.indexOf(comment), 1 );
+					toaster.pop('success', 'Comment' , 'Comment deleted successfully');
+				}, 
+				function(result) {
+					toaster.pop('error', 'Comment' , result.data.message);
+				});
+			}
+		};
+		
+		$scope.viewUser = function(id) {
+			$location.path('/user/contacts/' + id);
 		};
 	});
 

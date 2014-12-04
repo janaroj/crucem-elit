@@ -14,19 +14,25 @@
 			$location.path('/user/contacts/' + id);
 		};
 		
+		$scope.viewGym = function(id) {
+			$location.path('/user/gyms/' + id);
+		};
+		
 		$scope.removeFriend = function(friend) {
-			userService.removeFriend(friend.id).then(
-				function(data) {
-					$rootScope.removeFriend(friend.id);
-					if (friend.gym.id !== $scope.user.gym.id) {
-						$scope.contacts.splice( $scope.contacts.indexOf(friend), 1 );
+			if (confirm("Are you sure you wish to remove " + friend.name + " from friend list?")) {
+				userService.removeFriend(friend.id).then(
+					function(data) {
+						$rootScope.removeFriend(friend.id);
+						if (friend.gym.id !== $scope.user.gym.id) {
+							$scope.contacts.splice( $scope.contacts.indexOf(friend), 1 );
+						}
+						toaster.pop('success', 'Friend', 'Friend removed successfully!');
+					},
+					function(data) {
+						toaster.pop('error', 'Friend', data.result.message);
 					}
-					toaster.pop('success', 'Friend', 'Friend removed successfully!');
-				},
-				function(data) {
-					toaster.pop('error', 'Friend', data.result.message);
-				}
-			);
+				);
+			}
 		};
 
 		$scope.pictures = {};
@@ -46,7 +52,7 @@
 
 	});
 
-	app.controller('ContactController', function($scope, $routeParams, $location, userService, toaster) {
+	app.controller('ContactController', function($scope, $rootScope, $routeParams, $location, userService, toaster) {
 		$scope.isChangeable = false;
 		$scope.isChangeInProgress = false;
 		$scope.isProfileLoaded = false;
@@ -160,6 +166,18 @@
 		
 		$scope.viewGym = function(id) {
 			$location.path('/user/gyms/' + id);
+		};
+		
+		$scope.removeFriend = function(friend) {
+			userService.removeFriend(friend.id).then(
+				function(data) {
+					$rootScope.removeFriend(friend.id);
+					toaster.pop('success', 'Friend', 'Friend removed successfully!');
+				},
+				function(data) {
+					toaster.pop('error', 'Friend', data.result.message);
+				}
+			);
 		};
 
 	});

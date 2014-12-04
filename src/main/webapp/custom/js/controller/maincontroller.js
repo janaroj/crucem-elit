@@ -29,6 +29,10 @@
 			});
 		};	
 		
+		$scope.newWorkout = function() {
+			$location.path('/user/workout/add');
+		}
+		
 	});
 	
 }());
