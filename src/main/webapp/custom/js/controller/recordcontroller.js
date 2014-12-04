@@ -67,7 +67,9 @@
 
 
 	app.controller('RecordController', function($scope, $routeParams, $location, userService, workoutService, toaster) {
-		$scope.workout = null;
+		$scope.workout = {};
+		$scope.workout.exerciseGroups = [];
+		$scope.workout.exerciseGroups.exercises = [];
 		$scope.init = function() {
 			userService.getWorkout($routeParams.id).then(function(result) {
 				$scope.workout = result.data;
@@ -75,26 +77,32 @@
 				toaster.pop('error', 'Workout' , result.data.message);
 			});
 		};
-		
-		$scope.saveFilledWorkout = function() {
-        	userService.addWorkout($scope.workout).then(
-        	  function(result) {
-        		  $location.path('/user/workouts');
-        		  toaster.pop('success', 'Workout' , 'Workout added successfully');
-        	  },
-        	  function(result) {
-        		  toaster.pop('error', 'Workout' , result.data.message);
-        	  }
-        	);
-        };
 
-		$scope.isMissingWodResult = function(){
+		$scope.saveFilledWorkout = function() {
+			if (!isMissingWodResult() && !isMissingExerciseResult()){
+				userService.addWorkout($scope.workout).then(
+						function(result) {
+							$location.path('/user/workouts');
+							toaster.pop('success', 'Workout' , 'Workout finished');
+						},
+						function(result) {
+							toaster.pop('error', 'Workout' , result.data.message);
+						}
+				);
+			}
+			else {
+				toaster.pop('error', 'Submit unsuccessful', 'Insert at least one result for every exercise!');
+			}
+		};
+
+		var isMissingWodResult = function(){
 			for (var i=0;i<$scope.workout.exerciseGroups.length;i++){
-				if ($scope.workout.exerciseGroups[i].wod) {
-					if ($scope.workout.exerciseGroups[i].result.time == 'null' & 
-							$scope.workout.exerciseGroups[i].result.weight == 'null' &
-							$scope.workout.exerciseGroups[i].result.repeats == 'null' &
-							$scope.workout.exerciseGroups[i].result.comment == 'null') {
+				var group = $scope.workout.exerciseGroups[i];
+				if (group.wod) {
+
+					if ( !group.record ||  !group.record.time && 
+							!group.record.weight &&
+							!group.record.repeats) {
 						return true;
 					}
 					return false;
@@ -102,15 +110,13 @@
 			}
 			return false;
 		};
-		
-		$scope.isMissingExerciseResult = function() {
+
+		var isMissingExerciseResult = function() {
 			for (var i = 0; i < $scope.workout.exerciseGroups.length; i++) {
 				for (var u = 0; u<$scope.workout.exerciseGroups[i].exercises.length; u++) {
-					for (var c = 0; c<$scope.workout.exerciseGroups.exercises[u].records.length; c++) {
-						if ($scope.workout.exerciseGroups[i].exercises[u].records[c].time == 'null' & 
-								$scope.workout.exerciseGroups[i].exercises[u].records[c].weight == 'null' &
-								$scope.workout.exerciseGroups[i].exercises[u].records[c].repeats == 'null' &
-								$scope.workout.exerciseGroups[i].exercises[u].records[c].comment == 'null') {
+					var exercise = $scope.workout.exerciseGroups[i].exercises[u];
+					if (exercise.countWeight || exercise.countTime || exercise.countRepeats){
+						if (!exercise.record || !exercise.record.time  && !record.weight && !record.repeats) {
 							return true;
 						}
 					}

@@ -23,7 +23,7 @@
 						<msg key="workout.fill.time" />
 					</p>
 					<div class="pull-left">
-						<input class="text-result" type="text" ng-model="group.result.time">
+						<input class="text-result" type="number" step="0.01" ng-model="group.record.time">
 					</div>
 				</div>
 				<div class="form-group">
@@ -31,7 +31,7 @@
 						<msg key="workout.fill.weight" />
 					</p>
 					<div class="pull-left">
-						<input type="text" class="text-result" ng-model="group.result.weight">
+						<input type="number" step="0.01" class="text-result" ng-model="group.record.weight">
 					</div>
 				</div>
 				<div class="form-group">
@@ -39,7 +39,7 @@
 						<msg key="workout.fill.repeats" />
 					</p>
 					<div class="pull-left">
-						<input type="text" class="text-result" ng-model="group.result.repeats">
+						<input type="number" step="0.01" class="text-result" ng-model="group.record.repeats">
 					</div>
 				</div>
 				<div class="form-group">
@@ -47,7 +47,7 @@
 						<msg key="workout.fill.comment" />
 					</p>
 					<div>
-						<textarea class="text-name" ng-model="group.result.comment"/>
+						<textarea class="text-name" ng-model="group.record.comment"/>
 					</div>
 				</div>
 			</div>
@@ -60,7 +60,7 @@
 								<msg key="workout.fill.time" />
 							</p>
 							<div class="pull-left">
-								<input class="text-result" type="text" ng-model="exercise.records.record.time">
+								<input class="text-result" type="number" step="0.01" ng-model="exercise.record.time">
 							</div>
 						</div>
 					</div>
@@ -71,7 +71,7 @@
 
 							</p>
 							<div class="pull-left">
-								<input type="text" class="text-result" ng-model="exercise.records.record.weight">
+								<input type="number" step="0.01" class="text-result" ng-model="exercise.record.weight">
 							</div>
 						</div>
 					</div>
@@ -82,7 +82,7 @@
 							</p>
 
 							<div class="pull-left">
-								<input type="text" class="text-result" ng-model="exercise.records.record.repeats">
+								<input type="number" step="0.01" class="text-result" ng-model="exercise.record.repeats">
 							</div>
 						</div>
 					</div>
@@ -91,7 +91,7 @@
 							<msg key="workout.add.comment" />
 						</p>
 						<div>
-							<textarea class="text-name" />
+							<textarea class="text-name" ng-model="exercise.record.comment"/>
 						</div>
 					</div>
 					<br> <br> <br>
@@ -103,7 +103,7 @@
 		<div class="form-group">
 			<label class="col-md-3 control-label"></label>
 			<div class="col-md-8">
-				<button type="submit" class="btn btn-primary" ng-disabled="form.$invalid || isMissingExerciseResult() || isMissingWodResult()">
+				<button type="submit" class="btn btn-primary" ng-disabled="form.$invalid">
 					<msg key="save" />
 				</button>
 			</div>

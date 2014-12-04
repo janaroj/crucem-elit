@@ -5,7 +5,6 @@ import java.util.List;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import com.crucemelit.model.Exercise;
 import com.crucemelit.model.ExerciseGroup;
 import com.crucemelit.model.Record;
 
@@ -16,7 +15,7 @@ public @Data class ExerciseGroupDto {
 
     private String name;
 
-    private List<Exercise> exercises;
+    private List<ExerciseDto> exercises;
 
     private boolean wod;
 
@@ -26,11 +25,6 @@ public @Data class ExerciseGroupDto {
         if (exerciseGroup != null) {
             this.id = exerciseGroup.getId();
             this.name = exerciseGroup.getName();
-            this.exercises = exerciseGroup.getExercises();
-            System.out.println("##############################################");
-            for (Exercise e : this.exercises) {
-                System.out.println(e.toString());
-            }
             this.wod = exerciseGroup.isWod();
             this.record = exerciseGroup.getRecord();
         }
