@@ -40,6 +40,18 @@
 			return false;
 		};
 		
+		$rootScope.removeGym = function() {
+			var user = $cookieStore.get('user');
+			user.gym = null;
+			$cookieStore.put('user', user);
+		};
+		
+		$rootScope.addGym = function(gym) {
+			var user = $cookieStore.get('user');
+			user.gym = gym;
+			$cookieStore.put('user', user);
+		}
+		
 		$rootScope.removeFriend = function(id) {
 			friends =  $filter('filter')(friends, {id: id}, function (obj, test) { return obj !== test; });
 			$cookieStore.put('friends', friends);
@@ -129,7 +141,7 @@
 					event.preventDefault();
 					$timeout(function(){$location.path("/user/main");});
 				}
-				else if ( $location.url().replace("/user/gyms/", "") > 0 && !user.gym) {
+				else if ( $location.url().replace("/user/gyms/", "").length > 0 && user.gym.id === 0) {
 					event.preventDefault();
 					$timeout(function(){$location.path("/user/gyms/");});
 				}

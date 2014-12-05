@@ -41,6 +41,7 @@
 			if (confirm($rootScope.getTranslation('join.new.gym.confirm') + " " + gym.name)) {
 				userService.joinGym(gym.id).then(function() {
 					$scope.user.gym = gym;
+					$rootScope.addGym(gym);
 					toaster.pop('success', $rootScope.getTranslation('gyms'), $rootScope.getTranslation('gym.joined.successfully'));
 				}, function(result) {
 					toaster.pop('error', $rootScope.getTranslation('gyms'), result.data.message);
@@ -52,6 +53,7 @@
 			if (confirm($rootScope.getTranslation('leave.gym.confirm') + " " + gym.name )) {
 				userService.leaveGym().then(function() {
 					$scope.user.gym = null;
+					$rootScope.removeGym();
 					toaster.pop('success', $rootScope.getTranslation('gyms'), $rootScope.getTranslation('gym.left.successfully'));
 				}, function(result) {
 					toaster.pop('error', $rootScope.getTranslation('gyms'), result.data.message);

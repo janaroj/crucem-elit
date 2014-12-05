@@ -57,7 +57,7 @@ public class ErrorController {
     @ResponseBody
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ServerException unknownError(Exception e) throws ServerException {
-        String error = "Unknown error occurred.";
+        String error = "unknown.error";
 
         if (e != null) {
             if (StringUtils.hasText(e.getMessage())) {
