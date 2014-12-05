@@ -141,7 +141,7 @@
 					event.preventDefault();
 					$timeout(function(){$location.path("/user/main");});
 				}
-				else if ( $location.url().replace("/user/gyms/", "").length > 0 && user.gym.id === 0) {
+				else if ( $location.url().indexOf("/user/gyms/") > -1 && $location.url().replace("/user/gyms/", "").length > 0 && user.gym.id === 0) {
 					event.preventDefault();
 					$timeout(function(){$location.path("/user/gyms/");});
 				}
