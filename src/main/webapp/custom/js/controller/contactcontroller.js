@@ -6,7 +6,7 @@
 			userService.getContacts().then(function(result) {
 				$scope.contacts = result.data;
 			}, function(result) {
-				toaster.pop('error', 'Contacts' , result.data.message);
+				toaster.pop('error', $rootScope.getTranslation('contacts'), result.data.message);
 			});
 		};
 
@@ -19,17 +19,17 @@
 		};
 		
 		$scope.removeFriend = function(friend) {
-			if (confirm("Are you sure you wish to remove " + friend.name + " from friend list?")) {
+			if (confirm($rootScope.getTranslation('remove.from.friends.list')  + " " + friend.name)) {
 				userService.removeFriend(friend.id).then(
 					function(data) {
 						$rootScope.removeFriend(friend.id);
 						if (friend.gym.id !== $scope.user.gym.id) {
 							$scope.contacts.splice( $scope.contacts.indexOf(friend), 1 );
 						}
-						toaster.pop('success', 'Friend', 'Friend removed successfully!');
+						toaster.pop('success', $rootScope.getTranslation('friend'), $rootScope.getTranslation('friend.removed.successfully'));
 					},
 					function(data) {
-						toaster.pop('error', 'Friend', data.result.message);
+						toaster.pop('error', $rootScope.getTranslation('friend'), data.result.message);
 					}
 				);
 			}
@@ -42,7 +42,7 @@
 				$scope.pictures[id] = (!result.data) ? getDefaultImageSrc(gender) : "data:image/png;base64," + result.data;
 			}, 
 			function(result) {
-				toaster.pop('error', 'Contact' , result.data.message);
+				toaster.pop('error', $rootScope.getTranslation('contact'), result.data.message);
 			});
 		};
 
@@ -66,7 +66,7 @@
 					getProfileImage();
 					$scope.isProfileLoaded = true;
 				}, function(result) {
-					toaster.pop('error', 'Contact' , result.data.message);
+					toaster.pop('error', $rootScope.getTranslation('contact'), result.data.message);
 				});
 			}
 			else {
@@ -76,7 +76,7 @@
 					getProfileImage();
 					$scope.isProfileLoaded = true;
 				}, function(result) {
-					toaster.pop('error', 'Contact' , result.data.message);
+					toaster.pop('error', $rootScope.getTranslation('contact'), result.data.message);
 				});
 			}
 
@@ -87,7 +87,7 @@
 					function(result) {
 						$scope.imageSrc = (!result.data) ? getDefaultImageSrc() : "data:image/png;base64," + result.data;
 					},  
-					function(result) { toaster.pop('error', 'Contact' , result.data.message); }
+					function(result) { toaster.pop('error', $rootScope.getTranslation('contact'), result.data.message); }
 			);
 		};
 
@@ -119,10 +119,10 @@
 				}
 				angular.extend(createUserDTO($scope.contact), $scope.user);
 				$scope.toggleProfileChange();
-				toaster.pop('success', 'Contact' , 'Updated successfully');
+				toaster.pop('success', $rootScope.getTranslation('contact'), $rootScope.getTranslation('updated.successfully'));
 			}, 
 			function(result) {
-				toaster.pop('error', 'Contact' , result.data.message);
+				toaster.pop('error', $rootScope.getTranslation('contact'), result.data.message);
 			});
 
 		};
@@ -157,9 +157,9 @@
 				userService.uploadProfilePicture($files[0]).then(
 						function(result) {
 							$scope.imageSrc = "data:image/png;base64," + result.data;
-							toaster.pop('success', 'Contact', 'File uploaded successfully!');
+							toaster.pop('success', $rootScope.getTranslation('contact'), $rootScope.getTranslation('file.uploaded.successfully'));
 						}, 
-						function(result) {toaster.pop('error', 'Upload', 'Uploading file failed');}
+						function(result) {toaster.pop('error', $rootScope.getTranslation('upload'), $rootScope.getTranslation('file.upload.failed'));}
 				);
 			}
 		};
@@ -169,14 +169,14 @@
 		};
 		
 		$scope.removeFriend = function(friend) {
-			if (confirm("Are you sure you wish to remove " + friend.name + " from friend list?")) {
+			if (confirm($rootScope.getTranslation('remove.from.friends.list')  + " " + friend.name)) {
 				userService.removeFriend(friend.id).then(
 					function(data) {
 						$rootScope.removeFriend(friend.id);
-						toaster.pop('success', 'Friend', 'Friend removed successfully!');
+						toaster.pop('success', $rootScope.getTranslation('friend'), $rootScope.getTranslation('friend.removed.successfully'));
 					},
 					function(data) {
-						toaster.pop('error', 'Friend', data.result.message);
+						toaster.pop('error', $rootScope.getTranslation('friend'), data.result.message);
 					}
 				);
 			}

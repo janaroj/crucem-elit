@@ -1,7 +1,7 @@
 (function() {
 	var app = angular.module('crucem-elit');
 
-	app.controller('WorkoutsController', function($scope, $location, $filter, $timeout, userService, ngTableParams, toaster) {
+	app.controller('WorkoutsController', function($scope, $rootScope, $location, $filter, $timeout, userService, ngTableParams, toaster) {
 		var newWorkoutData = [];
 		var doneWorkoutData = [];
 		$scope.doneTableLoading = true;
@@ -39,7 +39,7 @@
 					}
 				});
 			}, function(result) {
-				toaster.pop('error', 'Workouts' , result.data.message);
+				toaster.pop('error', $rootScope.getTranslation('workouts'), result.data.message);
 			});
 		};
 		
@@ -52,21 +52,21 @@
 		};
 		
 		$scope.deleteWorkout = function(workout) {
-			if (confirm("Are you sure you wish to delete " + workout.name )) {
+			if (confirm($rootScope.getTranslation('delete.workout.confirm') + " " + workout.name )) {
 				userService.deleteWorkout(workout.id).then(function() {
 					newWorkoutData.splice( newWorkoutData.indexOf(workout), 1 );
 					$scope.tableParams1.reload();
-					toaster.pop('success', 'Workout' , 'Workout deleted successfully');
+					toaster.pop('success', $rootScope.getTranslation('workout'), $rootScope.getTranslation('workout.deleted.successfully'));
 				}, 
 				function(result) {
-					toaster.pop('error', 'Workout', result.data.message);
+					toaster.pop('error', $rootScope.getTranslation('workout'), result.data.message);
 				});
 			}
 		};
 
 	});
 
-	app.controller('WorkoutController', function($scope, $modal, $location, $timeout, userService, exerciseService, toaster) {
+	app.controller('WorkoutController', function($scope, $rootScope, $modal, $location, $timeout, userService, exerciseService, toaster) {
 
 		$scope.open = function($event) {
 			$event.preventDefault();
@@ -84,10 +84,10 @@
         	userService.addWorkout($scope.workout).then(
         	  function(result) {
         		  $location.path('/user/workouts');
-        		  toaster.pop('success', 'Workout' , 'Workout added successfully');
+        		  toaster.pop('success', $rootScope.getTranslation('workout'), $rootScope.getTranslation('workout.added.successfully'));
         	  },
         	  function(result) {
-        		  toaster.pop('error', 'Workout' , result.data.message);
+        		  toaster.pop('error', $rootScope.getTranslation('workout'), result.data.message);
         	  }
         	);
         }
@@ -129,7 +129,7 @@
 				  exercises = result.data;
 			  },
 			  function(result) {
-				  toaster.pop('error', 'Exercises' , result.data.message);
+				  toaster.pop('error', $rootScope.getTranslation('exercises'), result.data.message);
 			  }
 			);
 		
