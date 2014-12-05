@@ -167,6 +167,11 @@ public class UserController {
         return workoutService.getUserWorkoutsDto(userService.getCurrentUser());
     }
 
+    @RequestMapping(value = "/workouts/upcoming")
+    public List<WorkoutDto> getUpcomingUserWorkouts() {
+        return workoutService.getUserUpcomingWorkoutsDto(userService.getCurrentUser());
+    }
+
     @RequestMapping(value = "/workouts", method = RequestMethod.POST)
     public ResponseEntity<String> createWorkout(@RequestBody Workout workout) {
         userService.createUserWorkout(workout);
