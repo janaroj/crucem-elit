@@ -175,6 +175,15 @@ public class UserController {
         return new ResponseEntity<String>("Success", HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/workouts/{id}", method = RequestMethod.PUT)
+    @SneakyThrows
+    public ResponseEntity<String> updateWorkout(@PathVariable long id, HttpServletRequest req) {
+        Workout workout = workoutService.getWorkoutById(id);
+        objectMapper.readerForUpdating(workout).readValue(req.getReader());
+        workoutService.updateWorkout(workout);
+        return new ResponseEntity<String>("Success", HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/workouts/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<String> deleteWorkoutById(@PathVariable long id) {
         userService.deleteUserWorkoutById(id);

@@ -239,7 +239,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public void createUserWorkout(Workout workout) {
         User user = getCurrentUser();
-        workout.setGymName(user.getGym().getName());
+        if (user.getGym() != null) {
+            workout.setGymName(user.getGym().getName());
+        }
+        else {
+            workout.setGymName("gymless");
+        }
         user.addWorkout(workout);
         userRepository.saveAndFlush(user);
     }

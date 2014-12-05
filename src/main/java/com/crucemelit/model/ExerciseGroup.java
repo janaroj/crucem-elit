@@ -2,6 +2,7 @@ package com.crucemelit.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -24,7 +25,7 @@ import lombok.ToString;
 @Table(name = "EXCERCISEGROUP")
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-@ToString(of = { "id", "name", "wod" })
+@ToString(of = { "id", "name", "wod", "record" })
 public @Data class ExerciseGroup extends BaseEntity {
 
     @Id
@@ -44,7 +45,7 @@ public @Data class ExerciseGroup extends BaseEntity {
 
     private boolean wod;
 
-    @OneToOne(mappedBy = "exerciseGroup", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "exerciseGroup", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Record record;
 
 }

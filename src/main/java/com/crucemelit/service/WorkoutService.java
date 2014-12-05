@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.crucemelit.dto.WorkoutDto;
 import com.crucemelit.model.User;
+import com.crucemelit.model.Workout;
 
 public interface WorkoutService {
 
@@ -12,5 +13,9 @@ public interface WorkoutService {
     WorkoutDto getUserWorkoutDto(long id, User user);
 
     List<WorkoutDto> getUserWorkoutsDto(User user);
+
+    void updateWorkout(Workout workout);
+
+    Workout getWorkoutById(long id);
 
 }

@@ -79,8 +79,11 @@
 		};
 
 		$scope.saveFilledWorkout = function() {
-			if (!isMissingWodResult() && !isMissingExerciseResult()){
-				userService.addWorkout($scope.workout).then(
+			if (!isMissingWodResult()){
+				$scope.workout.completed = true;
+				delete $scope.workout.user;
+				delete $scope.workout.result; //Tee dto hiljem
+				workoutService.updateWorkout($scope.workout).then(
 						function(result) {
 							$location.path('/user/workouts');
 							toaster.pop('success', 'Workout' , 'Workout finished');
