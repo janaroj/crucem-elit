@@ -7,7 +7,7 @@
 
     
 
-<div class="container">
+<div ng-init="init()" class="container">
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-10 col-lg-10 col-xs-offset-0 col-sm-offset-0 col-md-offset-1 col-lg-offset-1 toppad">
 				<div class="panel panel-info">
@@ -18,30 +18,10 @@
 						<div class="row">
 							<table class="table table-user-information">
 								<tbody>
-									<tr>
-										<td class="mainTable">Treeningu nimi</td>
-                                        <td> WOD NIMI </td>
-                                        <td>12.12.2014</td>
-									</tr>
-                                    <tr>
-										<td class="mainTable">Treeningu nimi</td>
-                                        <td> WOD NIMI </td>
-                                        <td>12.12.2014</td>
-									</tr>
-                                    <tr>
-										<td class="mainTable">Treeningu nimi</td>
-                                        <td> WOD NIMI </td>
-                                        <td>12.12.2014</td>
-									</tr>
-                                    <tr>
-										<td class="mainTable">Treeningu nimi</td>
-                                        <td> WOD NIMI </td>
-                                        <td>12.12.2014</td>
-									</tr>
-                                    <tr>
-										<td class="mainTable">Treeningu nimi</td>
-                                        <td> WOD NIMI </td>
-                                        <td>12.12.2014</td>
+									<tr ng-repeat="workout in workouts">
+										<td class="mainTable">{{workout.name}}</td>
+                                        <td> {{workout.wod}}</td>
+                                        <td> {{workout.date}}</td>
 									</tr>
 								</tbody>
 							</table>

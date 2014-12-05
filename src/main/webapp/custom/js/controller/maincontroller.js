@@ -1,6 +1,13 @@
 (function() {
 	var app = angular.module('crucem-elit');
-	app.controller('MainController', function($scope, $rootScope, i18n, $location, emailService, toaster) {
+	app.controller('MainController', function($scope, $rootScope, i18n, $location, emailService, userService, toaster) {
+		$scope.init = function() {
+			userService.getUpcomingWorkouts().then(function(result) {
+				$scope.workouts=result.data;
+				}, function(result) {
+				toaster.pop('error', $rootScope.getTranslation('workouts'), result.data.message);
+			});
+		};
 		
 		$scope.mainImgSrc = '../images/cf.jpg';
 		

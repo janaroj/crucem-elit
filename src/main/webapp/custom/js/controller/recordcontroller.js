@@ -62,6 +62,19 @@
 			});
 			return def;
 		};
+		
+		$scope.deleteResult = function(record) {
+			if (confirm("Are you sure you wish to delete " + record.name + " result?")) {
+				userService.deleteResult(record.id).then(function() {
+					recordData.splice( recordData.indexOf(record), 1 );
+					$scope.tableParams.reload();
+					toaster.pop('success', 'Record' , 'Result deleted successfully');
+				}, 
+				function(result) {
+					toaster.pop('error', 'Record', result.data.message);
+				});
+			}
+		};
 
 	});
 

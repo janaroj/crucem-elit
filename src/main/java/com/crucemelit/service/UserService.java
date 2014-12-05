@@ -62,4 +62,6 @@ public interface UserService extends UserDetailsService, SearchService, PictureS
 
     void deleteUserCommentById(long id);
 
+    void deleteUserRecordById(long id);
+
 }

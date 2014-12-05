@@ -29,6 +29,8 @@ public @Data class WorkoutDto {
 
     private List<ExerciseGroupDto> exerciseGroups;
 
+    private Boolean completed;
+
     public WorkoutDto(Workout workout) {
         if (workout != null) {
             this.id = workout.getId();
@@ -38,6 +40,7 @@ public @Data class WorkoutDto {
             this.gym = workout.getGymName();
             this.wod = workout.getWod().getName();
             this.result = workout.getResult();
+            this.completed = workout.getCompleted();
         }
     }
 
