@@ -4,7 +4,7 @@
 		<h2 class="pull-left">
 			<msg key="workout.pending" />
 		</h2>
-		<button class="btn btn-add btn-success pull-right pull-down" ng-click="newWorkout()">
+		<button class="btn btn-add btn-success pull-right pull-down clearFilter" ng-click="newWorkout()">
 			<i class="glyphicon-plus-sign glyphicon"></i>
 			<msg key="new.workout">
 		</button>
@@ -12,6 +12,7 @@
 </div>
 
 <div loading-container="newTableLoading">
+	<button ng-click="tableParams1.filter({})" class="btn btn-default pull-right"><msg key="clear.filter"/></button>
 	<table ng-table="tableParams1" show-filter="true" class="table">
 		<tbody>
 			<tr ng-repeat="workout in $data">
@@ -37,6 +38,7 @@
 </div>
 
 <div loading-container="doneTableLoading">
+	<button ng-click="tableParams2.filter({})" class="btn btn-default pull-right clearFilter"><msg key="clear.filter"/></button>
 	<table ng-table="tableParams2" show-filter="true" class="table">
 		<tbody>
 			<tr ng-repeat="workout in $data">
