@@ -1,7 +1,7 @@
 (function() {
 	var app = angular.module('crucem-elit');
 
-	app.controller('GymsController', function($scope, $location, $filter, gymService, userService, ngTableParams, toaster) {
+	app.controller('GymsController', function($scope, $rootScope, $location, $filter, gymService, userService, ngTableParams, toaster) {
 		var gymData = null;
 		var tempData = null;
 		$scope.tableParams = new ngTableParams({
@@ -19,7 +19,7 @@
 						tempData = angular.copy(gymData);
 						ui.util.table.prepareData($defer, $filter, params, gymData);
 					}, function(result) {
-						toaster.pop('error', 'Gyms' , result.data.message);
+						toaster.pop('error', $rootScope.getTranslation('gyms'), result.data.message);
 					});
 				}
 				else {
@@ -38,23 +38,23 @@
 		};
 
 		$scope.joinGym = function(gym) {
-			if (confirm("Are you sure you wish to join " + gym.name + "? This will remove you from your current gym")) {
+			if (confirm($rootScope.getTranslation('join.new.gym.confirm') + " " + gym.name)) {
 				userService.joinGym(gym.id).then(function() {
 					$scope.user.gym = gym;
-					toaster.pop('success', 'Gym', 'Joined gym successfully!');
+					toaster.pop('success', $rootScope.getTranslation('gyms'), $rootScope.getTranslation('gym.joined.successfully'));
 				}, function(result) {
-					toaster.pop('error', 'Gyms' , result.data.message);
+					toaster.pop('error', $rootScope.getTranslation('gyms'), result.data.message);
 				}) ;
 			}
 		};
 
 		$scope.leaveGym = function(gym) {
-			if (confirm("Are you sure you wish to leave from " + gym.name )) {
+			if (confirm($rootScope.getTranslation('leave.gym.confirm') + " " + gym.name )) {
 				userService.leaveGym().then(function() {
 					$scope.user.gym = null;
-					toaster.pop('success', 'Gym', 'Left from gym successfully!');
+					toaster.pop('success', $rootScope.getTranslation('gyms'), $rootScope.getTranslation('gym.left.successfully'));
 				}, function(result) {
-					toaster.pop('error', 'Gym' , result.data.message);
+					toaster.pop('error', $rootScope.getTranslation('gyms'), result.data.message);
 				});
 			}
 		};
@@ -68,25 +68,25 @@
 		};
 
 		$scope.deleteGym = function(gym) {
-			if (confirm("Are you sure you wish to delete " + gym.name )) {
+			if (confirm($rootScope.getTranslation('delete.gym.confirm')+ " " + gym.name )) {
 				gymService.deleteGym(gym.id).then(function() {
 					gymData.splice( gymData.indexOf(gym), 1 );
 					$scope.tableParams.reload();
-					toaster.pop('success', 'Gym' , 'Gym deleted successfully');
+					toaster.pop('success', $rootScope.getTranslation('gyms'), $rootScope.getTranslation('gym.deleted.successfully'));
 				}, 
 				function(result) {
-					toaster.pop('error', 'Gym', result.data.message);
+					toaster.pop('error', $rootScope.getTranslation('gyms'), result.data.message);
 				});
 			}
 		};
 		
 		$scope.updateGym = function(gym) {
 			gymService.updateGym(gym).then(function(){
-				toaster.pop('success', 'Gym' , 'Gym updated successfully');
+				toaster.pop('success',  $rootScope.getTranslation('gyms'), $rootScope.getTranslation('gym.updated.successfully'));
 				tempData[tempData.indexOf($filter("filter")(tempData, {id : gym.id}, true)[0])] = angular.copy(gym);
 				gym.$edit = false;
 			}, function(result) {
-				toaster.pop('error', 'Gym', result.data.message);
+				toaster.pop('error',  $rootScope.getTranslation('gyms'), result.data.message);
 				$scope.cancelEdit(gym);
 			});
 		};
@@ -100,25 +100,25 @@
 
 	});
 
-	app.controller('GymController', function($scope, $routeParams, $location, gymService, userService, toaster) {
+	app.controller('GymController', function($scope, $rootScope, $routeParams, $location, gymService, userService, toaster) {
 		$scope.init = function() {
 			gymService.getGymById($routeParams.id).then(function(result) {
 				$scope.gym = result.data;
 			}, function(result) {
-				toaster.pop('error', 'Gym' , result.data.message);
+				toaster.pop('error', $rootScope.getTranslation('gyms'), result.data.message);
 			});
 
 			gymService.getGymPicture($routeParams.id).then(function(result) {
 				$scope.imageSrc = (!result.data) ? getDefaultImageSrc() : "data:image/png;base64," + result.data;
 			}, function(result) {
-				toaster.pop('error', 'Gym Picture' , result.data.message);
+				toaster.pop('error', $rootScope.getTranslation('gym.picture'), result.data.message);
 			});
 			
 			gymService.getComments($routeParams.id).then(function(result) {
 				$scope.commentQuantity = 5;
 				$scope.comments = result.data;
 			}, function(result) {
-				toaster.pop('error', 'Gym comments' , result.data.message);
+				toaster.pop('error', $rootScope.getTranslation('gym.comments'), result.data.message);
 			});
 		};
 		
@@ -148,7 +148,7 @@
 					}
 				}, 
 				function(result) {
-					toaster.pop('error', 'Contact Picture' , result.data.message);
+					toaster.pop('error', $rootScope.getTranslation('contact.picture'), result.data.message);
 				});
 			}
 		};
@@ -165,9 +165,9 @@
 			if ($files[0]) {
 				gymService.uploadGymPicture($files[0], $routeParams.id).then(function(result) {
 					$scope.imageSrc = "data:image/png;base64," + result.data;
-					toaster.pop('success', 'Gym', 'File uploaded successfully!');
+					toaster.pop('success', $rootScope.getTranslation('gym'), $rootScope.getTranslation('file.uploaded.successfully'));
 				}, function(result) {
-					toaster.pop('error', 'Upload', 'Uploading file failed');
+					toaster.pop('error', $rootScope.getTranslation('upload'), $rootScope.getTranslation('file.upload.failed'));
 				});
 			}
 		};
@@ -176,7 +176,7 @@
 			gymService.getComments($routeParams.id).then(function(result) {
 				$scope.comments = result.data;
 			}, function(result) {
-				toaster.pop('error', 'Gym comments' , result.data.message);
+				toaster.pop('error', $rootScope.getTranslation('gym.comments'), result.data.message);
 			});
 		};
 		
@@ -188,21 +188,21 @@
 				$scope.comment.date = Date.parse(new Date());
 				$scope.comments.push($scope.comment);
 				$scope.comment = null;
-				toaster.pop('success', 'Comment' , 'Comment created successfully');
+				toaster.pop('success', $rootScope.getTranslation('comment'), $rootScope.getTranslation('comment.added.successfully'));
 			}, 
 			function(result) {
-				toaster.pop('error', 'Comment' , result.data.message);
+				toaster.pop('error', $rootScope.getTranslation('comment'), result.data.message);
 			});
 		};
 		
 		$scope.deleteComment = function(comment) {
-			if (confirm("Are you sure you wish to delete this comment?")) {
+			if (confirm($rootScope.getTranslation('delete.comment.confirmation'))) {
 				userService.deleteComment(comment.id).then(function(result) {
 					$scope.comments.splice( $scope.comments.indexOf(comment), 1 );
-					toaster.pop('success', 'Comment' , 'Comment deleted successfully');
+					toaster.pop('success', $rootScope.getTranslation('comment'), $rootScope.getTranslation('comment.deleted.successfully'));
 				}, 
 				function(result) {
-					toaster.pop('error', 'Comment' , result.data.message);
+					toaster.pop('error', $rootScope.getTranslation('comment'), result.data.message);
 				});
 			}
 		};
@@ -212,15 +212,15 @@
 		};
 	});
 
-	app.controller('AdminGymController', function($scope, $location, gymService, toaster) {
+	app.controller('AdminGymController', function($scope, $rootScope, $location, gymService, toaster) {
 
 		$scope.createGym = function() {
 			gymService.createGym($scope.gym).then(function(result) {
 				$location.path('/user/gyms');
-				toaster.pop('success', 'Gym' , 'Gym created successfully');
+				toaster.pop('success', $rootScope.getTranslation('gym'), $rootScope.getTranslation('gym.created.successfully'));
 			}, 
 			function(result) {
-				toaster.pop('error', 'Gym' , result.data.message);
+				toaster.pop('error', $rootScope.getTranslation('gym'), result.data.message);
 			});
 		};
 

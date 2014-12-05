@@ -1,11 +1,12 @@
 <div class="page-header">
 	<nav id="subnav" class="clear">
 		<h2 class="pull-left"><msg key="gyms"/></h2>
-		<button ng-if="hasRole('ADMIN')" class="btn btn-success pull-right" ng-click="newGym()"><i class="glyphicon glyphicon-plus-sign"></i> <msg key="create"/></button>
+		<button ng-if="hasRole('ADMIN')" class="btn btn-success pull-right clearFilter" ng-click="newGym()"><i class="glyphicon glyphicon-plus-sign"></i> <msg key="create"/></button>
 	</nav>
 </div>
 
 <div loading-container="tableParams.settings().$loading">
+	<button ng-click="tableParams.filter({})" class="btn btn-default pull-right"><msg key="clear.filter"/></button>
 	<table ng-table="tableParams" show-filter="true" class="table">
 		<tbody>
 			<tr ng-repeat="gym in $data">

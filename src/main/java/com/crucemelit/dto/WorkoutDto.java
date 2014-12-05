@@ -29,6 +29,8 @@ public @Data class WorkoutDto {
 
     private List<ExerciseGroupDto> exerciseGroups;
 
+    private Boolean completed;
+
     public WorkoutDto(Workout workout) {
         if (workout != null) {
             this.id = workout.getId();
@@ -38,13 +40,8 @@ public @Data class WorkoutDto {
             this.gym = workout.getGymName();
             this.wod = workout.getWod().getName();
             this.result = workout.getResult();
+            this.completed = workout.getCompleted();
         }
-    }
-
-    @Override
-    public String toString() {
-        return "WorkoutDto [id=" + id + ", date=" + date + ", name=" + name + ", comment=" + comment + ", gym=" + gym
-                + ", wod=" + wod + ", result=" + result + ", user=" + user + ", exerciseGroups=" + exerciseGroups + "]";
     }
 
 }

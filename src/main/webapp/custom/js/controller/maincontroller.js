@@ -1,6 +1,13 @@
 (function() {
 	var app = angular.module('crucem-elit');
-	app.controller('MainController', function($scope, i18n, $location, emailService, toaster) {
+	app.controller('MainController', function($scope, $rootScope, i18n, $location, emailService, userService, toaster) {
+		$scope.init = function() {
+			userService.getUpcomingWorkouts().then(function(result) {
+				$scope.workouts=result.data;
+				}, function(result) {
+				toaster.pop('error', $rootScope.getTranslation('workouts'), result.data.message);
+			});
+		};
 		
 		$scope.mainImgSrc = '../images/cf.jpg';
 		
@@ -23,9 +30,9 @@
 		$scope.forgot = function() {
 			emailService.sendNewPassword({email : $scope.email}).then(function() {
 				$scope.email = null;
-				toaster.pop('success', 'Forgot password', 'Email sent successfully!');
+				toaster.pop('success', $rootScope.getTranslation('forgot.password.title'), $rootScope.getTranslation('email.sent.successfully'));
 			}, function(result) {
-				toaster.pop('error', 'Forgot password', result.data.message);
+				toaster.pop('error', $rootScope.getTranslation('forgot.password.title'), result.data.message);
 			});
 		};	
 		

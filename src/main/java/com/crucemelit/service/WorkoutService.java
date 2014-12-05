@@ -18,4 +18,6 @@ public interface WorkoutService {
 
     Workout getWorkoutById(long id);
 
+    List<WorkoutDto> getUserUpcomingWorkoutsDto(User currentUser);
+
 }

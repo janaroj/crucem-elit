@@ -3,6 +3,8 @@ package com.crucemelit.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,6 +54,13 @@ public class WorkoutServiceImpl implements WorkoutService {
     @Override
     public Workout getWorkoutById(long id) {
         return workoutRepository.findOne(id);
+    }
+
+    @Override
+    public List<WorkoutDto> getUserUpcomingWorkoutsDto(User currentUser) {
+        Pageable topFive = new PageRequest(0, 5);
+        return workoutTransformer.transformToDto(workoutRepository.findByUserAndCompletedFalseOrderByDateAsc(currentUser,
+                topFive));
     }
 
 }

@@ -1,7 +1,7 @@
 (function() {
 	var app = angular.module('crucem-elit');
 
-	app.controller('RecordsController', function($scope, $q, $location, $filter, userService, workoutService, ngTableParams, toaster) {
+	app.controller('RecordsController', function($scope, $rootScope, $q, $location, $filter, userService, workoutService, ngTableParams, toaster) {
 		var recordData = null;
 		$scope.tableParams = new ngTableParams({
 			page: 1,            // show first page
@@ -22,7 +22,7 @@
 						recordData = result.data;
 						ui.util.table.prepareData($defer, $filter, params, recordData);
 					}, function(result) {
-						toaster.pop('error', 'Records' , result.data.message);
+						toaster.pop('error', $rootScope.getTranslation('records'), result.data.message);
 					});
 				}
 				else {
@@ -62,11 +62,24 @@
 			});
 			return def;
 		};
+		
+		$scope.deleteResult = function(record) {
+			if (confirm("Are you sure you wish to delete " + record.name + " result?")) {
+				userService.deleteResult(record.id).then(function() {
+					recordData.splice( recordData.indexOf(record), 1 );
+					$scope.tableParams.reload();
+					toaster.pop('success', 'Record' , 'Result deleted successfully');
+				}, 
+				function(result) {
+					toaster.pop('error', 'Record', result.data.message);
+				});
+			}
+		};
 
 	});
 
 
-	app.controller('RecordController', function($scope, $routeParams, $location, userService, workoutService, toaster) {
+	app.controller('RecordController', function($scope, $rootScope, $routeParams, $location, userService, workoutService, toaster) {
 		$scope.workout = {};
 		$scope.workout.exerciseGroups = [];
 		$scope.workout.exerciseGroups.exercises = [];
@@ -74,7 +87,7 @@
 			userService.getWorkout($routeParams.id).then(function(result) {
 				$scope.workout = result.data;
 			}, function(result) {
-				toaster.pop('error', 'Workout' , result.data.message);
+				toaster.pop('error', $rootScope.getTranslation('workout'), result.data.message);
 			});
 		};
 
@@ -86,15 +99,15 @@
 				workoutService.updateWorkout($scope.workout).then(
 						function(result) {
 							$location.path('/user/workouts');
-							toaster.pop('success', 'Workout' , 'Workout finished');
+							toaster.pop('success', $rootScope.getTranslation('workout'), $rootScope.getTranslation('workout.finished'));
 						},
 						function(result) {
-							toaster.pop('error', 'Workout' , result.data.message);
+							toaster.pop('error', $rootScope.getTranslation('workout'), result.data.message);
 						}
 				);
 			}
 			else {
-				toaster.pop('error', 'Submit unsuccessful', 'Insert at least one result for every exercise!');
+				toaster.pop('error', $rootScope.getTranslation('submit.unsuccessful'), $rootScope.getTranslation('insert.at.least.one'));
 			}
 		};
 

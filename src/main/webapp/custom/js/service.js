@@ -139,6 +139,9 @@
 		this.getWorkout = function(id){
 			return $http.get('/api/user/workouts/' + id);
 		};
+		this.getUpcomingWorkouts = function(){
+			return $http.get('/api/user/workouts/upcoming');
+		};
 		this.deleteWorkout = function(id) {
 			return $http.delete('/api/user/workouts/' + id);
 		};
@@ -147,6 +150,9 @@
 		};
 		this.fillWorkout = function(workout) {
 			return $http.post("/api/user/workouts/fill", workout);
+		};
+		this.deleteResult = function(id) {
+			return $http.delete('/api/user/record/' + id);
 		};
 		this.createComment = function(comment) {
 			return $http.post("/api/user/comments", comment);

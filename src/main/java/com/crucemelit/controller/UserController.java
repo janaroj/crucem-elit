@@ -34,6 +34,7 @@ import com.crucemelit.model.User;
 import com.crucemelit.model.Workout;
 import com.crucemelit.service.ExerciseService;
 import com.crucemelit.service.GymService;
+import com.crucemelit.service.RecordService;
 import com.crucemelit.service.SearchService;
 import com.crucemelit.service.UserService;
 import com.crucemelit.service.WorkoutService;
@@ -58,6 +59,9 @@ public class UserController {
 
     @Autowired
     private ExerciseService exerciseService;
+
+    @Autowired
+    private RecordService recordService;
 
     @RequestMapping(value = "/exercises")
     public List<ExerciseDto> getExercises() {
@@ -163,6 +167,11 @@ public class UserController {
         return workoutService.getUserWorkoutsDto(userService.getCurrentUser());
     }
 
+    @RequestMapping(value = "/workouts/upcoming")
+    public List<WorkoutDto> getUpcomingUserWorkouts() {
+        return workoutService.getUserUpcomingWorkoutsDto(userService.getCurrentUser());
+    }
+
     @RequestMapping(value = "/workouts", method = RequestMethod.POST)
     public ResponseEntity<String> createWorkout(@RequestBody Workout workout) {
         userService.createUserWorkout(workout);
@@ -187,6 +196,12 @@ public class UserController {
     @RequestMapping(value = "/workouts/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<String> deleteWorkoutById(@PathVariable long id) {
         userService.deleteUserWorkoutById(id);
+        return new ResponseEntity<String>("Success", HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/record/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<String> deleteRecordById(@PathVariable long id) {
+        userService.deleteUserRecordById(id);
         return new ResponseEntity<String>("Success", HttpStatus.OK);
     }
 
