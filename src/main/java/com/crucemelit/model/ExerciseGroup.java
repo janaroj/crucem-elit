@@ -45,7 +45,7 @@ public @Data class ExerciseGroup extends BaseEntity {
 
     private boolean wod;
 
-    @OneToOne(mappedBy = "exerciseGroup", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @OneToOne(mappedBy = "exerciseGroup", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Record record;
 
 }

@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.crucemelit.dto.WorkoutDto;
+import com.crucemelit.model.ExerciseGroup;
 import com.crucemelit.model.User;
+import com.crucemelit.model.Workout;
 import com.crucemelit.repository.WorkoutRepository;
 import com.crucemelit.service.WorkoutService;
 import com.crucemelit.transformer.WorkoutTransformer;
@@ -35,6 +37,21 @@ public class WorkoutServiceImpl implements WorkoutService {
     @Override
     public List<WorkoutDto> getUserWorkoutsDto(User user) {
         return workoutTransformer.transformToDto(workoutRepository.findAllByUser(user));
+    }
+
+    @Override
+    public void updateWorkout(Workout workout) {
+        for (ExerciseGroup group : workout.getExerciseGroups()) {
+            if (group.getRecord() != null) {
+                group.getRecord().setExerciseGroup(group);
+            }
+        }
+        workoutRepository.saveAndFlush(workout);
+    }
+
+    @Override
+    public Workout getWorkoutById(long id) {
+        return workoutRepository.findOne(id);
     }
 
 }
