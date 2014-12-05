@@ -38,7 +38,7 @@
 		};
 
 		$scope.joinGym = function(gym) {
-			if (confirm($rootScope.getTranslation('join.new.gym.confirm') + " " + gym.name)) {
+			if (confirm($rootScope.getTranslation('join.new.gym.confirm'))) {
 				userService.joinGym(gym.id).then(function() {
 					$scope.user.gym = gym;
 					$rootScope.addGym(gym);
