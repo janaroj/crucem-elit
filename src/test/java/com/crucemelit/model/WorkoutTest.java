@@ -18,12 +18,13 @@ public class WorkoutTest {
     private final Double RESULT2 = null;
 
     private Workout workout;
+    private ExerciseGroup wodExerciseGroup;
 
     @Before
     public void setUp() {
         workout = new Workout();
+        wodExerciseGroup = createExerciseGroup(WOD_EXERCISE_GROUP, true, WOD_RESULT);
         workout.setExerciseGroups(createExerciseGroups());
-
     }
 
     @Test
@@ -33,13 +34,13 @@ public class WorkoutTest {
 
     @Test
     public void getWodTest() {
-        assertEquals(WOD_EXERCISE_GROUP, workout.getWod());
+        assertEquals(wodExerciseGroup, workout.getWod());
     }
 
     private List<ExerciseGroup> createExerciseGroups() {
         List<ExerciseGroup> exerciseGroups = new ArrayList<>();
         exerciseGroups.add(createExerciseGroup(GROUP1, false, RESULT1));
-        exerciseGroups.add(createExerciseGroup(WOD_EXERCISE_GROUP, true, WOD_RESULT));
+        exerciseGroups.add(wodExerciseGroup);
         exerciseGroups.add(createExerciseGroup(GROUP2, false, RESULT2));
         return exerciseGroups;
     }

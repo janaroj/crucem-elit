@@ -14,7 +14,6 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import com.crucemelit.exception.EntityNotFoundException;
 import com.crucemelit.model.Gym;
 import com.crucemelit.repository.GymRepository;
 
@@ -22,7 +21,6 @@ import com.crucemelit.repository.GymRepository;
 public class GymServiceTest {
 
     private static final long EXISTING_GYM_ID = 1;
-    private static final long NOT_EXISTING_GYM_ID = 2;
 
     @Mock
     private GymRepository gymRepository;
@@ -52,11 +50,6 @@ public class GymServiceTest {
     @Test
     public void getGymSuccessfullyTest() {
         assertEquals(mockGym, gymService.getGym(EXISTING_GYM_ID));
-    }
-
-    @Test(expected = EntityNotFoundException.class)
-    public void getGymFailureTest() {
-        gymService.getGym(NOT_EXISTING_GYM_ID);
     }
 
 }
