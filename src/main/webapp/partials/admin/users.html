@@ -5,6 +5,7 @@
 </div>
 
 <div loading-container="tableParams.settings().$loading">
+	<button ng-click="tableParams.filter({})" class="btn btn-default pull-right"><msg key="clear.filter"/></button>
 	<table ng-table="tableParams" show-filter="true" class="table">
 		<tbody>
 			<tr ng-repeat="user in $data">

@@ -62,10 +62,10 @@
 				function(result) {
 					friends.push(friend);
 					$cookieStore.put('friends', friends);
-					toaster.pop('success', 'Friend', 'Friend added successfully!');
+					toaster.pop('success', $rootScope.getTranslation('friend'), $rootScope.getTranslation('friend.added.successfully'));
 				},
 				function(result) {
-					toaster.pop('error', 'Friend' , result.data.message);
+					toaster.pop('error',  $rootScope.getTranslation('friend'), result.data.message);
 				}
 			);
 
@@ -110,12 +110,12 @@
 						$cookieStore.put('friends', result.data);
 					}, 
 					function(result) {
-						toaster.pop('error', 'Fetching friends', result.data.message);
+						toaster.pop('error',  $rootScope.getTranslation('fetching.friends'), result.data.message);
 					});
 			},
 			function(result) {
 				$rootScope.loginClicked = false;
-				toaster.pop('error', 'Authentication', result.data.message);
+				toaster.pop('error',  $rootScope.getTranslation('authentication'), result.data.message);
 			});
 		};
 

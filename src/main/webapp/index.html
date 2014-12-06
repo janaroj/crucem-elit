@@ -56,7 +56,7 @@
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav" ng-cloak ng-show="user">
 					<li ng-class="activeWhen(pathContains('/user/workout'))"><a href="#/user/workouts"><msg key="workouts"/></a></li>
-					<li ng-class="activeWhen(pathContains('/user/gym'))"><a href="#/user/gyms/{{user.gym.id}}"><msg key="gym"/></a></li>
+					<li ng-class="activeWhen(pathContains('/gym'))"><a href="#/user/gyms/{{user.gym.id}}"><msg key="gym"/></a></li>
                 	<li ng-class="activeWhen(pathContains('/user/contact'))"><a href="#/user/contacts"><msg key="contacts"/></a></li>
 					<li ng-class="activeWhen(pathContains('/user/record'))"><a href="#/user/records"><msg key="records"/></a></li>
 					<li>
