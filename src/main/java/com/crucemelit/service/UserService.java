@@ -48,8 +48,6 @@ public interface UserService extends UserDetailsService, SearchService, PictureS
 
     void createUserWorkout(Workout workout);
 
-    void fillUserWorkout(Workout workout);
-
     void deleteUserWorkoutById(long id);
 
     List<UserDto> getUsersWithAuthInfo();

@@ -242,29 +242,8 @@ public class UserServiceImpl implements UserService {
         if (user.getGym() != null) {
             workout.setGymName(user.getGym().getName());
         }
-        else {
-            workout.setGymName("gymless");
-        }
         user.addWorkout(workout);
         userRepository.saveAndFlush(user);
-    }
-
-    @Override
-    public void fillUserWorkout(Workout workout) {
-        User user = getCurrentUser();
-        List<Workout> userWorkouts = user.getWorkouts();
-        Workout targetWorkout = null;
-        for (Workout w : userWorkouts) {
-            if (w.getId() == workout.getId()) {
-                targetWorkout = w;
-                break;
-            }
-        }
-        if (targetWorkout != null) {
-            targetWorkout.setExerciseGroups(workout.getExerciseGroups());
-        }
-        userRepository.saveAndFlush(user);
-
     }
 
     @Override

@@ -178,12 +178,6 @@ public class UserController {
         return new ResponseEntity<String>("Success", HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/workouts/fill", method = RequestMethod.POST)
-    public ResponseEntity<String> fillWorkout(@RequestBody Workout workout) {
-        userService.fillUserWorkout(workout);
-        return new ResponseEntity<String>("Success", HttpStatus.OK);
-    }
-
     @RequestMapping(value = "/workouts/{id}", method = RequestMethod.PUT)
     @SneakyThrows
     public ResponseEntity<String> updateWorkout(@PathVariable long id, HttpServletRequest req) {
