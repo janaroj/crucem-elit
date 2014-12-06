@@ -40,7 +40,7 @@ public @Data class WorkoutDto {
             this.gym = workout.getGymName();
             this.wod = workout.getWod().getName();
             this.result = workout.getResult();
-            this.completed = workout.getCompleted();
+            this.completed = workout.isCompleted();
         }
     }
 
