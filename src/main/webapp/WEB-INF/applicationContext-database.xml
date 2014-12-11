@@ -23,8 +23,7 @@
 			value="#{ 'jdbc:postgresql://' + @dbUrl.getHost() + ':' + @dbUrl.getPort() + @dbUrl.getPath() }" />
 		<property name="username" value="#{ @dbUrl.getUserInfo().split(':')[0] }" />
 		<property name="password" value="#{ @dbUrl.getUserInfo().split(':')[1] }" />
-		<property name="connectionProperties"
-			value="ssl=true;sslfactory=org.postgresql.ssl.NonValidatingFactory;" />
+		<property name="connectionProperties" value="ssl=true;sslfactory=org.postgresql.ssl.NonValidatingFactory;" />
 	</bean>
 	
 	<bean id="entityManagerFactory"
@@ -39,7 +38,7 @@
 				<prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</prop>
 				<prop key="hibernate.show_sql">true</prop>
 				<prop key="hibernate.format_sql">true</prop>
-				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.hbm2ddl.auto">validate</prop>
 			</props>
 		</property>
 	</bean>
