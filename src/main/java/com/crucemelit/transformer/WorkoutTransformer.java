@@ -47,4 +47,14 @@ public class WorkoutTransformer {
         workoutDto.setExerciseGroups(exerciseGroupTransformer.transformToDtoWithExercises(workout.getExerciseGroups()));
         return workoutDto;
     }
+
+    public List<WorkoutDto> transformToDtoWithExerciseGroups(List<Workout> workouts) {
+        List<WorkoutDto> list = new ArrayList<>();
+        for (Workout workout : workouts) {
+            WorkoutDto workoutDto = transformToDtoWithExerciseGroups(workout);
+            list.add(workoutDto);
+        }
+        return list;
+    }
+
 }

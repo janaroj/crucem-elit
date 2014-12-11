@@ -18,7 +18,7 @@
 			getData: function($defer, params) {
 				if (recordData===null) {
 
-					workoutService.getWorkouts().then(function(result) {
+					workoutService.getWorkoutsWithResults().then(function(result) {
 						recordData = result.data;
 						ui.util.table.prepareData($defer, $filter, params, recordData);
 					}, function(result) {
@@ -130,7 +130,7 @@
 		var isMissingExerciseResult = function() {
 			for (var i = 0; i < $scope.workout.exerciseGroups.length; i++) {
 				for (var u = 0; u<$scope.workout.exerciseGroups[i].exercises.length; u++) {
-					var exercise = $scope.workout.exerciseGroups[i].exercises[u];
+					var exercise = $scope.workout.exerciseGroups[i].exercises[u].exerciseModel;
 					if (exercise.countWeight || exercise.countTime || exercise.countRepeats){
 						if (!exercise.record || !exercise.record.time  && !record.weight && !record.repeats) {
 							return true;

@@ -167,6 +167,11 @@ public class UserController {
         return workoutService.getUserWorkoutsDto(userService.getCurrentUser());
     }
 
+    @RequestMapping(value = "/workouts/records")
+    public List<WorkoutDto> getUserWorkoutsExerciseResults() {
+        return workoutService.getUserWorkoutsWithExerciseGroupsDto(userService.getCurrentUser());
+    }
+
     @RequestMapping(value = "/workouts/upcoming")
     public List<WorkoutDto> getUpcomingUserWorkouts() {
         return workoutService.getUserUpcomingWorkoutsDto(userService.getCurrentUser());

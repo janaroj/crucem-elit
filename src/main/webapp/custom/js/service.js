@@ -206,6 +206,9 @@
 		this.updateWorkout = function(workout) {
 			return $http.put('/api/user/workouts/'+ workout.id, workout);
 		};
+		this.getWorkoutsWithResults = function() {
+			return $http.get('api/user/workouts/records');
+		};
 	});
 	
 	app.service('exerciseService', function($http) {

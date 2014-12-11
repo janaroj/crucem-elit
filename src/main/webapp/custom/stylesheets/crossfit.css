@@ -13,6 +13,13 @@ hr {
 	padding: 3px 0px 3px 0px;
 }
 
+.panel-fill{
+	background-color:#FFB2B2;
+}
+
+.bottom-padding{
+	padding-bottom:20px;
+}
 .form-horizontal .control-label{
   /* text-align:right; */
   text-align:left;
