@@ -5,7 +5,7 @@
 				<div class="panel-heading">
 					<h3 class="panel-title">{{contact.firstName}} {{contact.lastName}}</h3>
 				</div>
-                <form id="form" class="form-horizontal" role="form" name="form" ng-init="init()" ng-submit="updateProfile()" novalidate show-validation>
+                <form id="form" class="form-horizontal" role="form" name="form" ng-init="init()" ng-submit="updateProfile()">
 				<div class="panel-body" >
 					<div class="row" >
 						<div class="col-md-3 col-lg-3 " align="center">
@@ -49,12 +49,12 @@
 									</tr>
 									<tr>
 										<td class="pdgnContact"><msg key="length" /></td>
-										<td><input class="form-control" type="text" ng-cloak ng-show="isChangeInProgress" ng-model="contact.length">
+										<td><input class="form-control" type="number" min="0" step="5"  ng-cloak ng-if="isChangeInProgress" ng-model="contact.length">
 											<p class="form-control-static" ng-cloak ng-hide="isChangeInProgress">{{contact.length}}</p></td>
 									</tr>
 									<tr>
 										<td><msg key="weight" /></td>
-										<td><input class="form-control" type="text" ng-cloak ng-show="isChangeInProgress" ng-model="contact.weight">
+										<td><input class="form-control" type="number" min="0" step="3"  ng-cloak ng-if="isChangeInProgress" ng-model="contact.weight">
 											<p class="form-control-static" ng-cloak ng-hide="isChangeInProgress">{{contact.weight}}</p></td>
 									</tr>
 									<tr>
