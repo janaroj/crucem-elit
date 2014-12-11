@@ -179,6 +179,9 @@ public @Data class User extends BaseEntity implements UserDetails, Suggestable {
 
     public void increaseInvalidLoginCount() {
         this.invalidLoginCount++;
+        if (!isAccountNonLocked()) {
+            this.timeLocked = new Date();
+        }
     }
 
     public void addFriend(User friend) {
