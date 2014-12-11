@@ -2,6 +2,7 @@ package com.crucemelit.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -41,7 +42,7 @@ public @Data class Gym extends BaseEntity implements Suggestable {
     @OneToMany(mappedBy = "gym", fetch = FetchType.LAZY)
     private List<User> users;
 
-    @OneToMany(mappedBy = "gym", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "gym", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Comment> comments;
 
     private byte[] picture;
