@@ -11,13 +11,13 @@ import com.crucemelit.repository.ExerciseModelRepository;
 import com.crucemelit.service.ExerciseModelService;
 
 @Service
+@Transactional
 public class ExerciseModelServiceImpl implements ExerciseModelService {
 
     @Autowired
     private ExerciseModelRepository exerciseModelRepository;
 
     @Override
-    @Transactional
     public void createExerciseModel(ExerciseModel exerciseModel) {
         exerciseModelRepository.saveAndFlush(exerciseModel);
     }
@@ -28,7 +28,6 @@ public class ExerciseModelServiceImpl implements ExerciseModelService {
     }
 
     @Override
-    @Transactional
     public void deleteExerciseModel(long id) {
         exerciseModelRepository.delete(id);
     }
@@ -39,7 +38,6 @@ public class ExerciseModelServiceImpl implements ExerciseModelService {
     }
 
     @Override
-    @Transactional
     public void updateExerciseModel(ExerciseModel exerciseModel) {
         exerciseModelRepository.saveAndFlush(exerciseModel);
     }
