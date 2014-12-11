@@ -30,11 +30,15 @@
 <script src="bootstrap/js/bootstrap.min.js"></script>
 <script src="js/ui-bootstrap-tpls-0.11.2.min.js"></script>
 <script src="js/ng-table.js"></script>
+<script src="js/ng-fab-form.min.js"></script>
+<script src="js/messages.js"></script>
+<script src="js/jquery.bind-first-0.2.3.js"></script>
 <script src="js/jquery-ui.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel = "stylesheet" type = "text/css" href = "custom/stylesheets/crossfit.css">
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
 <link href="css/ng-table.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
 <link href="css/toaster.css" rel="stylesheet">
 <link href="css/jquery-ui.min.css" rel="stylesheet">
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
@@ -70,21 +74,14 @@
 					<li ng-cloak ng-show="!user">
 						<a data-toggle="popover" data-placement="bottom" data-target=".popover-target-login"><msg key="login"/></a>
 						<div class="popover-target popover-target-login">
-								<form name="form" role="login" ng-submit="login(username, password)" novalidate show-validation>
+								<form name="form" role="login" ng-submit="login(username, password)">
 									<div class="form-group">
-										<input type="email" ng-blur="visitedEmail=true" placeholder="{{ getTranslation('email') }}" class="form-control" name="email" data-ng-model="username" required ng-disabled="loginClicked"/>
-										<div ng-cloak ng-show="form.email.$dirty && form.email.$invalid && visitedEmail">
-											<p class="help-block" ng-cloak ng-show="form.email.$error.required"><msg key="email.required"/></p>
-											<p class="help-block" ng-cloak ng-show="form.email.$error.email"><msg key="email.invalid"/></p>
-										</div>
+										<input type="email" placeholder="{{ getTranslation('email') }}" class="form-control" name="email" data-ng-model="username" required ng-disabled="loginClicked"/>
 									</div>
 									<div class="form-group">
 										<input type="password" placeholder="{{ getTranslation('password') }}" class="form-control" name="password" data-ng-model="password" required ng-disabled="loginClicked"/>
-										<div ng-cloak ng-show="form.password.$dirty && form.password.$invalid">
-											<p class="help-block" ng-cloak ng-show="form.password.$error.required"><msg key="password.required"/></p>
-										</div>
 									</div>
-									<button type="submit" class="btn btn-primary" ng-disabled="form.$invalid || loginClicked"><msg key="login" /> »</button>
+									<button type="submit" class="btn btn-primary"><msg key="login" /> »</button>
 									<a href="/#/forgot" class="forgot-password-link"><msg key="forgot.password"/></a>           
 								</form>
   						</div>                      
