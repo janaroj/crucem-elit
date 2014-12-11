@@ -5,6 +5,8 @@ import java.util.List;
 
 import lombok.SneakyThrows;
 
+import org.joda.time.DateTime;
+import org.joda.time.Minutes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -206,12 +208,17 @@ public class UserServiceImpl implements UserService {
     public UserDto authenticate(String username, String password) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username,
                 password);
+        User user = (User) loadUserByUsername(username);
+        if (Minutes.minutesBetween(new DateTime(user.getTimeLocked()), new DateTime(new Date())).getMinutes() > 15) {
+            System.out.println("*************************************************");
+            user.setInvalidLoginCount(0);
+            user.setTimeLocked(null);
+        }
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        User user = (User) loadUserByUsername(username);
         user.setToken(tokenUtils.createToken(user));
         return userTransformer.transformToDtoWithAuthInfo(user);
+
     }
 
     @Override

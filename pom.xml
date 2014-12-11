@@ -16,6 +16,7 @@
 		<javax.mail.version>1.5.2</javax.mail.version>
 		<jetty.plugin.version>8.1.10.v20130312</jetty.plugin.version>
 		<jetty.runner.version>8.1.9.v20130131</jetty.runner.version>
+		<joda-time.version>2.6</joda-time.version>
 		<junit.version>4.11</junit.version>
 		<lombok.version>1.14.6</lombok.version>
 		<mockito.version>1.9.5</mockito.version>
@@ -194,6 +195,13 @@
 			<artifactId>newrelic-agent</artifactId>
 			<version>${new.relic.version}</version>
 			<scope>provided</scope>
+		</dependency>
+		
+		<!--  Date time library -->
+		<dependency>
+    		<groupId>joda-time</groupId>
+    		<artifactId>joda-time</artifactId>
+    		<version>${joda-time.version}</version>
 		</dependency>
 
 	</dependencies>
