@@ -1,6 +1,5 @@
 package com.crucemelit.model;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -66,7 +65,7 @@ public @Data class User extends BaseEntity implements UserDetails, Suggestable {
 
     private Integer length;
 
-    private Timestamp timeLocked;
+    private Date timeLocked;
 
     @Temporal(TemporalType.DATE)
     private Date dateOfBirth;
@@ -177,6 +176,9 @@ public @Data class User extends BaseEntity implements UserDetails, Suggestable {
 
     public void increaseInvalidLoginCount() {
         this.invalidLoginCount++;
+        if (!isAccountNonLocked()) {
+            this.timeLocked = new Date();
+        }
     }
 
     public void addFriend(User friend) {
