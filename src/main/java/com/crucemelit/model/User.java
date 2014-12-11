@@ -32,6 +32,7 @@ import org.hibernate.validator.constraints.Email;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.util.StringUtils;
 
 import com.crucemelit.domain.Gender;
 import com.crucemelit.domain.Role;
@@ -65,6 +66,8 @@ public @Data class User extends BaseEntity implements UserDetails, Suggestable {
 
     private Integer length;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "TIME_LOCKED")
     private Date timeLocked;
 
     @Temporal(TemporalType.DATE)
@@ -103,7 +106,7 @@ public @Data class User extends BaseEntity implements UserDetails, Suggestable {
 
     @Override
     public String getName() {
-        if (getFirstName() == null && getLastName() == null) {
+        if (StringUtils.isEmpty(getFirstName()) && StringUtils.isEmpty(getLastName())) {
             return getEmail();
         }
         return Utility.formatStrings(getFirstName(), getLastName());

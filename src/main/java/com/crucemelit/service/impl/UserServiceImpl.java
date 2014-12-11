@@ -7,6 +7,7 @@ import lombok.SneakyThrows;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -35,7 +36,7 @@ import com.crucemelit.util.TokenUtils;
 import com.crucemelit.util.Utility;
 
 @Service("userService")
-@Transactional
+@Transactional(noRollbackFor = BadCredentialsException.class)
 public class UserServiceImpl implements UserService {
 
     @Autowired
