@@ -24,15 +24,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.crucemelit.domain.Gender;
 import com.crucemelit.dto.CommentDto;
 import com.crucemelit.dto.EmailDto;
-import com.crucemelit.dto.ExerciseDto;
 import com.crucemelit.dto.GymDto;
 import com.crucemelit.dto.Suggestion;
 import com.crucemelit.dto.UserDto;
 import com.crucemelit.dto.WorkoutDto;
 import com.crucemelit.model.Comment;
+import com.crucemelit.model.ExerciseModel;
 import com.crucemelit.model.User;
 import com.crucemelit.model.Workout;
-import com.crucemelit.service.ExerciseService;
+import com.crucemelit.service.ExerciseModelService;
 import com.crucemelit.service.GymService;
 import com.crucemelit.service.RecordService;
 import com.crucemelit.service.SearchService;
@@ -58,14 +58,14 @@ public class UserController {
     private ObjectMapper objectMapper;
 
     @Autowired
-    private ExerciseService exerciseService;
+    private ExerciseModelService exerciseModelService;
 
     @Autowired
     private RecordService recordService;
 
     @RequestMapping(value = "/exercises")
-    public List<ExerciseDto> getExercises() {
-        return exerciseService.getExercises();
+    public List<ExerciseModel> getExerciseModels() {
+        return exerciseModelService.getExerciseModels();
     }
 
     @RequestMapping(value = "/gyms")

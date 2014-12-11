@@ -150,7 +150,13 @@
 		};
 		
 		$scope.addExercise = function(exercise) {
-			exercises.push(exercise);
+			exercises.push(exerciseModelToExercise(exercise));
+		};
+		
+		var exerciseModelToExercise = function(exerciseModel) {
+			var exercise = {};
+			exercise.exerciseModel = exerciseModel;
+			return exercise;
 		};
 
 		$scope.cancel = function () {

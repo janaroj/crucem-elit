@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.crucemelit.domain.Role;
 import com.crucemelit.dto.UserDto;
-import com.crucemelit.model.Exercise;
+import com.crucemelit.model.ExerciseModel;
 import com.crucemelit.model.ExerciseType;
 import com.crucemelit.model.Gym;
-import com.crucemelit.service.ExerciseService;
+import com.crucemelit.service.ExerciseModelService;
 import com.crucemelit.service.ExerciseTypeService;
 import com.crucemelit.service.GymService;
 import com.crucemelit.service.UserService;
@@ -35,7 +35,7 @@ public class AdminController {
     private GymService gymService;
 
     @Autowired
-    private ExerciseService exerciseService;
+    private ExerciseModelService exerciseModelService;
 
     @Autowired
     private ExerciseTypeService exerciseTypeService;
@@ -47,23 +47,23 @@ public class AdminController {
     private ObjectMapper objectMapper;
 
     @RequestMapping(value = "/exercises", method = RequestMethod.POST)
-    public ResponseEntity<String> createExercise(@RequestBody Exercise exercise) {
-        exerciseService.createExercise(exercise);
+    public ResponseEntity<String> createExercise(@RequestBody ExerciseModel exerciseModel) {
+        exerciseModelService.createExerciseModel(exerciseModel);
         return new ResponseEntity<String>("Success", HttpStatus.OK);
     }
 
     @RequestMapping(value = "/exercises/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<String> deleteExercise(@PathVariable long id) {
-        exerciseService.deleteExercise(id);
+    public ResponseEntity<String> deleteExerciseModel(@PathVariable long id) {
+        exerciseModelService.deleteExerciseModel(id);
         return new ResponseEntity<String>("Success", HttpStatus.OK);
     }
 
     @RequestMapping(value = "/exercises/{id}", method = RequestMethod.PUT)
     @SneakyThrows
     public ResponseEntity<String> updateExercise(@PathVariable long id, HttpServletRequest req) {
-        Exercise exercise = exerciseService.getExercise(id);
-        objectMapper.readerForUpdating(exercise).readValue(req.getReader());
-        exerciseService.updateExercise(exercise);
+        ExerciseModel exerciseModel = exerciseModelService.getExerciseModel(id);
+        objectMapper.readerForUpdating(exerciseModel).readValue(req.getReader());
+        exerciseModelService.updateExerciseModel(exerciseModel);
         return new ResponseEntity<String>("Success", HttpStatus.OK);
     }
 
