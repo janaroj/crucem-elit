@@ -23,7 +23,8 @@ hr {
 }
 
 .crucem-red {
-	text-color:#FF0000;
+	text-color:red;
+	text-size: 15px;
 }
 
 .text-result {
