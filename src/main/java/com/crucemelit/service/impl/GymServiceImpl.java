@@ -18,7 +18,6 @@ import com.crucemelit.transformer.GymTransformer;
 import com.crucemelit.util.Utility;
 
 @Service
-@Transactional
 public class GymServiceImpl implements GymService {
 
     @Autowired
@@ -55,6 +54,7 @@ public class GymServiceImpl implements GymService {
     }
 
     @Override
+    @Transactional
     public void setPicture(byte[] picture, long... id) {
         Gym gym = getGym(id[0]);
         gym.setPicture(picture);
@@ -71,21 +71,25 @@ public class GymServiceImpl implements GymService {
     }
 
     @Override
+    @Transactional
     public void createGym(Gym gym) {
         gymRepository.saveAndFlush(gym);
     }
 
     @Override
+    @Transactional
     public void deleteGym(long id) {
         gymRepository.delete(id);
     }
 
     @Override
+    @Transactional
     public void updateGym(Gym gym) {
         gymRepository.saveAndFlush(gym);
     }
 
     @Override
+    @Transactional
     public List<CommentDto> getGymComments(long id) {
         return commentTransformer.transformToDto(gymRepository.getCommentsByGymId(id));
     }

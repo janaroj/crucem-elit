@@ -35,7 +35,6 @@ import com.crucemelit.util.TokenUtils;
 import com.crucemelit.util.Utility;
 
 @Service("userService")
-@Transactional
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -63,6 +62,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void addLoginFailure(String email) {
         User user = (User) loadUserByUsername(email);
         user.increaseInvalidLoginCount();
@@ -76,6 +76,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void register(User user) {
         verifyUserDoesntExist(user.getEmail());
         seDefaultValuesForUser(user);
@@ -98,6 +99,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public List<UserDto> getContactsDto() {
         User user = getCurrentUser();
         List<User> contacts = Utility.getUniqueList(user.getFriends(), user.getContactsFromGym());
@@ -106,6 +108,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void joinGym(Gym gym) {
         User user = getCurrentUser();
         user.setGym(gym);
@@ -113,6 +116,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void leaveGym() {
         User user = getCurrentUser();
         user.setGym(null);
@@ -131,6 +135,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void setPicture(byte[] picture, long... id) {
         User user = getCurrentUser();
         user.setPicture(picture);
@@ -138,6 +143,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public String getPicture(long id) {
         byte[] pictureBytes = getUser(id).getPicture();
         if (pictureBytes == null) {
@@ -163,6 +169,7 @@ public class UserServiceImpl implements UserService {
 
     @SneakyThrows
     @Override
+    @Transactional
     public void forgotPassword(String email) {
         User user = (User) loadUserByUsername(email);
         String password = Utility.generateRandomPassword(8);
@@ -176,16 +183,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void updateUser(User user) {
         userRepository.saveAndFlush(user);
     }
 
     @Override
+    @Transactional
     public List<UserDto> getFriendsDto() {
         return userTransformer.transformToDto(getCurrentUser().getFriends());
     }
 
     @Override
+    @Transactional
     public void removeFriend(long id) {
         User user = getCurrentUser();
         User friend = getUser(id);
@@ -194,6 +204,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void addFriend(long id) {
         User user = getCurrentUser();
         User friend = getUser(id);
@@ -202,6 +213,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public UserDto authenticate(String username, String password) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username,
                 password);
@@ -237,6 +249,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void createUserWorkout(Workout workout) {
         User user = getCurrentUser();
         if (user.getGym() != null) {
@@ -247,6 +260,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void deleteUserWorkoutById(long id) {
         User user = getCurrentUser();
         user.removeWorkout(id);
@@ -254,6 +268,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void deleteUserRecordById(long id) {
         User user = getCurrentUser();
         user.removeRecord(id);
@@ -266,6 +281,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void changeUserRole(long id) {
         User user = getUser(id);
         user.changeRole();
@@ -273,11 +289,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void deleteUser(long id) {
         userRepository.delete(id);
     }
 
     @Override
+    @Transactional
     public void createUserComment(Comment comment) {
         comment.setDate(new Date());
         User user = getCurrentUser();
@@ -286,6 +304,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void deleteUserCommentById(long id) {
         User user = getCurrentUser();
         user.removeComment(id);

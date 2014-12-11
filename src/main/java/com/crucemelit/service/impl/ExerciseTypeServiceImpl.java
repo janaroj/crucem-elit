@@ -11,7 +11,6 @@ import com.crucemelit.repository.ExerciseTypeRepository;
 import com.crucemelit.service.ExerciseTypeService;
 
 @Service
-@Transactional
 public class ExerciseTypeServiceImpl implements ExerciseTypeService {
 
     @Autowired
@@ -28,16 +27,19 @@ public class ExerciseTypeServiceImpl implements ExerciseTypeService {
     }
 
     @Override
+    @Transactional
     public void createExerciseType(ExerciseType exerciseType) {
         exerciseTypeRepository.saveAndFlush(exerciseType);
     }
 
     @Override
+    @Transactional
     public void deleteExerciseType(long id) {
         exerciseTypeRepository.delete(id);
     }
 
     @Override
+    @Transactional
     public void updateExerciseType(ExerciseType exerciseType) {
         exerciseTypeRepository.saveAndFlush(exerciseType);
     }

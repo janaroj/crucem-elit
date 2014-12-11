@@ -17,7 +17,6 @@ import com.crucemelit.service.WorkoutService;
 import com.crucemelit.transformer.WorkoutTransformer;
 
 @Service
-@Transactional
 public class WorkoutServiceImpl implements WorkoutService {
 
     @Autowired
@@ -27,11 +26,13 @@ public class WorkoutServiceImpl implements WorkoutService {
     private WorkoutTransformer workoutTransformer;
 
     @Override
+    @Transactional
     public List<WorkoutDto> getWorkoutsWithResultsDto() {
         return workoutTransformer.transformToDtoWithUserInfo(workoutRepository.findByExerciseGroupsRecordNotNull());
     }
 
     @Override
+    @Transactional
     public WorkoutDto getUserWorkoutDto(long id, User user) {
         return workoutTransformer.transformToDtoWithExerciseGroups((workoutRepository.findOneByIdAndUser(id, user)));
     }
