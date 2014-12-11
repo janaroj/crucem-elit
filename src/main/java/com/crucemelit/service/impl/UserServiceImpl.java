@@ -5,8 +5,11 @@ import java.util.List;
 
 import lombok.SneakyThrows;
 
+import org.joda.time.DateTime;
+import org.joda.time.Minutes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -35,7 +38,7 @@ import com.crucemelit.util.TokenUtils;
 import com.crucemelit.util.Utility;
 
 @Service("userService")
-@Transactional
+@Transactional(noRollbackFor = BadCredentialsException.class)
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -205,12 +208,17 @@ public class UserServiceImpl implements UserService {
     public UserDto authenticate(String username, String password) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username,
                 password);
+        User user = (User) loadUserByUsername(username);
+        if (Minutes.minutesBetween(new DateTime(user.getTimeLocked()), new DateTime(new Date())).getMinutes() > 15) {
+            System.out.println("*************************************************");
+            user.setInvalidLoginCount(0);
+            user.setTimeLocked(null);
+        }
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        User user = (User) loadUserByUsername(username);
         user.setToken(tokenUtils.createToken(user));
         return userTransformer.transformToDtoWithAuthInfo(user);
+
     }
 
     @Override

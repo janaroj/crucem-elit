@@ -154,6 +154,14 @@
 
 		$scope.onFileSelect = function($files) {
 			if ($files[0]) {
+				if ($files[0].size > 5000000) {
+					toaster.pop('error', $rootScope.getTranslation('upload'),  $rootScope.getTranslation('file.too.large'));
+					return;
+				} 
+				if ($files[0].type.indexOf("image") < 0) {
+					toaster.pop('error', $rootScope.getTranslation('upload'),  $rootScope.getTranslation('file.not.image'));
+					return;
+				}
 				userService.uploadProfilePicture($files[0]).then(
 						function(result) {
 							$scope.imageSrc = "data:image/png;base64," + result.data;
