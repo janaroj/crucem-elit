@@ -52,7 +52,7 @@ public @Data class Workout extends BaseEntity {
     @Column(nullable = false)
     private boolean completed;
 
-    @OneToMany(mappedBy = "workout", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "workout", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ExerciseGroup> exerciseGroups;
 
     public void setExerciseGroups(List<ExerciseGroup> groups) {

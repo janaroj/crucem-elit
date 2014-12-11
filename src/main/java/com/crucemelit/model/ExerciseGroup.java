@@ -10,9 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -39,13 +38,19 @@ public @Data class ExerciseGroup extends BaseEntity {
     @JoinColumn(name = "workoutId")
     private Workout workout;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "groupexercises", joinColumns = @JoinColumn(name = "exerciseGroupId"), inverseJoinColumns = @JoinColumn(name = "exerciseId"))
+    @OneToMany(mappedBy = "exerciseGroup", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Exercise> exercises;
 
     private boolean wod;
 
     @OneToOne(mappedBy = "exerciseGroup", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Record record;
+
+    public void setExercises(List<Exercise> exercises) {
+        for (Exercise exercise : exercises) {
+            exercise.setExerciseGroup(this);
+        }
+        this.exercises = exercises;
+    }
 
 }

@@ -72,7 +72,7 @@
 			<ul>
 				<div ng-repeat="exercise in group.exercises track by $index">
 					<div>
-						<li class="pull-left">{{exercise.name}}</li> <a class="col-lg-1" href="" ng-click="showExerciseDetails(exercise)"><msg
+						<li class="pull-left">{{exercise.exerciseModel.name}}</li> <a class="col-lg-1" href="" ng-click="showExerciseDetails(exercise)"><msg
 								key="workout.add.exercise.details"></a>
 						<a href="" class="btn btn-danger pull-left btn-xs" ng-click="removeExercise(group,exercise)">
 							<span class="glyphicon glyphicon-remove"></span>
@@ -81,23 +81,23 @@
 						<br> <br>
 						<div ng-if="exercise.clicked">
 							<div>
-								<i class="glyphicon" ng-class="(exercise.countTime) ? 'glyphicon-ok' : 'glyphicon-remove'"></i>
+								<i class="glyphicon" ng-class="(exercise.exerciseModel.countTime) ? 'glyphicon-ok' : 'glyphicon-remove'"></i>
 								<msg key="workout.add.exercise.measure.time">
 							</div>
 
 							<div>
-								<i class="glyphicon" ng-class="(exercise.countWeight) ? 'glyphicon-ok' : 'glyphicon-remove'"></i>
+								<i class="glyphicon" ng-class="(exercise.exerciseModel.countWeight) ? 'glyphicon-ok' : 'glyphicon-remove'"></i>
 								<msg key="workout.add.exercise.measure.weight">
 							</div>
 
 							<div>
-								<i class="glyphicon" ng-class="(exercise.countRepeats) ? 'glyphicon-ok' : 'glyphicon-remove'"></i>
+								<i class="glyphicon" ng-class="(exercise.exerciseModel.countRepeats) ? 'glyphicon-ok' : 'glyphicon-remove'"></i>
 								<msg key="workout.add.exercise.measure.repeats">
 							</div>
 							
 							<div>
 								<label class="underlined"><msg key="workout.add.exercise.comment"></label>
-								<p class="commentary">{{exercise.comment}}</p>
+								<p class="commentary">{{exercise.exerciseModel.comment}}</p>
 							</div>
 
 						</div>
