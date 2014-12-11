@@ -1,5 +1,6 @@
 package com.crucemelit.model;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -64,6 +65,8 @@ public @Data class User extends BaseEntity implements UserDetails, Suggestable {
     private Double weight;
 
     private Integer length;
+
+    private Timestamp timeLocked;
 
     @Temporal(TemporalType.DATE)
     private Date dateOfBirth;
