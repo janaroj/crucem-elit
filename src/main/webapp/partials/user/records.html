@@ -1,5 +1,13 @@
-<div class="pad-down"/>
-<div loading-container="tableParams.settings().$loading">
+
+<div class="page-header" ng-init="init()">
+	<nav class="clear">
+		<h2 class="pull-left">
+			<msg key="records.wod" />
+		</h2>
+	</nav>
+</div>
+
+<div loading-container="wodTableLoading">
 	<button ng-click="tableParams.filter({})" class="btn btn-default pull-right clearFilter"><msg key="clear.filter"/></button>
 	<table ng-table="tableParams" show-filter="true" class="table">
 		<tbody>
@@ -15,9 +23,37 @@
 				<td data-title="getTranslation('record.table.gym')" sortable="'gym'" filter="{ 'gym': 'text'}">{{record.gym}}</td>
 				<td data-title="getTranslation('record.table.gender')" sortable="'user.gender'" filter="{ 'user.gender': 'select' }" filter-data="genders($column)"><msg key="{{record.user.gender}}"/></td>
 				<td data-title="getTranslation('record.table.date')" sortable="'date'" filter="{ 'date': 'text' }">{{record.date | date:'dd.MM.yyyy'}}</td>
-				<td class="buttons" width="250">
+				<td class="buttons" width="250" ng-hide>
 					<button class="btn btn-danger btn-sm pull-right" ng-click="deleteResult(record)"><i class="glyphicon glyphicon-trash"></i> <msg key="delete"/></button>
 				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<div class="page-separator page-header">
+	<nav class="clear">
+		<h2 class="pull-left">
+			<msg key="records.exercises" />
+		</h2>
+	</nav>
+</div>
+
+<div loading-container="exerciseTableLoading">
+	<button ng-click="tableParams2.filter({})" class="btn btn-default pull-right clearFilter"><msg key="clear.filter"/></button>
+	<table ng-table="tableParams2" show-filter="true" class="table">
+		<tbody ng-repeat="record in $data">
+			<tr ng-repeat="result in record.exerciseResults">
+				<td data-title="getTranslation('record.table.user')" sortable="'user.name'" filter="{ 'user.name': 'text'}">
+					<a href="" ng-click="viewUser(record.user.id)">{{record.user.name}}</a>
+				</td>
+				<td data-title="getTranslation('record.table.result.repeats')" sortable="'result.repeats'" filter="{ 'result.repeats': 'text'}">{{result.repeats}}</td>
+				<td data-title="getTranslation('record.table.result.time')" sortable="'result.time'" filter="{ 'result.time': 'text'}">{{result.time}}</td>
+				<td data-title="getTranslation('record.table.result.weight')" sortable="'result.weight'" filter="{ 'result.weight': 'text'}">{{result.weight}}</td>
+				<td data-title="getTranslation('record.table.result.comment')" sortable="'result.comment'" filter="{ 'result.comment': 'text'}">{{result.comment}}</td>
+				<td data-title="getTranslation('record.table.gym')" sortable="'gym'" filter="{ 'gym': 'text'}">{{record.gym}}</td>
+				<td data-title="getTranslation('record.table.gender')" sortable="'user.gender'" filter="{ 'user.gender': 'select' }" filter-data="genders($column)"><msg key="{{record.user.gender}}"/></td>
+				<td data-title="getTranslation('record.table.date')" sortable="'date'" filter="{ 'date': 'text' }">{{record.date | date:'dd.MM.yyyy'}}</td>
 			</tr>
 		</tbody>
 	</table>

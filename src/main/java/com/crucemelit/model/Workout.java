@@ -1,5 +1,6 @@
 package com.crucemelit.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -63,11 +64,7 @@ public @Data class Workout extends BaseEntity {
     }
 
     public Result getResult() {
-        Record record = getWod().getRecord();
-        if (record != null) {
-            return record.getResult();
-        }
-        return null;
+        return getWod().getResult();
     }
 
     public ExerciseGroup getWod() {
@@ -77,6 +74,19 @@ public @Data class Workout extends BaseEntity {
             }
         }
         return null;
+    }
+
+    public List<Result> getExerciseResults() {
+        List<Result> results = new ArrayList<>();
+        for (ExerciseGroup group : getExerciseGroups()) {
+            for (Exercise exercise : group.getExercises()) {
+                Result result = exercise.getResult();
+                if (result != null) {
+                    results.add(result);
+                }
+            }
+        }
+        return results;
     }
 
 }

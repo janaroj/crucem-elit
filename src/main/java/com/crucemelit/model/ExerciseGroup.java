@@ -20,6 +20,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import com.crucemelit.dto.Result;
+
 @Entity
 @Table(name = "EXCERCISEGROUP")
 @NoArgsConstructor
@@ -51,6 +53,13 @@ public @Data class ExerciseGroup extends BaseEntity {
             exercise.setExerciseGroup(this);
         }
         this.exercises = exercises;
+    }
+
+    public Result getResult() {
+        if (record != null) {
+            return record.getResult();
+        }
+        return null;
     }
 
 }

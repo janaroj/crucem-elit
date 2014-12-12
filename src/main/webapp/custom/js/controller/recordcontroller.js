@@ -2,36 +2,56 @@
 	var app = angular.module('crucem-elit');
 
 	app.controller('RecordsController', function($scope, $rootScope, $q, $location, $filter, userService, workoutService, ngTableParams, toaster) {
-		var recordData = null;
-		$scope.tableParams = new ngTableParams({
-			page: 1,            // show first page
-			count: 10,          // count per page
-			filter: {
-				'user.name' : $scope.user.name
-			},
-			sorting: {
-				'wod' : 'asc',
-				'result.repeats' : 'desc'
-			}
-		}, {
-			total: 0,           // length of data
-			getData: function($defer, params) {
-				if (recordData===null) {
+		var wodData = [];
+		$scope.wodTableLoading = true;
+		$scope.exerciseTableLoading = true;
 
-					workoutService.getWorkoutsWithResults().then(function(result) {
-						recordData = result.data;
-						ui.util.table.prepareData($defer, $filter, params, recordData);
-					}, function(result) {
-						toaster.pop('error', $rootScope.getTranslation('records'), result.data.message);
-					});
+		$scope.init = function() {
+			workoutService.getWorkoutsWithResults().then(function(workouts) {
+				for (var i = 0; i < workouts.data.length; i++) {
+					wodData.push(workouts.data[i]);
 				}
-				else {
-					ui.util.table.prepareData($defer, $filter, params, recordData);
-				}
-			}
-		});
 
-		$scope.tableParams.settings().$loading = true;
+				$scope.tableParams = new ngTableParams({
+					page: 1,            // show first page
+					count: 10,          // count per page
+					filter: {
+						'user.name' : $scope.user.name
+					},
+					sorting: {
+						'wod' : 'asc',
+						'result.repeats' : 'desc'
+					}
+				}, {
+					total: 0,           // length of data
+					getData: function($defer, params) {
+						ui.util.table.prepareData($defer, $filter, params, wodData);
+						$scope.wodTableLoading = false;
+					}
+				});
+
+				$scope.tableParams2 = new ngTableParams({
+					page: 1,            // show first page
+					count: 10,          // count per page
+					filter: {
+						'user.name' : $scope.user.name
+					},
+					sorting: {
+						'result.repeats' : 'desc'
+					}
+				},  {
+					total: 0,           // length of data
+					getData: function($defer, params) {
+						ui.util.table.prepareData($defer, $filter, params, wodData);
+						$scope.exerciseTableLoading = false;
+					}
+				});
+
+			}, function(result) {
+				toaster.pop('error', $rootScope.getTranslation('records'), result.data.message);
+			});
+
+		}
 
 		$scope.viewGym = function(id) {
 			$location.path('/user/gyms/' + id);
@@ -52,21 +72,24 @@
 		$scope.genders = function(column) {
 			var def = $q.defer();
 			userService.getGenders().then(function(result) {
-				angular.forEach(result.data, function(item) {
-					genders.push({
-						'id' : item,
-						'title' : $scope.getTranslation(item)
+				if (genders.length == 0) {
+
+					angular.forEach(result.data, function(item) {
+						genders.push({
+							'id' : item,
+							'title' : $scope.getTranslation(item)
+						});
 					});
-				});
+				}
 				def.resolve(genders);
 			});
 			return def;
 		};
-		
+
 		$scope.deleteResult = function(record) {
 			if (confirm("Are you sure you wish to delete " + record.name + " result?")) {
 				userService.deleteResult(record.id).then(function() {
-					recordData.splice( recordData.indexOf(record), 1 );
+					wodData.splice( wodData.indexOf(record), 1 );
 					$scope.tableParams.reload();
 					toaster.pop('success', 'Record' , 'Result deleted successfully');
 				}, 
@@ -95,7 +118,7 @@
 			if (!isMissingWodResult()){
 				$scope.workout.completed = true;
 				delete $scope.workout.user;
-				delete $scope.workout.result; //Tee dto hiljem
+				delete $scope.workout.result; // Tee dto hiljem
 				workoutService.updateWorkout($scope.workout).then(
 						function(result) {
 							$location.path('/user/workouts');
