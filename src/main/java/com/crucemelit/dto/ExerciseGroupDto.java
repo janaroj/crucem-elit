@@ -26,7 +26,7 @@ public @Data class ExerciseGroupDto {
             this.id = exerciseGroup.getId();
             this.name = exerciseGroup.getName();
             this.wod = exerciseGroup.isWod();
-            this.record = exerciseGroup.getRecord();
+            // this.record = exerciseGroup.getRecord();
         }
     }
 
