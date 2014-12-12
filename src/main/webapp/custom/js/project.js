@@ -58,17 +58,66 @@ ui.util = {
 	},
 	table : {
 		prepareData : function($defer, $filter, params, data) {
+			var dateFilterObject = {};
 			//Remove empty filters
-			for(var key in params.filter()) {if(!params.filter()[key]) {delete params.filter()[key];}}
+			for(var key in params.filter()) {
+				if(!params.filter()[key]) {
+					delete params.filter()[key];
+					continue;
+				}
+				if (ui.util.isDateField(key)) {
+					data = ui.util.filterDateField(data,params.filter()[key]);
+					dateFilterObject[key] = params.filter()[key];
+					delete(params.filter()[key]);
+				}
+			}
 			
 			data = params.filter() ? $filter('filter')(data, params.filter())
 					: data;
-			data = params.sorting() ? $filter('orderBy')
-					(data, params.orderBy()) : data;
+			data = params.sorting() ? $filter('orderBy') (data, params.orderBy()) : data;
+					
+			$.each(dateFilterObject, function(key,value) {params.filter()[key] = value;});
 			params.total(data.length);
 			$defer.resolve(data.slice((params.page() - 1) * params.count(),
 					params.page() * params.count()));
 		}
+	},
+	filterDateField : function(data,value) {
+		var filteredData = [];
+		var dates = value.split(" - ");
+		if (!moment(dates[0]).isValid() || !moment(dates[1]).isValid()) {
+			return filteredData;
+		}
+
+		for ( var i in data) {
+			var date = moment(data[i]["date"]);
+			if (moment(dates[0])<=date && date<= moment(dates[1])) {
+				filteredData.push(data[i]);
+			}
+		}
+
+		return filteredData;
+	},
+	initializeDateRangePicker: function(name) {
+		$("input[name='" + name + "']").daterangepicker({
+			 format: 'YYYY-MM-DD',
+			 showDropdowns : true,
+			 endDate: moment(),
+			 maxDate: moment(),
+			 opens: 'left'
+		});
+		
+		$(".cancelBtn").on("click",function(){
+			$("input[name='" + name + "']").val("");
+			$(".clear-"+name).click();
+		});
+		
+		$(".applyBtn").on("click",function(){
+			$(".apply-"+name).click();
+		});
+	},
+	isDateField: function(str) {
+		return str.toLowerCase().indexOf("date") >= 0;
 	}
 };
 

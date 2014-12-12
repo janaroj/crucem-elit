@@ -1,7 +1,7 @@
 (function() {
 	var app = angular.module('crucem-elit');
 
-	app.controller('RecordsController', function($scope, $rootScope, $q, $location, $filter, userService, workoutService, ngTableParams, toaster) {
+	app.controller('RecordsController', function($scope, $rootScope, $q, $location, $filter, $timeout, exerciseTypeService, userService, workoutService, ngTableParams, toaster) {
 		var wodData = [];
 		$scope.wodTableLoading = true;
 		$scope.exerciseTableLoading = true;
@@ -26,6 +26,7 @@
 					total: 0,           // length of data
 					getData: function($defer, params) {
 						ui.util.table.prepareData($defer, $filter, params, wodData);
+						ui.util.initializeDateRangePicker('daterange1');
 						$scope.wodTableLoading = false;
 					}
 				});
@@ -42,7 +43,8 @@
 				},  {
 					total: 0,           // length of data
 					getData: function($defer, params) {
-						ui.util.table.prepareData($defer, $filter, params, wodData);
+						ui.util.table.prepareData($defer, $filter, params, getExerciseData(wodData));
+						ui.util.initializeDateRangePicker('daterange2');
 						$scope.exerciseTableLoading = false;
 					}
 				});
@@ -51,7 +53,43 @@
 				toaster.pop('error', $rootScope.getTranslation('records'), result.data.message);
 			});
 
-		}
+		};
+		
+		var getExerciseData = function(workouts) {
+			var exerciseData = [];
+			angular.forEach(workouts, function(value) {
+				for (var i = 0; i < value.exerciseGroups.length ; i++) {
+					for (var j = 0; j < value.exerciseGroups[i].exercises.length; j++) {
+						var ex = value.exerciseGroups[i].exercises[j];
+						ex.user = value.user;
+						ex.gym = value.gym;
+						ex.date = value.date;
+						exerciseData.push(ex);
+					}
+				}
+			});
+			return exerciseData;
+		};
+		
+		$scope.clearDateFilterFirstTable = function() {
+			delete($scope.tableParams.filter().date);
+		};
+		
+		$scope.applyDateFilterFirstTable = function() {
+			$timeout(function(){$scope.tableParams.filter()["date"] = $("input[name=daterange1]").val();});
+		};
+		
+		$scope.clearDateFilterSecondTable = function() {
+			delete($scope.tableParams2.filter().date);
+		};
+		
+		$scope.applyDateFilterSecondTable = function() {
+			$timeout(function(){$scope.tableParams2.filter()["date"] = $("input[name=daterange2]").val();});
+		};
+		
+		$scope.viewWorkout = function(workout) {
+			$location.path('/user/workout/view/' + workout.id);
+		};
 
 		$scope.viewGym = function(id) {
 			$location.path('/user/gyms/' + id);
@@ -72,7 +110,6 @@
 		$scope.genders = function(column) {
 			var def = $q.defer();
 			userService.getGenders().then(function(result) {
-				if (genders.length == 0) {
 
 					angular.forEach(result.data, function(item) {
 						genders.push({
@@ -80,12 +117,27 @@
 							'title' : $scope.getTranslation(item)
 						});
 					});
-				}
 				def.resolve(genders);
 			});
 			return def;
 		};
-
+		
+		$scope.exerciseTypeOptions = function(column) {
+			var def = $q.defer();
+			var typeOptions = [];
+			exerciseTypeService.getExerciseTypes().then(function(result) {
+				$scope.exerciseTypes = result.data;
+				angular.forEach(result.data, function(item) {
+					typeOptions.push({
+						'id' : item.id,
+						'title' : item.name
+					});
+				});
+				def.resolve(typeOptions);
+			});
+			return def;
+		};
+		
 		$scope.deleteResult = function(record) {
 			if (confirm("Are you sure you wish to delete " + record.name + " result?")) {
 				userService.deleteResult(record.id).then(function() {
@@ -109,6 +161,7 @@
 		$scope.init = function() {
 			userService.getWorkout($routeParams.id).then(function(result) {
 				$scope.workout = result.data;
+				$scope.finishedLoading = true;
 			}, function(result) {
 				toaster.pop('error', $rootScope.getTranslation('workout'), result.data.message);
 			});

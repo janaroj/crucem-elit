@@ -18,11 +18,14 @@ public @Data class ExerciseGroupDto {
 
     private boolean wod;
 
+    private Result record;
+
     public ExerciseGroupDto(ExerciseGroup exerciseGroup) {
         if (exerciseGroup != null) {
             this.id = exerciseGroup.getId();
             this.name = exerciseGroup.getName();
             this.wod = exerciseGroup.isWod();
+            this.record = exerciseGroup.getResult();
         }
     }
 

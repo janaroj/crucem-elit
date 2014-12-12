@@ -31,7 +31,7 @@ public @Data class ExerciseModel extends BaseEntity {
     @Column(nullable = false)
     private String name;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "exerciseTypeId")
     private ExerciseType exerciseType;
 

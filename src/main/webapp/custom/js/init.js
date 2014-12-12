@@ -7,6 +7,18 @@
 	app.run(function ($rootScope, $http, $location, $cookieStore, $filter, authService, userService, toaster) {
 		
 		var friends = null;
+		
+		$rootScope.getDateFormat = function() {
+			return 'dd.MM.yyyy';
+		};
+		
+		$rootScope.getTimeFormat = function() {
+			return 'HH:mm:ss';
+		};
+		
+		$rootScope.getDateTimeFormat = function() {
+			return $rootScope.getTimeFormat() + " " + $rootScope.getDateFormat();
+		};
 
 		$rootScope.hasRole = function (role) {
 

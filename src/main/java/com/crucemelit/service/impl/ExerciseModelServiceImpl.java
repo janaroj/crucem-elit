@@ -24,7 +24,7 @@ public class ExerciseModelServiceImpl implements ExerciseModelService {
 
     @Override
     public List<ExerciseModel> getExerciseModels() {
-        return exerciseModelRepository.findAll();
+        return exerciseModelRepository.findAllWithTypes();
     }
 
     @Override

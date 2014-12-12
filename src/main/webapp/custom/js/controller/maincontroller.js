@@ -38,7 +38,11 @@
 		
 		$scope.newWorkout = function() {
 			$location.path('/user/workout/add');
-		}
+		};
+		
+		$scope.viewWorkout = function(workout) {
+			$location.path('/user/workout/view/' + workout.id);
+		};
 		
 	});
 	

@@ -19,9 +19,9 @@
 							<table class="table table-user-information">
 								<tbody>
 									<tr ng-repeat="workout in workouts">
-										<td class="mainTable">{{workout.name}}</td>
+										<td class="mainTable"><a href="" ng-click="viewWorkout(workout)">{{workout.name}}</a></td>
                                         <td> {{workout.wod}}</td>
-                                        <td> {{workout.date | date:'dd.MM.yyyy'}}</td>
+                                        <td> {{workout.date | date:getDateFormat()}}</td>
 									</tr>
 								</tbody>
 							</table>

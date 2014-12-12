@@ -2,8 +2,8 @@ package com.crucemelit.model;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -37,8 +37,8 @@ public class WorkoutTest {
         assertEquals(wodExerciseGroup, workout.getWod());
     }
 
-    private List<ExerciseGroup> createExerciseGroups() {
-        List<ExerciseGroup> exerciseGroups = new ArrayList<>();
+    private Set<ExerciseGroup> createExerciseGroups() {
+        Set<ExerciseGroup> exerciseGroups = new HashSet<>();
         exerciseGroups.add(createExerciseGroup(GROUP1, false, RESULT1));
         exerciseGroups.add(wodExerciseGroup);
         exerciseGroups.add(createExerciseGroup(GROUP2, false, RESULT2));

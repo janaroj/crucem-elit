@@ -112,8 +112,6 @@
 		};
 
 	});
-
-	
 	
 	
 	app.controller('AdminExerciseController', function($scope, $location, exerciseService, exerciseTypeService, toaster) {

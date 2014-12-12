@@ -1,8 +1,7 @@
 package com.crucemelit.model;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -27,7 +26,7 @@ import com.crucemelit.dto.Result;
 @Entity
 @Table(name = "WORKOUT")
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = false, of = { "id" })
 public @Data class Workout extends BaseEntity {
 
     @Id
@@ -54,9 +53,9 @@ public @Data class Workout extends BaseEntity {
     private boolean completed;
 
     @OneToMany(mappedBy = "workout", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ExerciseGroup> exerciseGroups;
+    private Set<ExerciseGroup> exerciseGroups;
 
-    public void setExerciseGroups(List<ExerciseGroup> groups) {
+    public void setExerciseGroups(Set<ExerciseGroup> groups) {
         for (ExerciseGroup group : groups) {
             group.setWorkout(this);
         }
@@ -74,19 +73,6 @@ public @Data class Workout extends BaseEntity {
             }
         }
         return null;
-    }
-
-    public List<Result> getExerciseResults() {
-        List<Result> results = new ArrayList<>();
-        for (ExerciseGroup group : getExerciseGroups()) {
-            for (Exercise exercise : group.getExercises()) {
-                Result result = exercise.getResult();
-                if (result != null) {
-                    results.add(result);
-                }
-            }
-        }
-        return results;
     }
 
 }

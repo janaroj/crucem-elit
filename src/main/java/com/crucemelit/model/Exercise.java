@@ -21,7 +21,7 @@ import com.crucemelit.dto.Result;
 @Entity
 @Table(name = "EXCERCISE")
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = false, of = { "id" })
 public @Data class Exercise extends BaseEntity {
 
     @Id
@@ -29,11 +29,11 @@ public @Data class Exercise extends BaseEntity {
     @Column(name = "id", unique = true, nullable = false)
     private long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "exerciseModelId")
     private ExerciseModel exerciseModel;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "exerciseGroupId")
     private ExerciseGroup exerciseGroup;
 

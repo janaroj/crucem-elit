@@ -39,7 +39,7 @@ public class WorkoutServiceImpl implements WorkoutService {
 
     @Override
     public List<WorkoutDto> getWorkoutsWithExerciseGroupsDto() {
-        return workoutTransformer.transformToDtoWithExerciseGroups(workoutRepository.findAll());
+        return workoutTransformer.transformToDtoWithExerciseGroups(workoutRepository.findCompletedWithResults());
     }
 
     @Override

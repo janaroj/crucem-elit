@@ -23,6 +23,7 @@
 					total: 0,           // length of data
 					getData: function($defer, params) {
 						ui.util.table.prepareData($defer, $filter, params,newWorkoutData);
+						ui.util.initializeDateRangePicker('daterange1');
 						$scope.newTableLoading = false;
 					}
 				});
@@ -35,6 +36,7 @@
 					total: 0,           // length of data
 					getData: function($defer, params) {
 						ui.util.table.prepareData($defer, $filter, params, doneWorkoutData);
+						ui.util.initializeDateRangePicker('daterange2');
 						$scope.doneTableLoading = false;
 					}
 				});
@@ -43,10 +45,26 @@
 			});
 		};
 		
-		$scope.fillWorkout = function(workout) {
-			$location.path('/user/workout/fill/' + workout.id);
-		}
-
+		$scope.clearDateFilterFirstTable = function() {
+			delete($scope.tableParams1.filter().date);
+		};
+		
+		$scope.applyDateFilterFirstTable = function() {
+			$timeout(function(){$scope.tableParams1.filter()["date"] = $("input[name=daterange1]").val();});
+		};
+		
+		$scope.clearDateFilterSecondTable = function() {
+			delete($scope.tableParams2.filter().date);
+		};
+		
+		$scope.applyDateFilterSecondTable = function() {
+			$timeout(function(){$scope.tableParams2.filter()["date"] = $("input[name=daterange2]").val();});
+		};
+		
+		$scope.viewWorkout = function(workout) {
+			$location.path('/user/workout/view/' + workout.id);
+		};
+		
 		$scope.newWorkout = function() {
 			$location.path('/user/workout/add');
 		};

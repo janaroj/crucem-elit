@@ -65,7 +65,7 @@
 								<div class="col-xs-9 col-md-10">
 									<div>
 										<div class="mic-info">
-											<a href="" ng-click="viewUser(comment.user.id)">{{comment.user.name}}</a>  {{ comment.date | date:'HH:mm:ss dd.MM.yyyy'}}
+											<a href="" ng-click="viewUser(comment.user.id)">{{comment.user.name}}</a>  {{ comment.date | date: getDateTimeFormat()}}
 										</div>
 									</div>
 									<div class="comment-text">{{comment.text}}</div>

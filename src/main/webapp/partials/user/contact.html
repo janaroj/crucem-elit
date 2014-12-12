@@ -61,7 +61,7 @@
 										<td class="pdgnContact"><msg key="dateOfBirth" /></td>
 										<td><div class="col-lg-5">
 										<input type="text" class="form-control" ng-model="contact.dateOfBirth" ng-cloak ng-show="isChangeInProgress" datepicker-popup="{{format}}" placeholder="{{format}}" is-open="opened" max-date="maxDate" show-button-bar=false datepicker-append-to-body=true style:display:inline;>
-										<p class="form-control-static" ng-cloak ng-hide="isChangeInProgress">{{contact.dateOfBirth | date:'dd.MM.yyyy'}}</p></div>
+										<p class="form-control-static" ng-cloak ng-hide="isChangeInProgress">{{contact.dateOfBirth | date:getDateFormat()}}</p></div>
 										<a class="btn btn-default" ng-click="open($event)" ng-cloak ng-show="isChangeInProgress">
 											<i class="glyphicon glyphicon-calendar" ng-cloak ng-show="isChangeInProgress"></i>
 										</a></td>

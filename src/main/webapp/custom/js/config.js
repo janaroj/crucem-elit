@@ -97,7 +97,7 @@
 			templateUrl: 'partials/admin/users.html',
 			resolve: {authentication : function(CheckAuthentication) {return CheckAuthentication();}}
 		})
-		.when('/user/workout/fill/:id', {
+		.when('/user/workout/view/:id', {
 			controller: 'RecordController',
 			templateUrl: 'partials/user/fillworkout.html',
 			resolve: {authentication : function(CheckAuthentication) {return CheckAuthentication();}}

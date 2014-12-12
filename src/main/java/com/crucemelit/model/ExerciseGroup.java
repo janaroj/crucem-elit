@@ -22,10 +22,11 @@ import lombok.ToString;
 
 import com.crucemelit.dto.Result;
 
+
 @Entity
 @Table(name = "EXCERCISEGROUP")
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = false, of = { "id" })
 @ToString(of = { "id", "name", "wod", "record" })
 public @Data class ExerciseGroup extends BaseEntity {
 

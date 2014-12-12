@@ -5,8 +5,9 @@
 				<div class="panel-heading">
 					<h1 class="workout-header">{{workout.name}}</h1>
 				</div>
-				<div class="panel-body">
+				<div class="panel-body" ng-show="finishedLoading">
 					<form id="form" class="form-horizontal" role="form" name="form" ng-submit="saveFilledWorkout()">
+					<fieldset ng-disabled="workout.completed"> 
 						<div class="form-group">
 							<label class="col-lg-2"><msg key=workout.fill.date></label>
 							<div>
@@ -33,7 +34,7 @@
 							<div class="form-group">
 								<div class="underlined">
 									<h3 class="bottom-padding">
-										{{group.name}}<span ng-if="group.wod">-WOD</span>
+										{{group.name}}<span ng-if="group.wod"> - WOD</span>
 									</h3>
 								</div>
 								<div ng-if="group.wod" class="form-group">
@@ -129,7 +130,7 @@
 								<hr class="padding-hr">
 								</div>
 							</div>
-							<div class="form-group">
+							<div class="form-group" ng-if="!workout.completed">
 								<label class="col-md-3 control-label"></label>
 								<div class="col-md-8">
 									<button type="submit" class="btn btn-primary" ng-disabled="form.$invalid">
@@ -137,6 +138,7 @@
 									</button>
 								</div>
 							</div>
+						</fieldset>
 					</form>
 
 				</div>
