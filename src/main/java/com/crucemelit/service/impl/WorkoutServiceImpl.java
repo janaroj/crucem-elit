@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.crucemelit.dto.WorkoutDto;
+import com.crucemelit.model.Exercise;
 import com.crucemelit.model.ExerciseGroup;
 import com.crucemelit.model.User;
 import com.crucemelit.model.Workout;
@@ -51,6 +52,11 @@ public class WorkoutServiceImpl implements WorkoutService {
         for (ExerciseGroup group : workout.getExerciseGroups()) {
             if (group.getRecord() != null) {
                 group.getRecord().setExerciseGroup(group);
+                for (Exercise exercise : group.getExercises()) {
+                    if (exercise.getRecord() != null) {
+                        exercise.getRecord().setExercise(exercise);
+                    }
+                }
             }
         }
         workoutRepository.saveAndFlush(workout);
