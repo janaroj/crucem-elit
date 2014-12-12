@@ -52,10 +52,10 @@ public class WorkoutServiceImpl implements WorkoutService {
         for (ExerciseGroup group : workout.getExerciseGroups()) {
             if (group.getRecord() != null) {
                 group.getRecord().setExerciseGroup(group);
-                for (Exercise exercise : group.getExercises()) {
-                    if (exercise.getRecord() != null) {
-                        exercise.getRecord().setExercise(exercise);
-                    }
+            }
+            for (Exercise exercise : group.getExercises()) {
+                if (exercise.getRecord() != null) {
+                    exercise.getRecord().setExercise(exercise);
                 }
             }
         }
