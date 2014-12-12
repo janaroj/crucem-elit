@@ -9,10 +9,10 @@
         </h1>
     </div>
     <div class="panel-body">
-	<form id="form" class="form-horizontal" role="form" name="form" ng-submit="createWorkout()" novalidate show-validation>
+	<form id="form" class="form-horizontal" role="form" name="form" ng-submit="createWorkout()">
 		<div class="form-group">
-			<label class="col-lg-2"><msg key="workout.add.name" /></label>
-			<div>
+			<label class="col-lg-2 pull-left"><msg key="workout.add.name" /></label>
+			<div class="pull-left">
 				<input type="text" ng-model="workout.name" class="text-name" required>
 			</div>
 		</div>
