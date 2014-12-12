@@ -1,5 +1,6 @@
 package com.crucemelit.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -34,7 +35,7 @@ public @Data class Exercise extends BaseEntity {
     @JoinColumn(name = "exerciseGroupId")
     private ExerciseGroup exerciseGroup;
 
-    @OneToOne(mappedBy = "exercise", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "exercise", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Record record;
 
 }

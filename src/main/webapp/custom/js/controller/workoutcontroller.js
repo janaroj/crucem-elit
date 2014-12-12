@@ -106,12 +106,13 @@
 		};
 		
 		$scope.isWodSelected = function() {
+			var wodAmount = 0;
 			for (var i = 0; i < $scope.workout.exerciseGroups.length; i++) {
 				if ( $scope.workout.exerciseGroups[i].wod) {
-					return true;
+					wodAmount++;
 				}
 			}
-			return false;
+			return wodAmount === 1;
 		};
 		
 		$scope.isMissingExercises = function() {

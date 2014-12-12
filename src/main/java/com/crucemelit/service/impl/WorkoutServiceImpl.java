@@ -37,8 +37,8 @@ public class WorkoutServiceImpl implements WorkoutService {
     }
 
     @Override
-    public List<WorkoutDto> getUserWorkoutsWithExerciseGroupsDto(User user) {
-        return workoutTransformer.transformToDtoWithExerciseGroups(workoutRepository.findAllByUser(user));
+    public List<WorkoutDto> getWorkoutsWithExerciseGroupsDto() {
+        return workoutTransformer.transformToDtoWithExerciseGroups(workoutRepository.findAll());
     }
 
     @Override
@@ -64,8 +64,8 @@ public class WorkoutServiceImpl implements WorkoutService {
     @Override
     public List<WorkoutDto> getUserUpcomingWorkoutsDto(User currentUser) {
         Pageable topFive = new PageRequest(0, 5);
-        return workoutTransformer.transformToDto(workoutRepository.findByUserAndCompletedFalseOrderByDateAsc(
-                currentUser, topFive));
+        return workoutTransformer.transformToDto(workoutRepository.findByUserAndCompletedFalseOrderByDateAsc(currentUser,
+                topFive));
     }
 
 }

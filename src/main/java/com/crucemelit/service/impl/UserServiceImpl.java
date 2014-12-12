@@ -210,7 +210,6 @@ public class UserServiceImpl implements UserService {
                 password);
         User user = (User) loadUserByUsername(username);
         if (Minutes.minutesBetween(new DateTime(user.getTimeLocked()), new DateTime(new Date())).getMinutes() > 15) {
-            System.out.println("*************************************************");
             user.setInvalidLoginCount(0);
             user.setTimeLocked(null);
         }
