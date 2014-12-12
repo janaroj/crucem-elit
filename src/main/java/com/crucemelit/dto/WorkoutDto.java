@@ -29,6 +29,8 @@ public @Data class WorkoutDto {
 
     private List<Result> exerciseResults;
 
+    private List<ExerciseGroupDto> exerciseGroups;
+
     private Boolean completed;
 
     public WorkoutDto(Workout workout) {
