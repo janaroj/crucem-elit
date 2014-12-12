@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import com.crucemelit.model.ExerciseGroup;
-import com.crucemelit.model.Record;
 
 @NoArgsConstructor
 public @Data class ExerciseGroupDto {
@@ -19,14 +18,11 @@ public @Data class ExerciseGroupDto {
 
     private boolean wod;
 
-    private Record record;
-
     public ExerciseGroupDto(ExerciseGroup exerciseGroup) {
         if (exerciseGroup != null) {
             this.id = exerciseGroup.getId();
             this.name = exerciseGroup.getName();
             this.wod = exerciseGroup.isWod();
-            // this.record = exerciseGroup.getRecord();
         }
     }
 

@@ -16,6 +16,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import com.crucemelit.dto.Result;
+
 @Entity
 @Table(name = "EXCERCISE")
 @NoArgsConstructor
@@ -37,5 +39,12 @@ public @Data class Exercise extends BaseEntity {
 
     @OneToOne(mappedBy = "exercise", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Record record;
+
+    public Result getResult() {
+        if (record != null) {
+            return record.getResult();
+        }
+        return null;
+    }
 
 }
