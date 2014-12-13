@@ -1,0 +1,17 @@
+<!-- Default Validation Template -->
+<div ng-messages="field.$error" class="validation">
+     <!-- Show errors for invalid fields, when it has been either focused, has been changed or the user tried to submit the form without success (requires the setDirtyOnSubmit-option to be set-->
+    <ul class="list-unstyled validation-errors" ng-show="field.$invalid && field.$touched && (field.$dirty || form.$triedSubmit)">
+        <li ng-message="required"><msg key="error.required"/></li>
+        <li ng-message="password"><msg key="error.password"></li>
+        <li ng-message="email"> <msg key="email.invalid"/></li>
+        <li ng-message="number"><msg key="error.number"/></li>
+        <li ng-message="minlength"><msg key="error.minlength"/> {{ attrs.minlength }} <msg key="error.characters"/></li>
+        <li ng-message="maxlength"><msg key="error.maxLength"/> {{ attrs.maxlength }}  <msg key="error.characters"/></li>
+
+    </ul>
+    <!-- It is also possible to show a success element using the standard form syntax -->
+    <div class="validation-success"
+         ng-show="field.$valid && !field.$invalid && field.$dirty && !field.$pristine">
+    </div>
+</div>

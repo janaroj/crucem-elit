@@ -51,7 +51,7 @@
 		<tbody>
 			<tr ng-repeat="exercise in $data">
 				<td data-title="getTranslation('record.table.user')" sortable="'user.name'" filter="{ 'user.name': 'text'}">
-					<a href="" ng-click="viewUser(workout.user.id)">{{exercise.user.name}}</a>
+					<a href="" ng-click="viewUser(exercise.user.id)">{{exercise.user.name}}</a>
 				</td>
 				<td data-title="getTranslation('record.table.exerciseModel.exerciseType.name')" sortable="'exerciseModel.exerciseType.name'" filter="{ 'exerciseModel.exerciseType': 'select'}" filter-data="exerciseTypeOptions($column)">{{exercise.exerciseModel.exerciseType.name}}</td>
 				<td data-title="getTranslation('record.table.exerciseModel.name')" sortable="'exerciseModel.name'" filter="{ 'exerciseModel.name': 'text'}">{{exercise.exerciseModel.name}}</td>

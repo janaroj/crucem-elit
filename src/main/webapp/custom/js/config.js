@@ -2,7 +2,8 @@
 
 	app = angular.module('crucem-elit');
 
-	app.config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
+	app.config(['$routeProvider', '$httpProvider', 'ngFabFormProvider',function($routeProvider, $httpProvider,ngFabFormProvider) {
+		
 		//configure the routing of ng-view
 		$routeProvider
 		.when('/', {
@@ -105,6 +106,11 @@
 		.otherwise({ redirectTo : "/"});
 		
 	    $httpProvider.interceptors.push('interceptor');
+	    
+	    ngFabFormProvider.extendConfig({
+	    	setAsteriskForRequiredLabel: true,
+	    	validationsTemplate : 'partials/validation.html'
+	    });
 	    
 	}]);
 	
