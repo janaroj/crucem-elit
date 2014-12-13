@@ -7,8 +7,15 @@
 <div loading-container="tableParams.settings().$loading">
 	<button ng-click="tableParams.filter({})" class="btn btn-default pull-right"><msg key="clear.filter"/></button>
 	<table ng-table="tableParams" show-filter="true" class="table">
-		<tbody>
-			<tr ng-repeat="user in $data">
+		<tbody ng-repeat="group in $groups">
+			<tr class="ng-table-group">
+				<td colspan="{{$columns.length}}">
+					<a href="" ng-click="group.$hideRows = !group.$hideRows"> 
+					<span class="glyphicon" ng-class="{ 'glyphicon-chevron-right': group.$hideRows, 'glyphicon-chevron-down': !group.$hideRows }"></span><strong>{{ getTranslation(group.value) }}</strong>
+					</a>
+				</td>
+			</tr>
+			<tr ng-hide="group.$hideRows" ng-repeat="user in group.data">
 				<td data-title="getTranslation('user.email')" sortable="'email'" filter="{ 'email': 'text' }">
 					<a href="" ng-click="viewUser(user.id)">{{user.email}}</a>
 				</td>

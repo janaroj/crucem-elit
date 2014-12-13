@@ -26,7 +26,7 @@
 				<td data-title="getTranslation('record.table.gym')" sortable="'gym'" filter="{ 'gym': 'text'}">{{workout.gym}}</td>
 				<td data-title="getTranslation('record.table.gender')" sortable="'user.gender'" filter="{ 'user.gender': 'select' }" filter-data="genders($column)"><msg key="{{workout.user.gender}}"/></td>
 				<td data-title="getTranslation('record.table.date')" sortable="'date'" filter="{ 'date': 'text' , '$$name' : 'daterange1' }">{{workout.date | date: getDateFormat()}}</td>
-				<td class="buttons" width="250" ng-hide>
+				<td class="buttons">
 					<button class="btn btn-danger btn-sm pull-right" ng-click="deleteResult(workout)"><i class="glyphicon glyphicon-trash"></i> <msg key="delete"/></button>
 				</td>
 			</tr>
@@ -47,9 +47,24 @@
 
 <div loading-container="exerciseTableLoading">
 	<button ng-click="tableParams2.filter({})" class="btn btn-default pull-right clearFilter"><msg key="clear.filter"/></button>
+	<msg key="group.by"/>
+    <select ng-model="groupby">
+        <option value="exerciseModel.exerciseType.name">{{ getTranslation("record.table.exerciseModel.exerciseType.name") }}</option>
+        <option value="exerciseModel.name">{{ getTranslation("record.table.exerciseModel.name") }}</option>
+        <option value="user.name">{{ getTranslation("record.table.user") }}</option>
+        <option value="gym">{{ getTranslation("record.table.gym") }}</option>
+    </select>
+    <br>
 	<table ng-table="tableParams2" show-filter="true" class="table">
-		<tbody>
-			<tr ng-repeat="exercise in $data">
+		<tbody ng-repeat="group in $groups">
+			<tr class="ng-table-group">
+				<td colspan="{{$columns.length}}">
+					<a href="" ng-click="group.$hideRows = !group.$hideRows"> 
+					<span class="glyphicon" ng-class="{ 'glyphicon-chevron-right': group.$hideRows, 'glyphicon-chevron-down': !group.$hideRows }"></span><strong>{{ group.value }}</strong>
+					</a>
+				</td>
+			</tr>
+			<tr ng-hide="group.$hideRows" ng-repeat="exercise in group.data">
 				<td data-title="getTranslation('record.table.user')" sortable="'user.name'" filter="{ 'user.name': 'text'}">
 					<a href="" ng-click="viewUser(exercise.user.id)">{{exercise.user.name}}</a>
 				</td>

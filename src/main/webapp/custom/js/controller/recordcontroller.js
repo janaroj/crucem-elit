@@ -5,6 +5,7 @@
 		var wodData = [];
 		$scope.wodTableLoading = true;
 		$scope.exerciseTableLoading = true;
+		$scope.groupby = 'exerciseModel.exerciseType.name';
 
 		$scope.init = function() {
 			workoutService.getWorkoutsWithResults().then(function(workouts) {
@@ -33,14 +34,23 @@
 
 				$scope.tableParams2 = new ngTableParams({
 					page: 1,            // show first page
-					count: 10,          // count per page
+					count: 100,          // count per page
 					filter: {
 						'user.name' : $scope.user.name
 					},
 					sorting: {
-						'result.repeats' : 'desc'
+						'record.repeats' : 'desc',
+						'record.time' : 'desc',
+						'record.weight' : 'desc'
 					}
 				},  {
+					groupBy:  function(exercise) {
+						var path = $scope.groupby.split('.');
+						for(var i = 0; i < path.length; i++){
+							exercise = exercise[path[i]];
+						}
+						return exercise;
+					},
 					total: 0,           // length of data
 					getData: function($defer, params) {
 						ui.util.table.prepareData($defer, $filter, params, getExerciseData(wodData));
@@ -105,6 +115,12 @@
 			}
 		});
 
+		$scope.$watch('groupby', function(value){
+			if ($scope.tableParams2) {
+				$scope.tableParams2.reload();
+			}
+		});
+		
 		var genders = [];
 
 		$scope.genders = function(column) {

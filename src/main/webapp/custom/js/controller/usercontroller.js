@@ -5,11 +5,14 @@
 		var userData = null;
 		$scope.tableParams = new ngTableParams({
 			page: 1,            // show first page
-			count: 10,          // count per page
+			count: 100,          // count per page
 			sorting: {
 				email : 'asc'
 			}
 		}, {
+			groupBy : function(value) {
+				return value.role;
+			}, 
 			total: 0,           // length of data
 			getData: function($defer, params) {
 				if (userData===null) {
