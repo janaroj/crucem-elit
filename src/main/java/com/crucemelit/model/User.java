@@ -238,18 +238,4 @@ public @Data class User extends BaseEntity implements UserDetails, Suggestable {
         throw new EntityNotFoundException();
     }
 
-    public void removeRecord(long id) {
-        for (Workout workout : getWorkouts()) {
-            if (workout.getId() == id) {
-                for (ExerciseGroup exerciseGroup : workout.getExerciseGroups()) {
-                    if (exerciseGroup.isWod()) {
-                        exerciseGroup.setRecord(null);
-                        return;
-                    }
-                }
-            }
-        }
-        throw new EntityNotFoundException();
-    }
-
 }

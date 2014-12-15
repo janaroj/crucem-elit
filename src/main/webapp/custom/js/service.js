@@ -148,9 +148,6 @@
 		this.addWorkout = function(workout) {
 			return $http.post("/api/user/workouts", workout);
 		};
-		this.deleteResult = function(id) {
-			return $http.delete('/api/user/record/' + id);
-		};
 		this.createComment = function(comment) {
 			return $http.post("/api/user/comments", comment);
 		};

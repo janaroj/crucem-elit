@@ -261,13 +261,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUserRecordById(long id) {
-        User user = getCurrentUser();
-        user.removeRecord(id);
-        userRepository.saveAndFlush(user);
-    }
-
-    @Override
     public List<UserDto> getUsersWithAuthInfo() {
         return userTransformer.transformToDtoWithAuthInfo(userRepository.findAll());
     }

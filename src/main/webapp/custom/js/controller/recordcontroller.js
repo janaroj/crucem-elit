@@ -155,16 +155,30 @@
 		};
 		
 		$scope.deleteResult = function(record) {
-			if (confirm("Are you sure you wish to delete " + record.name + " result?")) {
-				userService.deleteResult(record.id).then(function() {
+			if (confirm($rootScope.getTranslation('record.delete.confirm'))) {
+				userService.deleteWorkout(record.id).then(function() {
 					wodData.splice( wodData.indexOf(record), 1 );
 					$scope.tableParams.reload();
-					toaster.pop('success', 'Record' , 'Result deleted successfully');
+					$scope.tableParams2.reload();
+					toaster.pop('success', $rootScope.getTranslation('record') , $rootScope.getTranslation('workout.deleted.successfully'));
 				}, 
 				function(result) {
-					toaster.pop('error', 'Record', result.data.message);
+					toaster.pop('error', $rootScope.getTranslation('record'), result.data.message);
 				});
 			}
+		};
+		
+		$scope.isAllowedToDelete = function(workout) {
+			return workout.user.id === $scope.user.id;
+		};
+		
+		$scope.sum = function(data, path) {
+			var sum = 0;
+			angular.forEach(data, function(value) {
+				if (value.record) {sum += value.record[path];}
+			});
+			if (sum === 0) {return "";}
+			return sum;
 		};
 
 	});

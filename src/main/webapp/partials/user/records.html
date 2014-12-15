@@ -26,7 +26,7 @@
 				<td data-title="getTranslation('record.table.gym')" sortable="'gym'" filter="{ 'gym': 'text'}">{{workout.gym}}</td>
 				<td data-title="getTranslation('record.table.gender')" sortable="'user.gender'" filter="{ 'user.gender': 'select' }" filter-data="genders($column)"><msg key="{{workout.user.gender}}"/></td>
 				<td data-title="getTranslation('record.table.date')" sortable="'date'" filter="{ 'date': 'text' , '$$name' : 'daterange1' }">{{workout.date | date: getDateFormat()}}</td>
-				<td class="buttons">
+				<td class="buttons" ng-if="isAllowedToDelete(workout)">
 					<button class="btn btn-danger btn-sm pull-right" ng-click="deleteResult(workout)"><i class="glyphicon glyphicon-trash"></i> <msg key="delete"/></button>
 				</td>
 			</tr>
@@ -58,11 +58,14 @@
 	<table ng-table="tableParams2" show-filter="true" class="table">
 		<tbody ng-repeat="group in $groups">
 			<tr class="ng-table-group">
-				<td colspan="{{$columns.length}}">
+				<td colspan="3">
 					<a href="" ng-click="group.$hideRows = !group.$hideRows"> 
 					<span class="glyphicon" ng-class="{ 'glyphicon-chevron-right': group.$hideRows, 'glyphicon-chevron-down': !group.$hideRows }"></span><strong>{{ group.value }}</strong>
 					</a>
 				</td>
+				<td><strong>{{ sum(group.data, 'repeats') }}</strong></td>
+				<td><strong>{{ sum(group.data, 'time') }}</strong></td>
+				<td><strong>{{ sum(group.data, 'weight') }}</strong></td>
 			</tr>
 			<tr ng-hide="group.$hideRows" ng-repeat="exercise in group.data">
 				<td data-title="getTranslation('record.table.user')" sortable="'user.name'" filter="{ 'user.name': 'text'}">

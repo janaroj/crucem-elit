@@ -198,12 +198,6 @@ public class UserController {
         return new ResponseEntity<String>("Success", HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/record/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<String> deleteRecordById(@PathVariable long id) {
-        userService.deleteUserRecordById(id);
-        return new ResponseEntity<String>("Success", HttpStatus.OK);
-    }
-
     @RequestMapping(value = "/workouts/results")
     public List<WorkoutDto> getWorkouts() {
         return workoutService.getWorkoutsWithResultsDto();
