@@ -164,14 +164,87 @@
 				}
 			});
 
-			modalInstance.result.then(
-			function (exercises) {
+			modalInstance.result.then(function (exercises) {
 				exerciseGroup.exercises.push.apply(exerciseGroup.exercises, exercises);
+			});
+		};
+		
+		$scope.openWorkoutModal = function() {
+			var modalInstance = $modal.open({
+				templateUrl: 'partials/user/workoutsuggestions.html',
+				controller: 'WorkoutSuggestionController',
+				resolve: {
+					workoutData: function () {
+						return userService.getWorkoutSuggestions();
+					}
+				}
+			});
+
+			modalInstance.result.then(function (workout) {
+				$scope.workout = workout;
 			});
 		};
 
 
 	});
-
+	
+	app.controller('WorkoutSuggestionController', function($scope, $filter, $modalInstance, ngTableParams, workoutData, toaster) {
+		
+		$scope.ok = function (workout) {
+			$modalInstance.close(getWorkoutDto(workout));
+		};
+		
+		$scope.cancel = function () {
+			$modalInstance.dismiss('cancel');
+		};
+		
+		var getWorkoutDto = function(workout) {
+			var workoutDto = {};
+			workoutDto.comment = workout.comment;
+			workoutDto.date = workout.date;
+			workoutDto.name = workout.name;
+			workoutDto.wod = workout.wod;
+			workoutDto.exerciseGroups = getExerciseGroupsDto(workout.exerciseGroups);
+			return workoutDto;
+		};
+		
+		var getExerciseGroupsDto = function(groups) {
+			var groupsDto = [];
+			angular.forEach(groups, function(group) {
+				var groupDto = {};
+				groupDto.name = group.name;
+				groupDto.wod = group.wod;
+				groupDto.exercises = getExercisesDto(group.exercises);
+				groupsDto.push(groupDto);
+			});
+			return groupsDto;
+		};
+		
+		var getExercisesDto = function(exercises) {
+			var exercisesDto = [];
+			angular.forEach(exercises, function(exercise) {
+				var exerciseDto = {};
+				exerciseDto.exerciseModel = exercise.exerciseModel;
+				exercisesDto.push(exerciseDto);
+			});
+			return exercisesDto;
+		};
+		
+		$scope.tableParams = new ngTableParams({
+			page: 1,            // show first page
+			count: 10, 
+			sorting: {
+				name : 'asc'
+			}
+		}, {
+			total: 0,           // length of data
+			getData: function($defer, params) {
+				ui.util.table.prepareData($defer, $filter, params, workoutData.data);
+			}
+		});
+		
+		$scope.tableParams.settings().$loading = true;
+	});
+	
 
 }());

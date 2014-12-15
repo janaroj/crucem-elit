@@ -27,6 +27,8 @@ public interface UserService extends UserDetailsService, SearchService, PictureS
     UserDto getCurrentUserDto();
 
     User getCurrentUser();
+    
+    User getCurrentUserWithGymUsers();
 
     void joinGym(Gym gym);
 

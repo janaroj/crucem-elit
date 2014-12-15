@@ -1,6 +1,7 @@
 package com.crucemelit.repository;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,7 +21,7 @@ public interface WorkoutRepository extends JpaRepository<Workout, Long> {
             + "LEFT JOIN FETCH w.exerciseGroups eg "
             + "LEFT JOIN FETCH eg.record "
             + "WHERE w.user = (:user)")
-    List<Workout> findAllByUser(@Param("user") User user);
+    List<Workout> findAllByUserWithRecords(@Param("user") User user);
 
     @Query("SELECT w FROM Workout w "
             + "LEFT JOIN FETCH w.user u "
@@ -29,21 +30,31 @@ public interface WorkoutRepository extends JpaRepository<Workout, Long> {
             + "LEFT JOIN FETCH eg.exercises e "
             + "LEFT JOIN FETCH e.record "
             + "LEFT JOIN FETCH e.exerciseModel em "
+            + "LEFT JOIN FETCH em.exerciseType "
             + "WHERE w.id = (:id) and w.user = (:user)")
     Workout findOneByIdAndUser(@Param("id") long id, @Param("user") User user);
 
     List<Workout> findByUserAndCompletedFalseOrderByDateAsc(User currentUser, Pageable topFive);
 
-    @Query("SELECT DISTINCT w FROM Workout w "
+    @Query("SELECT DISTINCT w FROM Workout w " 
             + "LEFT JOIN FETCH w.user u "
             + "LEFT JOIN FETCH u.gym "
-            + "LEFT JOIN FETCH w.exerciseGroups eg "
-            + "LEFT JOIN FETCH eg.record "
+            + "LEFT JOIN FETCH w.exerciseGroups eg " 
+            + "LEFT JOIN FETCH eg.record " 
             + "LEFT JOIN FETCH eg.exercises e "
             + "LEFT JOIN FETCH e.record "
-            + "LEFT JOIN FETCH e.exerciseModel em "
+            + "LEFT JOIN FETCH e.exerciseModel em " 
             + "LEFT JOIN FETCH em.exerciseType "
             + "WHERE w.completed = true")
     List<Workout> findCompletedWithResults();
+
+    @Query("SELECT DISTINCT w from Workout w "
+            + "LEFT JOIN FETCH w.user "
+            + "LEFT JOIN FETCH w.exerciseGroups eg "
+            + "LEFT JOIN FETCH eg.exercises e "
+            + "LEFT JOIN FETCH e.exerciseModel em "
+            + "LEFT JOIN FETCH em.exerciseType "
+            + "WHERE w.user = (:user) and w.completed = (:completed)")
+    Set<Workout> findDistinctByUserAndCompleted(@Param("user") User user, @Param("completed") boolean completed);
 
 }

@@ -1,0 +1,29 @@
+
+<div class="modal-header">
+	<h3 class="modal-title">
+		<msg key="choose.existing.workout.title" />
+	</h3>
+</div>
+<div class="modal-body">
+	<div loading-container="tableParams.settings().$loading">
+		<table ng-table="tableParams" show-filter="true" class="table">
+			<tbody>
+				<tr ng-repeat="workout in $data">
+					<td data-title="getTranslation('workout.table.workout')" sortable="'name'" filter="{ 'name': 'text' }">{{workout.name}}</td>
+					<td data-title="getTranslation('workout.table.wod')" sortable="'wod'" filter="{ 'wod': 'text' }">{{workout.wod}}</td>
+					<td data-title="getTranslation('workout.table.date')" sortable="'date'">{{workout.date | date: getDateFormat()}}</td>
+					<td class="buttons">
+						<button class="btn btn-add btn-success" ng-click="ok(workout)"><i class="glyphicon-plus-sign glyphicon"></i>
+							<msg key="choose">
+						</button>
+					</td>
+				</tr>
+						
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<div class="modal-footer">
+	<button class="btn btn-warning" ng-click="cancel()"><msg key="cancel" /></button>
+</div>

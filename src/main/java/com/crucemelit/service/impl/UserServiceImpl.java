@@ -5,6 +5,7 @@ import java.util.List;
 
 import lombok.SneakyThrows;
 
+import org.hibernate.Hibernate;
 import org.joda.time.DateTime;
 import org.joda.time.Minutes;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -290,5 +291,14 @@ public class UserServiceImpl implements UserService {
         User user = getCurrentUser();
         user.removeComment(id);
         userRepository.saveAndFlush(user);
+    }
+
+    @Override
+    public User getCurrentUserWithGymUsers() {
+        User user = getCurrentUser();
+        if (user.getGym() != null) {
+            Hibernate.initialize(user.getGym().getUsers());
+        }
+        return user;
     }
 }

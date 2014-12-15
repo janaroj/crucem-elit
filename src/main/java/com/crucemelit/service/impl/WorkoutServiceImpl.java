@@ -1,6 +1,7 @@
 package com.crucemelit.service.impl;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -44,7 +45,7 @@ public class WorkoutServiceImpl implements WorkoutService {
 
     @Override
     public List<WorkoutDto> getUserWorkoutsDto(User user) {
-        return workoutTransformer.transformToDto(workoutRepository.findAllByUser(user));
+        return workoutTransformer.transformToDto(workoutRepository.findAllByUserWithRecords(user));
     }
 
     @Override
@@ -68,10 +69,21 @@ public class WorkoutServiceImpl implements WorkoutService {
     }
 
     @Override
-    public List<WorkoutDto> getUserUpcomingWorkoutsDto(User currentUser) {
+    public List<WorkoutDto> getUserUpcomingWorkoutsDto(User user) {
         Pageable topFive = new PageRequest(0, 5);
-        return workoutTransformer.transformToDto(workoutRepository.findByUserAndCompletedFalseOrderByDateAsc(currentUser,
-                topFive));
+        return workoutTransformer.transformToDto(workoutRepository.findByUserAndCompletedFalseOrderByDateAsc(user, topFive));
     }
 
+    @Override
+    public List<WorkoutDto> getWorkoutSuggestionsForUser(User user) {
+        Set<Workout> workouts = workoutRepository.findDistinctByUserAndCompleted(user, true);
+        if (user.getGym() != null) {
+            for (User gymMember : user.getGym().getUsers()) {
+                if (!gymMember.equals(user)) {
+                    workouts.addAll(workoutRepository.findDistinctByUserAndCompleted(gymMember, false));
+                }
+            }
+        }
+        return workoutTransformer.transformToDtoWithExerciseGroups(workouts);
+    }
 }

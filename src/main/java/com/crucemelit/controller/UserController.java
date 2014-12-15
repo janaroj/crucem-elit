@@ -250,4 +250,9 @@ public class UserController {
         return new ResponseEntity<String>("Success", HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/workouts/suggestions")
+    public List<WorkoutDto> getWorkoutSuggestions() {
+        return workoutService.getWorkoutSuggestionsForUser(userService.getCurrentUserWithGymUsers());
+    }
+
 }

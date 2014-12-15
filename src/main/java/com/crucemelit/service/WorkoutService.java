@@ -22,4 +22,6 @@ public interface WorkoutService {
 
     List<WorkoutDto> getWorkoutsWithExerciseGroupsDto();
 
+    List<WorkoutDto> getWorkoutSuggestionsForUser(User currentUser);
+
 }

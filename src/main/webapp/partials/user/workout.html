@@ -6,41 +6,35 @@
     <div class="panel-heading">
         <h1 class="workout-header">
             <msg key="workout.add.header" />
+		    <button class="btn pull-right clearFilter" ng-click="openWorkoutModal()"><i class="glyphicon glyphicon-plus-sign"></i> <msg key="use.existing.workout"/></button>
         </h1>
     </div>
     <div class="panel-body">
-	<form id="form" class="form-horizontal" role="form" name="form" ng-submit="createWorkout()">
-		<div class="form-group">
-			<label class="col-lg-2 pull-left"><msg key="workout.add.name" /></label>
-			<div class="pull-left">
-				<input type="text" ng-model="workout.name" class="text-name" required>
+		<form id="form" class="form-horizontal" role="form" name="form" ng-submit="createWorkout()">
+			<div class="form-group">
+				<label class="col-lg-2 pull-left"><msg key="workout.add.name" /></label>
+				<div class="pull-left">
+					<input type="text" ng-model="workout.name" class="text-name" required>
+				</div>
 			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-lg-2"><msg key="workout.add.date" /></label>
-			<div class="pull-left">
-				<input type="text" ng-model="workout.date" datepicker-popup="{{format}}" class="text-calendar" placeholder="{{format}}" is-open="opened" required
+			<div class="form-group">
+				<label class="col-lg-2"><msg key="workout.add.date" /></label>
+				<div class="pull-left">
+					<input type="text" ng-model="workout.date" datepicker-popup="{{format}}" class="text-calendar" placeholder="{{format}}" is-open="opened" required
 					show-button-bar=false datepicker-append-to-body=true style:display:inline;>
+				</div>
+				<a href="" class="btn btn-default btn-xs next-to-input-btn" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></a>
 			</div>
-			<a href="" class="btn btn-default btn-xs next-to-input-btn" ng-click="open($event)">
-				<i class="glyphicon glyphicon-calendar"></i>
-			</a>
-		</div>
-		<div class="form-group">
-			<label class="col-lg-2"><msg key="workout.add.comment" /></label>
-			<div>
-				<textarea ng-model="workout.comment" class="text-name"/>
+			<div class="form-group">
+				<label class="col-lg-2"><msg key="workout.add.comment" /></label>
+				<div><textarea ng-model="workout.comment" class="text-name"/></div>
 			</div>
-		</div>
 		<div class="page-header">
 			<nav class="clear">
                 <div class= "panel panel-default">
-                    <h2 class="pull-left">
-                        <msg key="workout.groups" />
-                    </h2>
+                    <h2 class="pull-left"><msg key="workout.groups" /></h2>
                 </div>
-				<a href="" class="btn btn-add btn-success pull-right pull-down" ng-click="newExerciseGroup()">
-					<i class="glyphicon-plus-sign glyphicon"></i>
+				<a href="" class="btn btn-add btn-success pull-right pull-down" ng-click="newExerciseGroup()"> <i class="glyphicon-plus-sign glyphicon"></i>
 					<msg key="workout.add.group">
 				</a>
 			</nav>
@@ -52,8 +46,7 @@
 				<div class="pull-left">
 					<input type="text" ng-model="group.name" class="text-name" required>
 				</div>
-				<a href="" class="btn btn-danger pull-right del-workout-btn next-to-input-btn" ng-click="removeExerciseGroup(group)"><i
-					class="glyphicon glyphicon-trash"></i> <msg key="workout.add.exercisegroup.remove"></a>
+				<a href="" class="btn btn-danger pull-right del-workout-btn next-to-input-btn" ng-click="removeExerciseGroup(group)"><i class="glyphicon glyphicon-trash"></i> <msg key="workout.add.exercisegroup.remove"></a>
 			</div>
 			<div class="form-group">
 				<label class="col-lg-2 pull-left"><msg key="workout.add.exercisegroup.isWod" /></label>
@@ -64,44 +57,34 @@
 			<h3 class="pull-left">
 				<msg key="workout.add.added.exercises" />
 			</h3>
-			<a href="" class="btn btn-add btn-success pull-left btn-xs add-exercise-btn" ng-click="openModal(group)">
-				<span class="glyphicon-plus-sign glyphicon"></span>
+			<a href="" class="btn btn-add btn-success pull-left btn-xs add-exercise-btn" ng-click="openModal(group)"><span class="glyphicon-plus-sign glyphicon"></span>
 				<msg key="workout.add.exercises">
 			</a>
 			<br> <br> <br>
 			<ul>
 				<div ng-repeat="exercise in group.exercises track by $index">
-					<div>
-						<li class="pull-left">{{exercise.exerciseModel.name}}</li> <a class="col-lg-1" href="" ng-click="showExerciseDetails(exercise)"><msg
-								key="workout.add.exercise.details"></a>
-						<a href="" class="btn btn-danger pull-left btn-xs" ng-click="removeExercise(group,exercise)">
-							<span class="glyphicon glyphicon-remove"></span>
+					<li class="pull-left">{{exercise.exerciseModel.name}}</li> <a class="col-lg-1" href="" ng-click="showExerciseDetails(exercise)"><msg key="workout.add.exercise.details"/></a>
+						<a href="" class="btn btn-danger pull-left btn-xs" ng-click="removeExercise(group,exercise)"> <span class="glyphicon glyphicon-remove"></span>
 							<msg key="workout.add.exercise.remove">
 						</a>
 						<br> <br>
-						<div ng-if="exercise.clicked">
+					<div ng-if="exercise.clicked">
 							<div>
 								<i class="glyphicon" ng-class="(exercise.exerciseModel.countTime) ? 'glyphicon-ok' : 'glyphicon-remove'"></i>
 								<msg key="workout.add.exercise.measure.time">
 							</div>
-
 							<div>
 								<i class="glyphicon" ng-class="(exercise.exerciseModel.countWeight) ? 'glyphicon-ok' : 'glyphicon-remove'"></i>
 								<msg key="workout.add.exercise.measure.weight">
 							</div>
-
 							<div>
 								<i class="glyphicon" ng-class="(exercise.exerciseModel.countRepeats) ? 'glyphicon-ok' : 'glyphicon-remove'"></i>
 								<msg key="workout.add.exercise.measure.repeats">
 							</div>
-							
 							<div>
 								<label class="underlined"><msg key="workout.add.exercise.comment"></label>
 								<p class="commentary">{{exercise.exerciseModel.comment}}</p>
 							</div>
-
-						</div>
-
 					</div>
 				</div>
 			</ul>
@@ -118,9 +101,8 @@
 		</div>
 	</form>
                     
-                        </div>
     </div>
     </div>
     </div>
-</div>
+    </div>
 </div>
