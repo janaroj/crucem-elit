@@ -65,7 +65,7 @@
 				</td>
 				<td><strong>{{ sum(group.data, 'repeats') }}</strong></td>
 				<td><strong>{{ sum(group.data, 'time') }}</strong></td>
-				<td><strong>{{ sum(group.data, 'weight') }}</strong></td>
+				<td colspan="4"><strong>{{ sum(group.data, 'weight') }}</strong></td>
 			</tr>
 			<tr ng-hide="group.$hideRows" ng-repeat="exercise in group.data">
 				<td data-title="getTranslation('record.table.user')" sortable="'user.name'" filter="{ 'user.name': 'text'}">
