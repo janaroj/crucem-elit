@@ -8,10 +8,20 @@
 	
 	<div loading-container="tableParams.settings().$loading">
 	<table ng-table="tableParams" show-filter="true" class="table">
-		<tbody>
-			<tr ng-repeat="exercise in $data">
+		<tbody ng-repeat="group in $groups">
+			<tr class="ng-table-group">
+				<td colspan="{{$columns.length}}">
+					<a href="" ng-click="group.$hideRows = !group.$hideRows"> 
+					<span class="glyphicon" ng-class="{ 'glyphicon-chevron-right': group.$hideRows, 'glyphicon-chevron-down': !group.$hideRows }"></span><strong>{{group.value}}</strong>
+					</a>
+				</td>
+			</tr>
+			<tr ng-hide="group.$hideRows" ng-repeat="exercise in group.data">
 				<td data-title="getTranslation('exercise.name')" sortable="'name'" filter="{ 'name': 'text' }">
 					<span>{{exercise.name}}</span>
+				</td>
+				<td data-title="getTranslation('exercise.type')" sortable="'exerciseType.name'" filter="{ 'exerciseType.name': 'text' }">
+					<span>{{exercise.exerciseType.name}}</span>
 				</td>
 				<td class="buttons">
 					<button class="btn btn-add btn-success" ng-click="addExercise(exercise)"><i class="glyphicon-plus-sign glyphicon"></i><msg key="workout.add.exercise"></button>

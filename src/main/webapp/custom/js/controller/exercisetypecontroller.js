@@ -1,7 +1,7 @@
 (function() {
 	var app = angular.module('crucem-elit');
 
-	app.controller('AdminExerciseTypesController', function($scope, $filter, $location, exerciseTypeService, ngTableParams, toaster) {
+	app.controller('AdminExerciseTypesController', function($scope, $rootScope, $filter, $location, exerciseTypeService, ngTableParams, toaster) {
 
 		var exerciseTypeData = null;
 		var tempData = null;
@@ -20,7 +20,7 @@
 						tempData = angular.copy(exerciseTypeData);
 						ui.util.table.prepareData($defer, $filter, params, exerciseTypeData);
 					}, function(result) {
-						toaster.pop('error', 'Exercise Types' , result.data.message);
+						toaster.pop('error', $rootScope.getTranslation('exercise.type') , result.data.message);
 					});
 				}
 				else {
@@ -36,25 +36,25 @@
 		};
 
 		$scope.deleteExerciseType = function(exerciseType) {
-			if (confirm("Are you sure you wish to delete " + exerciseType.name )) {
+			if (confirm($rootScope.getTranslation('exercise.type.delete.confirm') + " " + exerciseType.name )) {
 				exerciseTypeService.deleteExerciseType(exerciseType.id).then(function() {
 					exerciseTypeData.splice( exerciseTypeData.indexOf(exerciseType), 1 );
 					$scope.tableParams.reload();
-					toaster.pop('success', 'Exercise Type' , 'Exercisetype deleted successfully');
+					toaster.pop('success', $rootScope.getTranslation('exercise.type') , $rootScope.getTranslation('exercise.type.delete.success'));
 				}, 
 				function(result) {
-					toaster.pop('error', 'Exercise Type', result.data.message);
+					toaster.pop('error', $rootScope.getTranslation('exercise.type'), result.data.message);
 				});
 			}
 		};
 		
 		$scope.updateExerciseType = function(exerciseType) {
 			exerciseTypeService.updateExerciseType(exerciseType).then(function(){
-				toaster.pop('success', 'Exercise Type' , 'Exercisetype updated successfully');
+				toaster.pop('success', $rootScope.getTranslation('exercise.type') , $rootScope.getTranslation('exercise.type.update.success'));
 				tempData[tempData.indexOf($filter("filter")(tempData, {id : exerciseType.id}, true)[0])] = angular.copy(exerciseType);
 				exerciseType.$edit = false; 
 			}, function(result) {
-				toaster.pop('error', 'Exercise Type', result.data.message);
+				toaster.pop('error', $rootScope.getTranslation('exercise.type'), result.data.message);
 				$scope.cancelEdit(exerciseType);
 			});
 		};
@@ -68,15 +68,15 @@
 
 	});
 
-	app.controller('AdminExerciseTypeController', function($scope, $location, exerciseTypeService, toaster) {
+	app.controller('AdminExerciseTypeController', function($scope, $rootScope, $location, exerciseTypeService, toaster) {
 
 		$scope.createExerciseType = function() {
 			exerciseTypeService.createExerciseType($scope.exerciseType).then(function(result) {
 				$location.path('/admin/exercisetypes');
-				toaster.pop('success', 'Exercise Type' , 'Exercisetype created successfully');
+				toaster.pop('success', $rootScope.getTranslation('exercise.type') , $rootScope.getTranslation('exercise.type.create.success'));
 			}, 
 			function(result) {
-				toaster.pop('error', 'Exercise Type', result.data.message);
+				toaster.pop('error', $rootScope.getTranslation('exercise.type'), result.data.message);
 			});
 		};
 

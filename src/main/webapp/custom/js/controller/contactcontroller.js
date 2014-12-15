@@ -104,6 +104,7 @@
 
 		$scope.cancelProfile = function(){
 			$scope.toggleProfileChange();
+			delete $scope.contact.role;
 			angular.extend($scope.user, $scope.contact);
 		};
 

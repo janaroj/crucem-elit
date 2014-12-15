@@ -23,7 +23,7 @@ public class WorkoutTest {
     @Before
     public void setUp() {
         workout = new Workout();
-        wodExerciseGroup = createExerciseGroup(WOD_EXERCISE_GROUP, true, WOD_RESULT);
+        wodExerciseGroup = createExerciseGroup(2, WOD_EXERCISE_GROUP, true, WOD_RESULT);
         workout.setExerciseGroups(createExerciseGroups());
     }
 
@@ -39,14 +39,15 @@ public class WorkoutTest {
 
     private Set<ExerciseGroup> createExerciseGroups() {
         Set<ExerciseGroup> exerciseGroups = new HashSet<>();
-        exerciseGroups.add(createExerciseGroup(GROUP1, false, RESULT1));
+        exerciseGroups.add(createExerciseGroup(1, GROUP1, false, RESULT1));
         exerciseGroups.add(wodExerciseGroup);
-        exerciseGroups.add(createExerciseGroup(GROUP2, false, RESULT2));
+        exerciseGroups.add(createExerciseGroup(3, GROUP2, false, RESULT2));
         return exerciseGroups;
     }
 
-    private ExerciseGroup createExerciseGroup(String name, boolean isWod, Double result) {
+    private ExerciseGroup createExerciseGroup(long id, String name, boolean isWod, Double result) {
         ExerciseGroup exerciseGroup = new ExerciseGroup();
+        exerciseGroup.setId(id);
         exerciseGroup.setName(name);
         exerciseGroup.setWod(isWod);
         if (result != null) {

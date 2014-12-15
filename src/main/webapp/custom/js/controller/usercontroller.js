@@ -20,7 +20,7 @@
 						userData = result.data;
 						ui.util.table.prepareData($defer, $filter, params, userData);
 					}, function(result) {
-						toaster.pop('error', 'Users' , result.data.message);
+						toaster.pop('error', $rootScope.getTranslation('user') , result.data.message);
 					});
 				}
 				else {
@@ -77,27 +77,27 @@
 		};
 		
 		$scope.deleteUser = function(user) {
-			if (confirm("Are you sure you wish to delete " + user.name )) {
+			if (confirm($rootScope.getTranslation('delete.user.confirm') +" " + user.name )) {
 				userService.deleteUser(user.id).then(function() {
 					userData.splice( userData.indexOf(user), 1 );
 					$scope.tableParams.reload();
-					toaster.pop('success', 'User' , 'User deleted successfully');
+					toaster.pop('success', $rootScope.getTranslation('user') , $rootScope.getTranslation('user.delete.success'));
 				}, 
 				function(result) {
-					toaster.pop('error', 'User', result.data.message);
+					toaster.pop('error', $rootScope.getTranslation('user'), result.data.message);
 				});
 			}
 		};
 		
 		$scope.changeRole = function(user) {
-			if (confirm("Are you sure you wish to switch the role?")) {
+			if (confirm($rootScope.getTranslation('switch.role.confirm'))) {
 				userService.changeRole(user.id).then(function() {
 					user.role = user.role ==='USER' ? 'ADMIN' : 'USER';
 					$scope.tableParams.reload();
-					toaster.pop('success', 'User' , 'Role changed successfully');
+					toaster.pop('success', $rootScope.getTranslation('user') , $rootScope.getTranslation('role.change.success'));
 				}, 
 				function(result) {
-					toaster.pop('error', 'User', result.data.message);
+					toaster.pop('error', $rootScope.getTranslation('user'), result.data.message);
 				});
 			}
 		};

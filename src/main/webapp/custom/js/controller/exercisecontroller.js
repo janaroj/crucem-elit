@@ -1,7 +1,7 @@
 (function() {
 	var app = angular.module('crucem-elit');
 	
-	app.controller('AdminExercisesController', function($scope, $q, $filter, $location, exerciseService, exerciseTypeService, ngTableParams, toaster) {
+	app.controller('AdminExercisesController', function($scope, $rootScope, $q, $filter, $location, exerciseService, exerciseTypeService, ngTableParams, toaster) {
 
 		var exerciseData = null;
 		var tempData = null;
@@ -23,7 +23,7 @@
 						tempData = angular.copy(exerciseData);
 						ui.util.table.prepareData($defer, $filter, params, exerciseData);
 					}, function(result) {
-						toaster.pop('error', 'Exercises' , result.data.message);
+						toaster.pop('error', $rootScope.getTranslation('exercise') , result.data.message);
 					});
 				}
 				else {
@@ -39,25 +39,25 @@
 		};
 
 		$scope.deleteExercise = function(exercise) {
-			if (confirm("Are you sure you wish to delete " + exercise.name )) {
+			if (confirm($rootScope.getTranslation('exercise.delete.confirm') + " "+ exercise.name )) {
 				exerciseService.deleteExercise(exercise.id).then(function() {
 					exerciseData.splice( exerciseData.indexOf(exercise), 1 );
 					$scope.tableParams.reload();
-					toaster.pop('success', 'Exercise' , 'Exercise deleted successfully');
+					toaster.pop('success', $rootScope.getTranslation('exercise') , $rootScope.getTranslation('exercise.delete.success'));
 				}, 
 				function(result) {
-					toaster.pop('error', 'Exercise', result.data.message);
+					toaster.pop('error', $rootScope.getTranslation('exercise'), result.data.message);
 				});
 			}
 		};
 		
 		$scope.updateExercise = function(exercise) {
 			exerciseService.updateExercise(exercise).then(function(){
-				toaster.pop('success', 'Exercise' , 'Exercise updated successfully');
+				toaster.pop('success', $rootScope.getTranslation('exercise') , $rootScope.getTranslation('exercise.update.success'));
 				tempData[tempData.indexOf($filter("filter")(tempData, {id : exercise.id}, true)[0])] = angular.copy(exercise);
 				exercise.$edit = false; 
 			}, function(result) {
-				toaster.pop('error', 'Exercise', result.data.message);
+				toaster.pop('error', $rootScope.getTranslation('exercise'), result.data.message);
 				$scope.cancelEdit(exercise);
 			});
 		};
@@ -117,24 +117,24 @@
 	});
 	
 	
-	app.controller('AdminExerciseController', function($scope, $location, exerciseService, exerciseTypeService, toaster) {
+	app.controller('AdminExerciseController', function($scope, $rootScope, $location, exerciseService, exerciseTypeService, toaster) {
 
 		$scope.init = function() {
 			exerciseTypeService.getExerciseTypes().then(function(result) {
 				$scope.types = result.data;
 			},
 			function(result) {
-				toaster.pop('error', 'Exercise Types',  result.data.message);
+				toaster.pop('error', $rootScope.getTranslation('exercise.type'),  result.data.message);
 			});
 		};
 
 		$scope.createExercise = function() {
 			exerciseService.createExercise($scope.exercise).then(function(result) {
 				$location.path('/admin/exercises');
-				toaster.pop('success', 'Exercise' , 'Exercise created successfully');
+				toaster.pop('success', $rootScope.getTranslation('exercise') , $rootScope.getTranslation('exercise.create.success'));
 			}, 
 			function(result) {
-				toaster.pop('error', 'Exercise', result.data.message);
+				toaster.pop('error', $rootScope.getTranslation('exercise'), result.data.message);
 			});
 		};
 
@@ -166,8 +166,14 @@
 		
 		$scope.tableParams = new ngTableParams({
 			page: 1,            // show first page
-			count: 10,          // count per page
+			count: 100, 
+			sorting: {
+				name : 'asc'
+			}
 		}, {
+			groupBy : function(value) {
+				return value.exerciseType.name;
+			},
 			total: 0,           // length of data
 			getData: function($defer, params) {
 					ui.util.table.prepareData($defer, $filter, params, exerciseData);
