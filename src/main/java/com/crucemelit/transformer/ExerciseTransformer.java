@@ -1,6 +1,7 @@
 package com.crucemelit.transformer;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -15,7 +16,7 @@ public class ExerciseTransformer {
         return new ExerciseDto(exercise);
     }
 
-    public List<ExerciseDto> transformToDto(List<Exercise> exercises) {
+    public List<ExerciseDto> transformToDto(Collection<Exercise> exercises) {
         List<ExerciseDto> list = new ArrayList<>();
         for (Exercise exercise : exercises) {
             list.add(transformToDto(exercise));

@@ -1,6 +1,7 @@
 package com.crucemelit.transformer;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class WorkoutTransformer {
         return new WorkoutDto(workout);
     }
 
-    public List<WorkoutDto> transformToDto(List<Workout> workouts) {
+    public List<WorkoutDto> transformToDto(Collection<Workout> workouts) {
         List<WorkoutDto> list = new ArrayList<>();
         for (Workout workout : workouts) {
             list.add(transformToDto(workout));
@@ -34,7 +35,7 @@ public class WorkoutTransformer {
         return workoutDto;
     }
 
-    public List<WorkoutDto> transformToDtoWithUserInfo(List<Workout> workouts) {
+    public List<WorkoutDto> transformToDtoWithUserInfo(Collection<Workout> workouts) {
         List<WorkoutDto> list = new ArrayList<>();
         for (Workout workout : workouts) {
             list.add(transformToDtoWithUserInfo(workout));
@@ -49,7 +50,7 @@ public class WorkoutTransformer {
         return workoutDto;
     }
 
-    public List<WorkoutDto> transformToDtoWithExerciseGroups(List<Workout> workouts) {
+    public List<WorkoutDto> transformToDtoWithExerciseGroups(Collection<Workout> workouts) {
         List<WorkoutDto> list = new ArrayList<>();
         for (Workout workout : workouts) {
             WorkoutDto workoutDto = transformToDtoWithExerciseGroups(workout);

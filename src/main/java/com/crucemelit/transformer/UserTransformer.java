@@ -1,6 +1,7 @@
 package com.crucemelit.transformer;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -15,7 +16,7 @@ public class UserTransformer {
         return new UserDto(user);
     }
 
-    public List<UserDto> transformToDto(List<User> users) {
+    public List<UserDto> transformToDto(Collection<User> users) {
         List<UserDto> list = new ArrayList<>();
         for (User user : users) {
             list.add(transformToDto(user));
@@ -30,7 +31,7 @@ public class UserTransformer {
         return userDto;
     }
 
-    public List<UserDto> transformToDtoWithAuthInfo(List<User> users) {
+    public List<UserDto> transformToDtoWithAuthInfo(Collection<User> users) {
         List<UserDto> list = new ArrayList<>();
         for (User user : users) {
             list.add(transformToDtoWithAuthInfo(user));

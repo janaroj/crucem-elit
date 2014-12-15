@@ -1,6 +1,7 @@
 package com.crucemelit.transformer;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -15,7 +16,7 @@ public class CommentTransformer {
         return new CommentDto(comment);
     }
 
-    public List<CommentDto> transformToDto(List<Comment> comments) {
+    public List<CommentDto> transformToDto(Collection<Comment> comments) {
         List<CommentDto> list = new ArrayList<>();
         for (Comment comment : comments) {
             list.add(transformToDto(comment));

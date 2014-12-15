@@ -26,7 +26,7 @@ import com.crucemelit.dto.Result;
 @Entity
 @Table(name = "EXCERCISEGROUP")
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false, of = { "id" })
+@EqualsAndHashCode(callSuper = false, of = { "id", "name", "wod" })
 @ToString(of = { "id", "name", "wod", "record" })
 public @Data class ExerciseGroup extends BaseEntity {
 

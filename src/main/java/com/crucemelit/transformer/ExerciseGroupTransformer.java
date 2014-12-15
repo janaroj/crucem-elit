@@ -1,8 +1,8 @@
 package com.crucemelit.transformer;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,7 +20,7 @@ public class ExerciseGroupTransformer {
         return new ExerciseGroupDto(exerciseGroup);
     }
 
-    public List<ExerciseGroupDto> transformToDto(List<ExerciseGroup> exerciseGroups) {
+    public List<ExerciseGroupDto> transformToDto(Collection<ExerciseGroup> exerciseGroups) {
         List<ExerciseGroupDto> list = new ArrayList<>();
         for (ExerciseGroup exerciseGroup : exerciseGroups) {
             list.add(transformToDto(exerciseGroup));
@@ -28,7 +28,7 @@ public class ExerciseGroupTransformer {
         return list;
     }
 
-    public List<ExerciseGroupDto> transformToDtoWithExercises(Set<ExerciseGroup> exerciseGroups) {
+    public List<ExerciseGroupDto> transformToDtoWithExercises(Collection<ExerciseGroup> exerciseGroups) {
         List<ExerciseGroupDto> list = new ArrayList<>();
         for (ExerciseGroup exerciseGroup : exerciseGroups) {
             ExerciseGroupDto exerciseGroupDto = transformToDto(exerciseGroup);

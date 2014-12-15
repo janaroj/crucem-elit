@@ -142,6 +142,9 @@
 		this.getUpcomingWorkouts = function(){
 			return $http.get('/api/user/workouts/upcoming');
 		};
+		this.getWorkoutSuggestions = function() {
+			return $http.get('/api/user/workouts/suggestions');
+		};
 		this.deleteWorkout = function(id) {
 			return $http.delete('/api/user/workouts/' + id);
 		};
