@@ -10,7 +10,7 @@ public interface WorkoutService {
 
     List<WorkoutDto> getWorkoutsWithResultsDto();
 
-    WorkoutDto getUserWorkoutDto(long id, User user);
+    WorkoutDto getWorkoutDto(long id);
 
     List<WorkoutDto> getUserWorkoutsDto(User user);
 

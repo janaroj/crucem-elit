@@ -31,8 +31,8 @@ public interface WorkoutRepository extends JpaRepository<Workout, Long> {
             + "LEFT JOIN FETCH e.record "
             + "LEFT JOIN FETCH e.exerciseModel em "
             + "LEFT JOIN FETCH em.exerciseType "
-            + "WHERE w.id = (:id) and w.user = (:user)")
-    Workout findOneByIdAndUser(@Param("id") long id, @Param("user") User user);
+            + "WHERE w.id = (:id)")
+    Workout findOneByIdWithRecords(@Param("id") long id);
 
     List<Workout> findByUserAndCompletedFalseOrderByDateAsc(User currentUser, Pageable topFive);
 

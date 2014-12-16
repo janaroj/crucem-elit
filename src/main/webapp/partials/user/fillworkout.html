@@ -7,7 +7,7 @@
 				</div>
 				<div class="panel-body" ng-show="finishedLoading">
 					<form id="form" class="form-horizontal" role="form" name="form" ng-submit="saveFilledWorkout()">
-					<fieldset ng-disabled="workout.completed"> 
+					<fieldset ng-disabled="workout.completed || !allowedToFill(workout)"> 
 						<div class="form-group">
 							<label class="col-lg-2"><msg key=workout.fill.date></label>
 							<div>

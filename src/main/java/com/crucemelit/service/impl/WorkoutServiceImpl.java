@@ -34,8 +34,8 @@ public class WorkoutServiceImpl implements WorkoutService {
     }
 
     @Override
-    public WorkoutDto getUserWorkoutDto(long id, User user) {
-        return workoutTransformer.transformToDtoWithExerciseGroups((workoutRepository.findOneByIdAndUser(id, user)));
+    public WorkoutDto getWorkoutDto(long id) {
+        return workoutTransformer.transformToDtoWithExerciseGroups((workoutRepository.findOneByIdWithRecords(id)));
     }
 
     @Override

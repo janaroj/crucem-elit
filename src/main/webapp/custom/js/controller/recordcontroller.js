@@ -216,6 +216,10 @@
 				toaster.pop('error', $rootScope.getTranslation('submit.unsuccessful'), $rootScope.getTranslation('insert.at.least.one'));
 			}
 		};
+		
+		$scope.allowedToFill = function(workout) {
+			return workout.user.id === $scope.user.id;
+		};
 
 		var isMissingWodResult = function(){
 			for (var i=0;i<$scope.workout.exerciseGroups.length;i++){

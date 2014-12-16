@@ -205,7 +205,7 @@ public class UserController {
 
     @RequestMapping(value = "/workouts/{id}")
     public WorkoutDto getWorkout(@PathVariable long id) {
-        return workoutService.getUserWorkoutDto(id, userService.getCurrentUser());
+        return workoutService.getWorkoutDto(id);
     }
 
     @RequestMapping(value = "/genders")
